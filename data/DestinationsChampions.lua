@@ -1,4 +1,4 @@
-Destinations                    = Destinations or {}
+Destinations = Destinations or {}
 
 Destinations.ChampionTableIndex = {
   X = 1,
@@ -476,16 +476,20 @@ Destinations.ChampionTableStore = {
     { 0.5766, 0.5018, 1857, 5 },
     { 0.229, 0.57, 1855, 1 },
   },
-  ["drinithtombfw01_base_0"] = { --Part of Forgotten Wastes
+  --Part of Forgotten Wastes
+  ["drinithtombfw01_base_0"] = {
     { 0.6848, 0.8109, 1857, 1 },
   },
-  ["koradurfw02_base_0"] = { --Part of Forgotten Wastes
+  --Part of Forgotten Wastes
+  ["koradurfw02_base_0"] = {
     { 0.2602, 0.7366, 1857, 2 },
   },
-  ["cavernsofkogoruhnfw03_base_0"] = { --Part of Forgotten Wastes
+  --Part of Forgotten Wastes
+  ["cavernsofkogoruhnfw03_base_0"] = {
     { 0.0892, 0.2376, 1857, 3 },
   },
-  ["forgottendepthsfw04_base_0"] = { --Part of Forgotten Wastes
+  --Part of Forgotten Wastes
+  ["forgottendepthsfw04_base_0"] = {
     { 0.203, 0.485, 1857, 4 },
   },
   ["fortgreenwall_base_0"] = {
@@ -586,8 +590,9 @@ Destinations.ChampionTableStore = {
   ["hoarvorpit_base_0"] = {
     { 0.6814, 0.4517, 298, 1 },
   },
+  -- Forsaken Citadel, Southern Elsweyr
   ["houseofembersoutside_base_0"] = {
-    { 0.4765, 0.2222, 2557, 1 }, -- Forsaken Citadel, Southern Elsweyr
+    { 0.4765, 0.2222, 2557, 1 },
   },
   ["hrotacave_base_0"] = {
     { 0.8643, 0.7979, 1426, 1 },
@@ -919,7 +924,8 @@ Destinations.ChampionTableStore = {
     { 0.379012, 0.220988, 739, 1 },
     { 0.780247, 0.262963, 739, 2 },
   },
-  ["rimmennecropolis_base_0"] = { -- TODO: recheck if these coordinates are exact
+  -- TODO: recheck if these coordinates are exact
+  ["rimmennecropolis_base_0"] = {
     { 0.0926, 0.4704, 2440, 1 },
     { 0.8988, 0.7420, 2440, 2 },
     { 0.7914, 0.3988, 2440, 3 },

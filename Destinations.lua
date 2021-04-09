@@ -1,6 +1,7 @@
 -------------------------------------------------
 ----- early helper                          -----
 -------------------------------------------------
+local ADDON_NAME = "Destinations"
 
 local function is_in(search_value, search_table)
   for k, v in pairs(search_table) do
@@ -37,10 +38,78 @@ Destinations.supported_lang                     = Destinations.client_lang == De
 -------------------------------------------------
 ----- Destinations                          -----
 -------------------------------------------------
+Dest = {}
+if LibDebugLogger then
+  local logger = LibDebugLogger.Create(ADDON_NAME)
+  Dest.logger   = logger
+end
+local SDLV = DebugLogViewer
+if SDLV then Dest.viewer = true else Dest.viewer = false end
 
-local ADDON_NAME                                = "Destinations"
+local function create_log(log_type, log_content)
+  if not Dest.viewer and log_type == "Info" then
+    CHAT_ROUTER:AddSystemMessage(log_content)
+    return
+  end
+  if not Dest.logger then return end
+  if log_type == "Debug" then
+    Dest.logger:Debug(log_content)
+  end
+  if log_type == "Info" then
+    Dest.logger:Info(log_content)
+  end
+  if log_type == "Verbose" then
+    Dest.logger:Verbose(log_content)
+  end
+  if log_type == "Warn" then
+    Dest.logger:Warn(log_content)
+  end
+end
+
+local function emit_message(log_type, text)
+  if (text == "") then
+    text = "[Empty String]"
+  end
+  create_log(log_type, text)
+end
+
+local function emit_table(log_type, t, indent, table_history)
+  indent        = indent or "."
+  table_history = table_history or {}
+
+  for k, v in pairs(t) do
+    local vType = type(v)
+
+    emit_message(log_type, indent .. "(" .. vType .. "): " .. tostring(k) .. " = " .. tostring(v))
+
+    if (vType == "table") then
+      if (table_history[v]) then
+        emit_message(log_type, indent .. "Avoiding cycle on table...")
+      else
+        table_history[v] = true
+        emit_table(log_type, v, indent .. "  ", table_history)
+      end
+    end
+  end
+end
+
+function Dest:dm(log_type, ...)
+  for i = 1, select("#", ...) do
+    local value = select(i, ...)
+    if (type(value) == "table") then
+      emit_table(log_type, value)
+    else
+      emit_message(log_type, tostring(value))
+    end
+  end
+end
+
+-------------------------------------------------
+----- Destinations                          -----
+-------------------------------------------------
+
 local ADDON_AUTHOR                              = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION                             = "28.4"
+local ADDON_VERSION                             = "28.5"
 local ADDON_WEBSITE                             = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP                                       = LibMapPins
@@ -1505,7 +1574,7 @@ local function ShowMyPosition()
 
   local mapname = LMP:GetZoneAndSubzone(true, true, true)
 
-  d(zo_strformat('["<<1>>"] = <<2>>, <<3>>', mapname, locX, locY))
+  Dest:dm("Info", zo_strformat('["<<1>>"] = <<2>>, <<3>>', mapname, locX, locY))
 
 end
 
@@ -4025,7 +4094,6 @@ local function MapCallback_fakeKnown()
   for poiIndex = 1, GetNumPOIs(zoneIndex) do
     if not mapData[poiIndex] then
       mapData[poiIndex] = { n = "unknown " .. poiIndex, t = DESTINATIONS_PIN_TYPE_UNKNOWN }
-      d("Fake Pin")
     end
   end
 
@@ -4212,7 +4280,7 @@ local function RegisterQuestDone(eventCode, questName, level, previousExperience
   ]]--
   if questFound then
     if drtv.getQuestInfo then
-      d("Completed: " .. tostring(questID) .. " / " .. questName)
+      Dest:dm("Info", "Completed: " .. tostring(questID) .. " / " .. questName)
     end
     for k, v in pairs(DestinationsCSSV.QuestsDone) do
       if questID == k then
@@ -4246,7 +4314,7 @@ end
 local function RegisterQuestCancelled(eventCode, isCompleted, journalIndex, questName, zoneIndex, poiIndex, questID)
   if isCompleted then return end
   if drtv.getQuestInfo then
-    d("Cancelled: " .. tostring(questID) .. "/" .. questName)
+    Dest:dm("Info", "Cancelled: " .. tostring(questID) .. "/" .. questName)
   end
   local questData = {}
   for k, v in pairs(DestinationsCSSV.QuestsDone) do
@@ -4696,8 +4764,8 @@ end
 
 local function SetQuestHidden(pin, questID, questName)
   if drtv.getQuestInfo then
-    d("Hiding questID: " .. questID)
-    d("Name: " .. questName)
+    Dest:dm("Info", "Hiding questID: " .. questID)
+    Dest:dm("Info", "Name: " .. questName)
   end
   DestinationsCSSV.QuestsDone[questID] = Destinations.QUEST_HIDDEN
   RedrawAllPins(DPINS.QUESTS_UNDONE)
@@ -4735,7 +4803,7 @@ local function ShowQuestEditingMenu(pin)
   qName           = string.gsub(qName, "%-", " ")
 
   if drtv.getQuestInfo then
-    d("Quest found: " .. qName)
+    Dest:dm("Info", "Quest found: " .. qName)
   end
 
   local questTableName
@@ -4757,7 +4825,7 @@ local function ShowQuestEditingMenu(pin)
 
   if not questID or questID == 0 then
     if drtv.getQuestInfo then
-      d("The quest could not be identified as no ID was found. For that reason the quest can not be hidden.")
+      Dest:dm("Info", "The quest could not be identified as no ID was found. For that reason the quest can not be hidden.")
     end
     AddMenuItem(defaults.miscColorCodes.settingsTextWarn:Colorize(GetString(QUEST_MENU_NOT_FOUND)), SetQuestHiddenDummy)
   else
@@ -4774,12 +4842,12 @@ function SetQuestEditing()
   if drtv.EditingQuests then
     drtv.EditingQuests = false
     LMP:SetClickHandlers(DPINS.QUESTS_UNDONE, nil)
-    d(GetString(QUEST_EDIT_OFF))
+    Dest:dm("Info", GetString(QUEST_EDIT_OFF))
   else
     drtv.EditingQuests = true
     LMP:SetClickHandlers(DPINS.QUESTS_UNDONE, { [1] = { callback = function(pin) ShowQuestEditingMenu(pin) end } },
       duplicates == false)
-    d(GetString(QUEST_EDIT_ON))
+    Dest:dm("Info", GetString(QUEST_EDIT_ON))
   end
 end
 
@@ -4787,19 +4855,19 @@ SLASH_COMMANDS["/dqin"] = function()
   --Quest Info Debug TOGGLE
   if drtv.getQuestInfo == false then
     drtv.getQuestInfo = true
-    d("Quest debug Info ON")
-    d("Repeat command to turn it off.")
+    Dest:dm("Info", "Quest debug Info ON")
+    Dest:dm("Info", "Repeat command to turn it off.")
   elseif drtv.getQuestInfo == true then
     drtv.getQuestInfo = false
-    d("Quest debug Info OFF")
+    Dest:dm("Info", "Quest debug Info OFF")
   end
 end
 SLASH_COMMANDS["/dhlp"] = function()
   --Show help
-  d(GetString(DESTCOMMANDS))
-  d(GetString(DESTCOMMANDdhlp))
-  d(GetString(DESTCOMMANDdset))
-  d(GetString(DESTCOMMANDdqed))
+  Dest:dm("Info", GetString(DESTCOMMANDS))
+  Dest:dm("Info", GetString(DESTCOMMANDdhlp))
+  Dest:dm("Info", GetString(DESTCOMMANDdset))
+  Dest:dm("Info", GetString(DESTCOMMANDdqed))
 end
 SLASH_COMMANDS["/dlaq"] = function()
   --Refresh all Completed Quests and /reloadui
@@ -4810,7 +4878,7 @@ end
 SLASH_COMMANDS["/dqed"] = SetQuestEditing   --Quest Editing TOGGLE
 SLASH_COMMANDS["/dgcq"] = function()
   --Get Completed Quests (to saved vars)
-  d("Saving all completed quests...")
+  Dest:dm("Info", "Saving all completed quests...")
   local questId   = nil
   local questName = nil
   local questType
@@ -4821,11 +4889,11 @@ SLASH_COMMANDS["/dgcq"] = function()
       DestinationsSV.TEMPPINDATA[questId] = "\v" .. questName .. "\v"
     end
   end
-  d("Done...")
+  Dest:dm("Info", "Done...")
 end
 SLASH_COMMANDS["/dgac"] = function()
   --Get All Achievements (to saved vars)
-  d("Saving all achievements...")
+  Dest:dm("Info", "Saving all achievements...")
   local achId   = nil
   local achName = nil
   local achType
@@ -4836,24 +4904,24 @@ SLASH_COMMANDS["/dgac"] = function()
       DestinationsSV.TEMPPINDATA[achId] = "\v" .. achName .. "\v"
     end
   end
-  d("Done...")
+  Dest:dm("Info", "Done...")
 end
 SLASH_COMMANDS["/dgap"] = function()
   --Get All POI's (to saved vars)
-  d("Saving all POI's...")
-  local zoneIndex = GetCurrentMapZoneIndex()
+  Dest:dm("Info", "Saving all POI's...")
+  local zoneIndex    = GetCurrentMapZoneIndex()
   local currentMapId = GetCurrentMapId()
   if Destinations_Settings.pointsOfIntrest == nil then Destinations_Settings.pointsOfIntrest = {} end
   if Destinations_Settings.pointsOfIntrest[currentMapId] == nil then Destinations_Settings.pointsOfIntrest[currentMapId] = {} end
   Destinations_Settings.pointsOfIntrest[currentMapId] = {}
-  local saveData                                   = Destinations_Settings.pointsOfIntrest[currentMapId]
+  local saveData                                      = Destinations_Settings.pointsOfIntrest[currentMapId]
   if zoneIndex then
     for i = 1, GetNumPOIs(zoneIndex) do
       local normalizedX, normalizedY, poiType, icon = GetPOIMapInfo(zoneIndex, i)
       local objectiveName                           = GetPOIInfo(zoneIndex, i)
       local _, _, _, objectiveIcon, _, _            = GetPOIMapInfo(zoneIndex, i)
       local poiTypeId                               = 99
-      local poiTypeName = GetPoiTypeName(poiTypeId)
+      local poiTypeName                             = GetPoiTypeName(poiTypeId)
       if objectiveName then
         local POIno = tostring(i)
         if string.len(POIno) == 1 then
@@ -4861,16 +4929,16 @@ SLASH_COMMANDS["/dgap"] = function()
         end
         local objectiveString = "{ n = 0x22%s0x22, t = %s },"
         saveData[POIno]       = string.format(objectiveString, objectiveName, objectiveIcon)
-        d(tostring(POIno) .. ": " .. objectiveName)
+        Dest:dm("Info", tostring(POIno) .. ": " .. objectiveName)
         if string.find(objectiveIcon, "/esoui/art/icons/poi/") then
           objectiveIcon = string.gsub(objectiveIcon, "/esoui/art/icons/poi/", "")
         end
-        d(tostring(POIno) .. ": " .. objectiveIcon)
+        Dest:dm("Info", tostring(POIno) .. ": " .. objectiveIcon)
       end
     end
-    d("Done...")
+    Dest:dm("Info", "Done...")
   else
-    d("No data to save...")
+    Dest:dm("Info", "No data to save...")
   end
 end
 
@@ -4880,36 +4948,36 @@ SLASH_COMMANDS["/dsav"] = function(...)
   if (param ~= nil and param ~= "") then
     local cmdparam = nil
     if (param == "ff") then
-      d("Saving Foul Water Fishing Spot.")
+      Dest:dm("Info", "Saving Foul Water Fishing Spot.")
       cmdparam = 40
     elseif (param == "fr") then
-      d("Saving River Fishing Spot.")
+      Dest:dm("Info", "Saving River Fishing Spot.")
       cmdparam = 41
     elseif (param == "fo") then
-      d("Saving Ocean Fishing Spot.")
+      Dest:dm("Info", "Saving Ocean Fishing Spot.")
       cmdparam = 42
     elseif (param == "fl") then
-      d("Saving Lake Fishing Spot.")
+      Dest:dm("Info", "Saving Lake Fishing Spot.")
       cmdparam = 43
     elseif (string.sub(param, 0, 2) == "co") and (string.len(param) >= 5) then
-      d("Saving Collectible Spot.")
+      Dest:dm("Info", "Saving Collectible Spot.")
       cmdparam = 100
     elseif (param == "-h") then
-      d("Write /dsav <param>")
-      d("The following parameters can be used:")
-      d("co* > saves Collectible spot")
-      d("replace the * with the mob name")
-      d("like: /dsav coMudcrab")
-      d("ff > saves Foul Fishing spot")
-      d("fr > saves River Fishing spot")
-      d("fo > saves Ocean Fishing spot")
-      d("fl > saves Lake Fishing spot")
-      d("-h > Shows this help text.")
-      d("Example: /dsav ff")
+      Dest:dm("Info", "Write /dsav <param>")
+      Dest:dm("Info", "The following parameters can be used:")
+      Dest:dm("Info", "co* > saves Collectible spot")
+      Dest:dm("Info", "replace the * with the mob name")
+      Dest:dm("Info", "like: /dsav coMudcrab")
+      Dest:dm("Info", "ff > saves Foul Fishing spot")
+      Dest:dm("Info", "fr > saves River Fishing spot")
+      Dest:dm("Info", "fo > saves Ocean Fishing spot")
+      Dest:dm("Info", "fl > saves Lake Fishing spot")
+      Dest:dm("Info", "-h > Shows this help text.")
+      Dest:dm("Info", "Example: /dsav ff")
       cmdparam = nil
     else
-      d("Unknown parameter!")
-      d("Write /dsav -h for help.")
+      Dest:dm("Info", "Unknown parameter!")
+      Dest:dm("Info", "Write /dsav -h for help.")
       cmdparam = nil
     end
     if cmdparam then
@@ -4940,15 +5008,15 @@ SLASH_COMMANDS["/dsav"] = function(...)
       mapNumber = 1
       while coordData[mapNumber] do
         if drtv.getQuestInfo then
-          d("saving data for " .. mapName[mapNumber] .. "...")
+          Dest:dm("Info", "saving data for " .. mapName[mapNumber] .. "...")
         end
         DestinationsSV.Quests["DQD: " .. mapName[mapNumber] .. "/" .. FormatCoords(mapX) .. FormatCoords(mapY)] = coordData[mapNumber]
         mapNumber                                                                                               = mapNumber + 1
       end
     end
   else
-    d("Missing parameter!")
-    d("Write /dsav -h for help.")
+    Dest:dm("Info", "Missing parameter!")
+    Dest:dm("Info", "Write /dsav -h for help.")
   end
 end
 
@@ -5182,12 +5250,14 @@ local function OnAchievementUpdate(eventCode, achievementId)
   end
 end
 
+--[[TODO What did this do in the past?
+]]--
 local function UpdateInventoryContent()
   MapMiscPOIs = false
   if DestinationsCSSV.filters[DPINS.RELIC_HUNTER] or DestinationsCSSV.filters[DPINS.CUTPURSE] then
     GetMapTextureName()
     if mapTextureName and zoneTextureName then
-      --          d("getting inventory...")
+      -- Dest:dm("Info", "getting inventory...")
     end
   end
 end
@@ -8993,7 +9063,7 @@ local function InitSettings()
         disabled = function() return not DestinationsCSSV.filters[DPINS.QUESTS_UNDONE] and not DestinationsCSSV.filters[DPINS.QUESTS_IN_PROGRESS] and not DestinationsCSSV.filters[DPINS.QUESTS_DONE] end,
         default = defaults.pins.pinTextureQuestsUndone.level
       })
------------
+      -----------
       table.insert(submenu, { -- Global show Quest Giver in tooltip
         type = "checkbox",
         name = defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_REGISTER_QUEST_GIVER_TOGGLE)) .. " " .. defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_PER_CHAR)),
@@ -9008,13 +9078,13 @@ local function InitSettings()
           RedrawCompassPinsOnly(DPINS.QUESTS_DONE)
         end,
         disabled = function() return
-          not DestinationsCSSV.filters[DPINS.QUESTS_UNDONE] and
+        not DestinationsCSSV.filters[DPINS.QUESTS_UNDONE] and
           not DestinationsCSSV.filters[DPINS.QUESTS_IN_PROGRESS] and
           not DestinationsCSSV.filters[DPINS.QUESTS_DONE]
         end,
         default = defaults.settings.HideQuestGiverName,
       })
---------------
+      --------------
       table.insert(submenu, { -- Header
         type = "header",
         name = defaults.miscColorCodes.settingsTextAchHeaders:Colorize(GetString(DEST_SETTINGS_QUEST_REGISTER_HEADER)),
