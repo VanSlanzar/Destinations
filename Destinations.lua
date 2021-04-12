@@ -17,7 +17,7 @@ end
 ----- lang setup                            -----
 -------------------------------------------------
 
-Destinations.client_lang    = GetCVar("language.2")
+Destinations.client_lang    = GetCVar("Language.2")
 Destinations.effective_lang = nil
 --[[
 FX is an alternate Polish lang file
@@ -33,15 +33,15 @@ if is_in(Destinations.client_lang, Destinations.supported_lang) then
 else
   Destinations.effective_lang = "en"
 end
-Destinations.supported_lang                     = Destinations.client_lang == Destinations.effective_lang
+Destinations.supported_lang = Destinations.client_lang == Destinations.effective_lang
 
 -------------------------------------------------
 ----- Destinations                          -----
 -------------------------------------------------
-Dest = {}
+Dest                        = {}
 if LibDebugLogger then
   local logger = LibDebugLogger.Create(ADDON_NAME)
-  Dest.logger   = logger
+  Dest.logger  = logger
 end
 local SDLV = DebugLogViewer
 if SDLV then Dest.viewer = true else Dest.viewer = false end
@@ -4099,11 +4099,10 @@ local function MapCallback_fakeKnown()
 
   for poiIndex = 1, GetNumPOIs(zoneIndex) do
 
-    local normalizedX, normalizedY, poiType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
+    local normalizedX, normalizedY, poiPinType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
       poiIndex)
-    local unknown                                                                                                         = not (isDiscovered or isNearby)
-
-    local seen                                                                                                            = isDiscovered
+    local unknown                                                                                                            = not (isDiscovered or isNearby)
+    local seen                                                                                                               = isDiscovered
 
     if not unknown and mapData[poiIndex] then
 
@@ -4194,9 +4193,9 @@ local function MapCallback_unknown()
 
   for poiIndex = 1, GetNumPOIs(zoneIndex) do
 
-    local normalizedX, normalizedY, poiType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
+    local normalizedX, normalizedY, poiPinType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
       poiIndex)
-    local unknown                                                                                                         = not (isDiscovered or isNearby)
+    local unknown                                                                                                            = not (isDiscovered or isNearby)
 
     if unknown and mapData[poiIndex] then
 
@@ -4825,7 +4824,8 @@ local function ShowQuestEditingMenu(pin)
 
   if not questID or questID == 0 then
     if drtv.getQuestInfo then
-      Dest:dm("Info", "The quest could not be identified as no ID was found. For that reason the quest can not be hidden.")
+      Dest:dm("Info",
+        "The quest could not be identified as no ID was found. For that reason the quest can not be hidden.")
     end
     AddMenuItem(defaults.miscColorCodes.settingsTextWarn:Colorize(GetString(QUEST_MENU_NOT_FOUND)), SetQuestHiddenDummy)
   else
@@ -4917,11 +4917,9 @@ SLASH_COMMANDS["/dgap"] = function()
   local saveData                                      = Destinations_Settings.pointsOfIntrest[currentMapId]
   if zoneIndex then
     for i = 1, GetNumPOIs(zoneIndex) do
-      local normalizedX, normalizedY, poiType, icon = GetPOIMapInfo(zoneIndex, i)
-      local objectiveName                           = GetPOIInfo(zoneIndex, i)
-      local _, _, _, objectiveIcon, _, _            = GetPOIMapInfo(zoneIndex, i)
-      local poiTypeId                               = 99
-      local poiTypeName                             = GetPoiTypeName(poiTypeId)
+      local objectiveName, objectiveLevel, startDescription, finishedDescription = GetPOIInfo(zoneIndex, i)
+      local normalizedX, normalizedY, poiPinType, objectiveIcon, _, _, _, _      = GetPOIMapInfo(zoneIndex, i)
+      local poiTypeId                                                            = 99
       if objectiveName then
         local POIno = tostring(i)
         if string.len(POIno) == 1 then
