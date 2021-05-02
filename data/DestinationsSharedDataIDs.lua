@@ -71,7 +71,7 @@ Destinations.FishIDs        = {
   [2566] = (GetAchievementInfo(2566)), --"Pellitine Master Angler"
   [2412] = (GetAchievementInfo(2412)), --"Northern Elsweyr Master Angler"
   [2861] = (GetAchievementInfo(2861)), --"The Reach Master Angler"
-
+  [2981] = (GetAchievementInfo(2981)), --"Blackwood Master Angler"
 }
 Destinations.FishLocs       = {
   ["glenumbra_base_0"] = 471, --"Glenumbra Angler"
@@ -115,4 +115,5 @@ Destinations.FishLocs       = {
   -- The Reach, and Arkthzand Cavern are the same fishing ach
   ["reach_base_0"] = 2861, --"The Reach Master Angler"
   ["u28_blackreach_base_0"] = 2861, --"The Reach Master Angler"
+  ["blackwood_base_0"] = 2981, --"Blackwood Master Angler"
 }

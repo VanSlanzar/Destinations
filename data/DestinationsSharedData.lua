@@ -3131,4 +3131,8 @@ Destinations.ACHDataStore = {
   ["u28_blackreach_base_0"] = {
     { 0.335290551, 0.297058612, 41, 2861, 1, "X" }, -- Sharlikran
   },
+  -- Blackwood
+  ["blackwood_base_0"] = {
+    { 0.2875977754, 0.4839881360, 42, 2981, 1, "X" }, -- Sharlikran
+  },
 }

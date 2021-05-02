@@ -169,6 +169,11 @@ local CRAFTINGSET_LEGACY_OF_KARTH               = 61
 -- Blackreach: Arkthzand Cavern
 local CRAFTINGSET_AETHERIAL_ASCENSION           = 62
 
+-- Blacwood
+local CRAFTINGSET_PENTRIC_RUN                   = 63
+local CRAFTINGSET_WITHERED_ROOT                 = 64
+local CRAFTINGSET_SARIELLENS_SWORD              = 65
+
 -- itemId, numberOfTraitsRequired
 Destinations.SetsStore                          = {
 
@@ -274,6 +279,11 @@ Destinations.SetsStore                          = {
 
   -- Blackreach: Arkthzand Cavern
   [CRAFTINGSET_AETHERIAL_ASCENSION] = { 168782, 9 }, -- 62
+
+  -- Blackwood
+  [CRAFTINGSET_PENTRIC_RUN] = { 168782, 9 }, -- 63
+  [CRAFTINGSET_WITHERED_ROOT] = { 168782, 9 }, -- 64
+  [CRAFTINGSET_SARIELLENS_SWORD] = { 168782, 9 }, -- 65
 }
 
 Destinations.KeepsStore                         = {
@@ -2441,5 +2451,64 @@ Destinations.POIsStore                          = {
     [12] = { n = "Ghostlight Grotto", t = DESTINATIONS_PIN_TYPE_AOI },
     [13] = { n = "Mistgloom Thicket", t = DESTINATIONS_PIN_TYPE_AOI },
     ["zoneName"] = "Blackreach: Arkthzand Cavern",
+  },
+  [1261] = 
+  {
+    [1] = { n = "Borderwatch", t = DESTINATIONS_PIN_TYPE_KEEP },
+    [2] = { n = "White Stallion Inn", t = DESTINATIONS_PIN_TYPE_AOI },
+    [3] = { n = "Undertow Cavern", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [4] = { n = "Leyawiin", t = DESTINATIONS_PIN_TYPE_CITY },
+    [5] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [6] = { n = "Plateau of the Traveler", t = DESTINATIONS_PIN_TYPE_AOI },
+    [7] = { n = "Tidewater Cave", t = DESTINATIONS_PIN_TYPE_CAVE },
+    [8] = { n = "Deepscorn Hollow", t = DESTINATIONS_PIN_TYPE_CAVE },
+    [9] = { n = "Shardius's Excavation", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [10] = { n = "Fort Blueblood", t = DESTINATIONS_PIN_TYPE_AOI },
+    [11] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [12] = { n = "Veyond", t = DESTINATIONS_PIN_TYPE_AYLEIDRUIN },
+    [13] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [14] = { n = "Fort Redmane", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [15] = { n = "Doomvault Vulpinaz", t = DESTINATIONS_PIN_TYPE_DAEDRICRUIN },
+    [16] = { n = "Toad-Tongue War Camp", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [17] = { n = "Arpenia", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [18] = { n = "Shrine to Nocturnal", t = DESTINATIONS_PIN_TYPE_AOI },
+    [19] = { n = "Zenithar's Abbey", t = DESTINATIONS_PIN_TYPE_DUNGEON },
+    [20] = { n = "Sul-Xan Ritual Site", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [21] = { n = "Welke", t = DESTINATIONS_PIN_TYPE_AYLEIDRUIN },
+    [22] = { n = "Bloodrun Cave", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [23] = { n = "Bloodrun Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [24] = { n = "Farmer's Nook", t = DESTINATIONS_PIN_TYPE_TOWN },
+    [25] = { n = "Old Deathwart's Pond", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [26] = { n = "Salvitto Estate", t = DESTINATIONS_PIN_TYPE_AOI },
+    [27] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [28] = { n = "Hutan-Tzel", t = DESTINATIONS_PIN_TYPE_TOWN },
+    [29] = { n = "Doomvault Porcixid", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [30] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [31] = { n = "Gideon", t = DESTINATIONS_PIN_TYPE_CITY },
+    [32] = { n = "The Silent Halls", t = DESTINATIONS_PIN_TYPE_DUNGEON },
+    [33] = { n = "Glenbridge", t = DESTINATIONS_PIN_TYPE_RUIN },
+    [34] = { n = "Vunalk", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [35] = { n = "Xeemhok's Lagoon", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [36] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [37] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [38] = { n = "Trial: Rockgrove", t = DESTINATIONS_PIN_TYPE_RAIDDUNGEON },
+    [39] = { n = "Ojel-Bak", t = DESTINATIONS_PIN_TYPE_AOI },
+    [40] = { n = "Stonewastes", t = DESTINATIONS_PIN_TYPE_TOWN },
+    [41] = { n = "The Shattered Xanmeer", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [42] = { n = "Xi-Tsei", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [43] = { n = "Leyawiin Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [44] = { n = "Gideon Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [45] = { n = "Borderwatch Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [46] = { n = "Fort Redmane Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [47] = { n = "Blueblood Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [48] = { n = "Stonewastes Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [49] = { n = "Leyawiin Outskirts Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [50] = { n = "Pentric Run", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_PENTRIC_RUN },
+    [51] = { n = "Sariellen's Sword", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_SARIELLENS_SWORD },
+    [52] = { n = "Withered Root", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_WITHERED_ROOT },
+    [53] = { n = "Pilgrim's Rest", t = DESTINATIONS_PIN_TYPE_HOUSING },
+    [54] = { n = "Water's Edge", t = DESTINATIONS_PIN_TYPE_HOUSING },
+    [55] = { n = "Pantherfang Chapel", t = DESTINATIONS_PIN_TYPE_HOUSING },
+    ["zoneName"] = "Blackwood",
   },
 }

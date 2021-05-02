@@ -109,7 +109,7 @@ end
 -------------------------------------------------
 
 local ADDON_AUTHOR                              = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION                             = "28.5"
+local ADDON_VERSION                             = "28.6"
 local ADDON_WEBSITE                             = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP                                       = LibMapPins
@@ -1482,6 +1482,7 @@ local ZoneIDsToFileNames                        = {
   [267] = "eyevea_base_0",
   [1207] = "reach_base_0",
   [1208] = "u28_blackreach_base_0",
+  [1261] = "blackwood_base_0",
 }
 
 local achTypes                                  = {
