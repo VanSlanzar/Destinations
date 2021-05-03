@@ -281,9 +281,9 @@ Destinations.SetsStore                          = {
   [CRAFTINGSET_AETHERIAL_ASCENSION] = { 168782, 9 }, -- 62
 
   -- Blackwood
-  [CRAFTINGSET_PENTRIC_RUN] = { 168782, 9 }, -- 63
-  [CRAFTINGSET_WITHERED_ROOT] = { 168782, 9 }, -- 64
-  [CRAFTINGSET_SARIELLENS_SWORD] = { 168782, 9 }, -- 65
+  [CRAFTINGSET_PENTRIC_RUN] = { 173203, 5 }, -- 63
+  [CRAFTINGSET_WITHERED_ROOT] = { 172455, 3 }, -- 64
+  [CRAFTINGSET_SARIELLENS_SWORD] = { 172829, 7 }, -- 65
 }
 
 Destinations.KeepsStore                         = {
@@ -400,6 +400,19 @@ Destinations.KeepsStore                         = {
 }
 
 Destinations.POIsStore                          = {
+---------------------------------
+--- Done                      ---
+---------------------------------
+  [1027] = -- Artaeum
+  {
+    [1] = { n = "Artaeum Craftworks", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_SLOADS_SEMBLANCE },
+    [2] = { n = "Ceporah Tower", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [3] = { n = "Artaeum Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [4] = { n = "Traitor's Vault", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [5] = { n = "Colosseum of the Old Ways", t = DESTINATIONS_PIN_TYPE_AOI },
+    [6] = { n = "Grand Psijic Villa", t = DESTINATIONS_PIN_TYPE_HOUSING },
+    ["zoneName"] = "Artaeum",
+  },
   [3] = --Glenumbra
   {
     [1] = { n = "Red Rook Camp", t = DESTINATIONS_PIN_TYPE_CAMP },
@@ -822,7 +835,7 @@ Destinations.POIsStore                          = {
     [8] = { n = "Elinhir", t = DESTINATIONS_PIN_TYPE_GROUPLIGHTHOUSE },
     [9] = { n = "Spellscar", t = DESTINATIONS_PIN_TYPE_GROUPCAVE },
     [10] = { n = "Dragonstar", t = DESTINATIONS_PIN_TYPE_TOWN },
-    [11] = { n = "Dragonstar Arena", t = DESTINATIONS_PIN_TYPE_GATE },
+    [11] = { n = "Dragonstar Arena", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE },
     [12] = { n = "Atelier of the Twice-Born Star", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_TWICE_BORN_STAR },
     [13] = { n = "Molavar", t = DESTINATIONS_PIN_TYPE_DELVE },
     [14] = { n = "Rkundzelft", t = DESTINATIONS_PIN_TYPE_GROUPDELVE },
@@ -867,7 +880,7 @@ Destinations.POIsStore                          = {
     [53] = { n = "Anka-Ra's Avowal", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
     [54] = { n = "Anka-Ra's Crucible", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
     [55] = { n = "Anka-Ra's Mettle", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
-    [56] = { n = "Fortified Nirncrux Mine", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [56] = { n = "Defunct Nirncrux Mine", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
     [57] = { n = "Overrun Nirncrux Mine", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
     [58] = { n = "Neglected Nirncrux Mine", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
     [59] = { n = "Secluded Nirncrux Mine", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
@@ -1184,7 +1197,7 @@ Destinations.POIsStore                          = {
     [9] = { n = "Humblemud", t = DESTINATIONS_PIN_TYPE_HOUSING },
     ["zoneName"] = "Bal Foyen",
   },
-  [823] = --Goald Coast
+  [823] = --Gold Coast
   {
     [1] = { n = "Anvil Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     [2] = { n = "Kvatch Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
@@ -1233,7 +1246,7 @@ Destinations.POIsStore                          = {
     [14] = { n = "Moonlit Maw", t = DESTINATIONS_PIN_TYPE_CAVE },
     [15] = { n = "Nurin Farm", t = DESTINATIONS_PIN_TYPE_FARM },
     [16] = { n = "Vanne Farm", t = DESTINATIONS_PIN_TYPE_FARM },
-    [17] = { n = "Alcaire Castle", t = DESTINATIONS_PIN_TYPE_KEEP },
+    [17] = { n = "Alcaire Keep", t = DESTINATIONS_PIN_TYPE_KEEP },
     [18] = { n = "Koeglin Village", t = DESTINATIONS_PIN_TYPE_TOWN },
     [19] = { n = "Windridge Cave", t = DESTINATIONS_PIN_TYPE_CAVE },
     [20] = { n = "Dungeon: Wayrest Sewers I", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE },
@@ -1573,6 +1586,9 @@ Destinations.POIsStore                          = {
     [64] = { n = "Dungeon: The Cauldron", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE },
     ["zoneName"] = "Deshaan",
   },
+---------------------------------
+--- Not Done                  ---
+---------------------------------
   [58] = --Malabal Tor
   {
     [1] = { n = "Ouze", t = DESTINATIONS_PIN_TYPE_RUIN },
@@ -2162,16 +2178,6 @@ Destinations.POIsStore                          = {
     [61] = { n = "Colossal Aldmeri Grotto", t = DESTINATIONS_PIN_TYPE_HOUSING }, --
     ["zoneName"] = "Summerset",
   },
-  [1027] = -- Artaeum
-  {
-    [1] = { n = "Artaeum Craftworks", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_SLOADS_SEMBLANCE }, --
-    [2] = { n = "Ceporah Tower", t = DESTINATIONS_PIN_TYPE_TOWER }, --
-    [3] = { n = "Artaeum Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE }, --
-    [4] = { n = "Traitor's Vault", t = DESTINATIONS_PIN_TYPE_DELVE }, --
-    [5] = { n = "Colosseum of the Old Ways", t = DESTINATIONS_PIN_TYPE_AOI }, --
-    [6] = { n = "Grand Psijic Villa", t = DESTINATIONS_PIN_TYPE_HOUSING },
-    ["zoneName"] = "Artaeum",
-  },
   [726] = -- Murkmire
   {
     [1] = { n = "Lilmoth", t = DESTINATIONS_PIN_TYPE_CITY },
@@ -2452,7 +2458,7 @@ Destinations.POIsStore                          = {
     [13] = { n = "Mistgloom Thicket", t = DESTINATIONS_PIN_TYPE_AOI },
     ["zoneName"] = "Blackreach: Arkthzand Cavern",
   },
-  [1261] = 
+  [1261] =
   {
     [1] = { n = "Borderwatch", t = DESTINATIONS_PIN_TYPE_KEEP },
     [2] = { n = "White Stallion Inn", t = DESTINATIONS_PIN_TYPE_AOI },
