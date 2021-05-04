@@ -4911,7 +4911,7 @@ SLASH_COMMANDS["/dgap"] = function()
   --Get All POI's (to saved vars)
   Dest:dm("Info", "Saving all POI's...")
   local zoneIndex    = GetCurrentMapZoneIndex()
-  local currentMapId = GetCurrentMapId()
+  local currentMapId = GetZoneId(zoneIndex)
   if Destinations_Settings.pointsOfIntrest == nil then Destinations_Settings.pointsOfIntrest = {} end
   if Destinations_Settings.pointsOfIntrest[currentMapId] == nil then Destinations_Settings.pointsOfIntrest[currentMapId] = {} end
   Destinations_Settings.pointsOfIntrest[currentMapId] = {}
