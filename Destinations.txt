@@ -9,7 +9,7 @@
 ## AddOnVersion: 286
 ## Version: 28.6
 ## Author: Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir
-## APIVersion: 100033 100035
+## APIVersion: 100034 100035
 ## SavedVariables: Destinations_Settings
 ## DependsOn: LibAddonMenu-2.0>=32 LibMapPins-1.0>=10030 CustomCompassPins>=31 LibQuestData>=223
 ## OptionalDependsOn: LibDebugLogger DebugLogViewer
