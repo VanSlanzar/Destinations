@@ -1444,7 +1444,7 @@ Destinations.ChampionTableStore = {
   ["u30_bloodruncave_base_0"] = {
     { 0.2903759479, 0.6479699015, 2971, 5 }, -- Bloodrun Cave
   },
-  ["vunalk2_base_0.dds"] = {
+  ["vunalk2_base_0"] = {
     { 0.3007254302, 0.4141569435, 2971, 6 }, -- Vunalk
   },
   ["zhmain_base_0"] = {	--Zenithar's Abbey
@@ -1496,3 +1496,5 @@ Destinations.ChampionTableStore["arpeniah_base_0"]  = Destinations.ChampionTable
 Destinations.ChampionTableStore["arpeniah2_base_0"]  = Destinations.ChampionTableStore["arpenial_base_0"]
 Destinations.ChampionTableStore["arpenial3_base_0"]  = Destinations.ChampionTableStore["arpenial_base_0"]
 
+-- vunalk
+Destinations.ChampionTableStore["vunalk1_base_0"]  = Destinations.ChampionTableStore["vunalk2_base_0"]

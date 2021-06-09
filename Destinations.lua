@@ -109,7 +109,7 @@ end
 -------------------------------------------------
 
 local ADDON_AUTHOR                              = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION                             = "28.7"
+local ADDON_VERSION                             = "28.8"
 local ADDON_WEBSITE                             = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP                                       = LibMapPins
@@ -1057,7 +1057,7 @@ local pinTextures                               = {
       [6] = "Destinations/pins/old/Ayleid_Well_colored_Red.dds",
     },
     Deadlands = {
-      [1] = "/esoui/art/icons/achievement_u30_obliviongate.dds",
+      [1] = "Destinations/pins/deadlands.dds",
     },
     dwemer = {
       [1] = "Destinations/pins/dummy.dds",

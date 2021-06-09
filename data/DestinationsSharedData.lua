@@ -3146,5 +3146,7 @@ Destinations.ACHDataStore = {
   ["vunalk2_base_0"] = {
     { 0.7836887240, 0.2897340059, 20, 999999, 1, "X" }, -- Sharlikran
   },
-  
 }
+
+-- vunalk
+Destinations.ACHDataStore["vunalk1_base_0"]  = Destinations.ACHDataStore["vunalk2_base_0"]
