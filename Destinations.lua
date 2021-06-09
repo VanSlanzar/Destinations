@@ -109,7 +109,7 @@ end
 -------------------------------------------------
 
 local ADDON_AUTHOR                              = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION                             = "28.6"
+local ADDON_VERSION                             = "28.7"
 local ADDON_WEBSITE                             = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP                                       = LibMapPins
@@ -174,6 +174,7 @@ local DESTINATIONS_PIN_TYPE_GROUPAREAOFINTEREST = 48
 local DESTINATIONS_PIN_TYPE_HOUSING             = 49
 local DESTINATIONS_PIN_TYPE_DWEMERGEAR          = 50
 local DESTINATIONS_PIN_TYPE_NORDBOAT            = 51
+local DESTINATIONS_PIN_TYPE_DEADLANDS           = 52
 local DESTINATIONS_PIN_TYPE_UNKNOWN             = 99
 
 -- quest value constants
@@ -289,6 +290,7 @@ local DPINS                                     = {
 
   AYLEID = "DEST_PinSet_Ayleid",
   DWEMER = "DEST_PinSet_Dwemer",
+  DEADLANDS = "DEST_PinSet_Deadlands",
   MISC_COMPASS = "DEST_Compass_Misc",
 
   WWVAMP = "DEST_PinSet_WWVamp",
@@ -580,6 +582,15 @@ local defaults                                  = {
       tint = { 1, 1, 1, 1 },
       textcolor = { 1, 1, 1 },
     },
+    pinTextureDeadlands = {
+      type = 1,
+      size = 26,
+      level = 30,
+      maxDistance = 0.05,
+      texture = "",
+      tint = { 1, 1, 1, 1 },
+      textcolor = { 1, 1, 1 },
+    },
     pinTextureDwemer = {
       type = 7,
       size = 26,
@@ -776,8 +787,9 @@ local defaults                                  = {
 
     [DPINS.ACHIEVEMENTS_COMPASS] = true,
 
-    [DPINS.DWEMER] = false,
     [DPINS.AYLEID] = false,
+    [DPINS.DWEMER] = false,
+    [DPINS.DEADLANDS] = false,
     [DPINS.MISC_COMPASS] = true,
 
     [DPINS.WWVAMP] = false,
@@ -1036,13 +1048,16 @@ local pinTextures                               = {
       [4] = "Destinations/pins/old/Achievement_Cutpurse_colored-complete.dds",
       [5] = "Destinations/pins/old/Achievement_Cutpurse_colored-complete.dds",
     },
-    ayleid = {
+    Ayleid = {
       [1] = "Destinations/pins/Ayleid_Well_1.dds",
       [2] = "Destinations/pins/Ayleid_Well_1_inverted.dds",
       [3] = "Destinations/pins/Ayleid_Well_2.dds",
       [4] = "Destinations/pins/A_Global_Asghaard-aura.dds",
       [5] = "Destinations/pins/old/Ayleid_Well_colored.dds",
       [6] = "Destinations/pins/old/Ayleid_Well_colored_Red.dds",
+    },
+    Deadlands = {
+      [1] = "/esoui/art/icons/achievement_u30_obliviongate.dds",
     },
     dwemer = {
       [1] = "Destinations/pins/dummy.dds",
@@ -1244,6 +1259,9 @@ local pinTextures                               = {
       "Old Colored Well",
       "Old Red Circled Well",
     },
+    Deadlands = {
+      "Entrance",
+    },
     Dwemer = {
       defaults.miscColorCodes.settingsTextOnlyText:Colorize(GetString(GLOBAL_SETTINGS_SELECT_TEXT_ONLY)),
       "Helmet",
@@ -1312,6 +1330,7 @@ local pinTextures                               = {
 local poiTypes                                  = {
   [DESTINATIONS_PIN_TYPE_AOI] = GetString(POITYPE_AOI),
   [DESTINATIONS_PIN_TYPE_AYLEIDRUIN] = GetString(POITYPE_QUESTHUB),
+  [DESTINATIONS_PIN_TYPE_DEADLANDS] = GetString(POITYPE_PUBLICDUNGEON),
   [DESTINATIONS_PIN_TYPE_BATTLEFIELD] = GetString(POITYPE_QUESTHUB),
   [DESTINATIONS_PIN_TYPE_CAMP] = GetString(POITYPE_QUESTHUB),
   [DESTINATIONS_PIN_TYPE_CAVE] = GetString(POITYPE_QUESTHUB),
@@ -1507,6 +1526,7 @@ local achTypes                                  = {
   [22] = GetString(POITYPE_VAMPIRE_ALTAR),
   [23] = GetString(POITYPE_DWEMER_RUIN),
   [24] = GetString(POITYPE_WEREWOLF_SHRINE),
+  [25] = GetString(POITYPE_DEADLANDS_ENTRANCE),
   [30] = GetString(POITYPE_COLLECTIBLE),
   [31] = GetString(POITYPE_FISH),
   [50] = GetString(POITYPE_UNDETERMINED),
@@ -2241,6 +2261,23 @@ local function AyleidpinTypeCallback()
   end
 end
 --------------------Misc POI--------------------
+local function DeadlandspinTypeCallback()
+  -- DESTINATIONS_PIN_TYPE_DEADLANDS
+  if GetMapType() >= MAPTYPE_WORLD then return end
+  drtv.pinName = DPINS.DEADLANDS
+  sharedAchievementsPinData()
+  if not mapData then return end
+  for _, pinData in ipairs(mapData) do
+    drtv.pinType     = pinData[AchIndex.TYPE]
+    drtv.pinTypeName = GetAchTypeName(drtv.pinType)
+    if drtv.pinType == 25 then
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureDeadlands.textcolor)):Colorize(zo_strformat("<<1>>",
+        drtv.pinTypeName)) }
+      LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
+    end
+  end
+end
+--------------------Misc POI--------------------
 local function DwemerRuinpinTypeCallback()
   if GetMapType() >= MAPTYPE_WORLD then return end
   drtv.pinName = DPINS.DWEMER
@@ -2250,7 +2287,7 @@ local function DwemerRuinpinTypeCallback()
     drtv.pinType     = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 23 then
-      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.textcolor)):Colorize(zo_strformat("<<1>>",
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureDwemer.textcolor)):Colorize(zo_strformat("<<1>>",
         drtv.pinTypeName)) }
       LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
     end
@@ -2266,7 +2303,7 @@ local function WWVamppinTypeCallback()
     drtv.pinType     = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 21 then
-      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.textcolor)):Colorize(zo_strformat("<<1>>",
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureWWVamp.textcolor)):Colorize(zo_strformat("<<1>>",
         drtv.pinTypeName)) }
       LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
     end
@@ -2282,7 +2319,7 @@ local function VampireAltarpinTypeCallback()
     drtv.pinType     = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 22 then
-      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.textcolor)):Colorize(zo_strformat("<<1>>",
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureVampAltar.textcolor)):Colorize(zo_strformat("<<1>>",
         drtv.pinTypeName)) }
       LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
     end
@@ -2298,7 +2335,7 @@ local function WerewolfShrinepinTypeCallback()
     drtv.pinType     = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 24 then
-      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.textcolor)):Colorize(zo_strformat("<<1>>",
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureWWShrine.textcolor)):Colorize(zo_strformat("<<1>>",
         drtv.pinTypeName)) }
       LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
     end
@@ -3677,6 +3714,9 @@ local function AddMiscCompassPins()
     if drtv.pinType == 20 then
       if not LMP:IsEnabled(DPINS.AYLEID) or not DestinationsCSSV.filters[DPINS.MISC_COMPASS] then return end
       COMPASS_PINS.pinManager:CreatePin(DPINS.AYLEID, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
+    elseif drtv.pinType == 25 then
+      if not LMP:IsEnabled(DPINS.DEADLANDS) or not DestinationsCSSV.filters[DPINS.MISC_COMPASS] then return end
+      COMPASS_PINS.pinManager:CreatePin(DPINS.DEADLANDS, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
     elseif drtv.pinType == 21 then
       if not LMP:IsEnabled(DPINS.WWVAMP) or not DestinationsCSSV.filters[DPINS.VWW_COMPASS] then return end
       COMPASS_PINS.pinManager:CreatePin(DPINS.WWVAMP, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
@@ -5799,12 +5839,27 @@ local function SetPinLayouts()
   local pinLayout_Ayleid              = {
     maxDistance = DestinationsSV.pins.pinTextureAyleid.maxDistance,
     level = DestinationsSV.pins.pinTextureAyleid.level,
-    texture = pinTextures.paths.ayleid[DestinationsSV.pins.pinTextureAyleid.type],
+    texture = pinTextures.paths.Ayleid[DestinationsSV.pins.pinTextureAyleid.type],
     size = DestinationsSV.pins.pinTextureAyleid.size,
     tint = ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.tint)),
     additionalLayout = {
       function(pin)
         pin:GetNamedChild("Background"):SetColor(unpack(DestinationsSV.pins.pinTextureAyleid.tint))
+      end,
+      function(pin)
+        pin:GetNamedChild("Background"):SetColor(1, 1, 1, 1)
+      end,
+    },
+  }
+  local pinLayout_Deadlands              = {
+    maxDistance = DestinationsSV.pins.pinTextureDeadlands.maxDistance,
+    level = DestinationsSV.pins.pinTextureDeadlands.level,
+    texture = pinTextures.paths.Deadlands[DestinationsSV.pins.pinTextureDeadlands.type],
+    size = DestinationsSV.pins.pinTextureDeadlands.size,
+    tint = ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureDeadlands.tint)),
+    additionalLayout = {
+      function(pin)
+        pin:GetNamedChild("Background"):SetColor(unpack(DestinationsSV.pins.pinTextureDeadlands.tint))
       end,
       function(pin)
         pin:GetNamedChild("Background"):SetColor(1, 1, 1, 1)
@@ -6003,6 +6058,7 @@ local function SetPinLayouts()
   LMP:AddPinType(DPINS.FISHINGDONE, FishDonepinTypeCallback, nil, pinLayout_FishDone, pinTooltipCreator)
 
   LMP:AddPinType(DPINS.AYLEID, AyleidpinTypeCallback, nil, pinLayout_Ayleid, pinTooltipCreator)
+  LMP:AddPinType(DPINS.DEADLANDS, DeadlandspinTypeCallback, nil, pinLayout_Deadlands, pinTooltipCreator)
   LMP:AddPinType(DPINS.WWVAMP, WWVamppinTypeCallback, nil, pinLayout_WWVamp, pinTooltipCreator)
 
   LMP:AddPinType(DPINS.VAMPIRE_ALTAR, VampireAltarpinTypeCallback, nil, pinLayout_VampireAltar, pinTooltipCreator)
@@ -6139,16 +6195,16 @@ local function SetPinLayouts()
   if DestinationsCSSV.settings.MapFiltersMisc then
     LMP:AddPinFilter(DPINS.AYLEID, defaults.miscColorCodes.mapFilterTextDone1:Colorize(GetString(DEST_FILTER_AYLEID)),
       nil, DestinationsCSSV.filters)
+    LMP:AddPinFilter(DPINS.DEADLANDS, defaults.miscColorCodes.mapFilterTextDone1:Colorize(GetString(DEST_FILTER_DEADLANDS_ENTRANCE)),
+      nil, DestinationsCSSV.filters)
     LMP:AddPinFilter(DPINS.WWVAMP, defaults.miscColorCodes.mapFilterTextUndone1:Colorize(GetString(DEST_FILTER_WWVAMP)),
       nil, DestinationsCSSV.filters)
-
     LMP:AddPinFilter(DPINS.VAMPIRE_ALTAR,
       defaults.miscColorCodes.mapFilterTextDone2:Colorize(GetString(DEST_FILTER_VAMPIRE_ALTAR)), nil,
       DestinationsCSSV.filters)
     LMP:AddPinFilter(DPINS.WEREWOLF_SHRINE,
       defaults.miscColorCodes.mapFilterTextUndone2:Colorize(GetString(DEST_FILTER_WEREWOLF_SHRINE)), nil,
       DestinationsCSSV.filters)
-
     LMP:AddPinFilter(DPINS.DWEMER, defaults.miscColorCodes.mapFilterTextDone1:Colorize(GetString(DEST_FILTER_DWEMER)),
       nil, DestinationsCSSV.filters)
   end
@@ -6204,6 +6260,7 @@ local function SetPinLayouts()
   COMPASS_PINS:AddCustomPin(DPINS.FISHINGDONE, CollectibleFishCompassPins, pinLayout_FishDone)
 
   COMPASS_PINS:AddCustomPin(DPINS.AYLEID, AddMiscCompassPins, pinLayout_Ayleid)
+  COMPASS_PINS:AddCustomPin(DPINS.DEADLANDS, AddMiscCompassPins, pinLayout_Deadlands)
   COMPASS_PINS:AddCustomPin(DPINS.WWVAMP, AddMiscCompassPins, pinLayout_WWVamp)
   COMPASS_PINS:AddCustomPin(DPINS.VAMPIRE_ALTAR, AddMiscCompassPins, pinLayout_VampireAltar)
   COMPASS_PINS:AddCustomPin(DPINS.WEREWOLF_SHRINE, AddMiscCompassPins, pinLayout_WereWolfShrine)
@@ -6395,7 +6452,7 @@ local function InitSettings()
   local unknownPoiPreview, otherPreview, otherPreviewDone, MaiqPreview, MaiqPreviewDone, PeacemakerPreview, PeacemakerPreviewDone, NosediverPreview, NosediverPreviewDone
   local EarthlyPosPreview, EarthlyPosPreviewDone, OnMePreview, OnMePreviewDone, BrawlPreview, BrawlPreviewDone, PatronPreview, PatronPreviewDone
   local WrothgarJumperPreview, WrothgarJumperPreviewDone, RelicHunterPreview, RelicHunterPreviewDone, BreakingPreview, BreakingPreviewDone, CutpursePreview, CutpursePreviewDone
-  local ChampionPreview, ChampionPreviewDone, AyleidPreview, DwemerPreview, WWVampPreview, VampAltarPreview, WWShrinePreview
+  local ChampionPreview, ChampionPreviewDone, AyleidPreview, DeadlandsPreview, DwemerPreview, WWVampPreview, VampAltarPreview, WWShrinePreview
   local QuestsUndonePreview, QuestsInProgressPreview, QuestsDonePreview, CollectiblePreview, CollectibleDonePreview, FishPreview, FishDonePreview
 
   CreateIcons         = function(panel)
@@ -6586,9 +6643,16 @@ local function InitSettings()
 
       AyleidPreview = WINDOW_MANAGER:CreateControl(nil, previewpinTextureAyleid, CT_TEXTURE)
       AyleidPreview:SetAnchor(RIGHT, previewpinTextureAyleid.dropdown:GetControl(), LEFT, -10, 0)
-      AyleidPreview:SetTexture(pinTextures.paths.ayleid[DestinationsSV.pins.pinTextureAyleid.type])
+      AyleidPreview:SetTexture(pinTextures.paths.Ayleid[DestinationsSV.pins.pinTextureAyleid.type])
       AyleidPreview:SetDimensions(DestinationsSV.pins.pinTextureAyleid.size, DestinationsSV.pins.pinTextureAyleid.size)
       AyleidPreview:SetColor(unpack(DestinationsSV.pins.pinTextureAyleid.tint))
+
+      -- Deadlands
+      DeadlandsPreview = WINDOW_MANAGER:CreateControl(nil, previewpinTextureDeadlands, CT_TEXTURE)
+      DeadlandsPreview:SetAnchor(RIGHT, previewpinTextureDeadlands.dropdown:GetControl(), LEFT, -10, 0)
+      DeadlandsPreview:SetTexture(pinTextures.paths.Deadlands[DestinationsSV.pins.pinTextureDeadlands.type])
+      DeadlandsPreview:SetDimensions(DestinationsSV.pins.pinTextureDeadlands.size, DestinationsSV.pins.pinTextureDeadlands.size)
+      DeadlandsPreview:SetColor(unpack(DestinationsSV.pins.pinTextureDeadlands.tint))
 
       DwemerPreview = WINDOW_MANAGER:CreateControl(nil, previewpinTextureDwemer, CT_TEXTURE)
       DwemerPreview:SetAnchor(RIGHT, previewpinTextureDwemer.dropdown:GetControl(), LEFT, -10, 0)
@@ -8158,8 +8222,8 @@ local function InitSettings()
           for index, name in ipairs(pinTextures.lists.Ayleid) do
             if name == selected then
               DestinationsSV.pins.pinTextureAyleid.type = index
-              LMP:SetLayoutKey(DPINS.AYLEID, "texture", pinTextures.paths.ayleid[index])
-              AyleidPreview:SetTexture(pinTextures.paths.ayleid[index])
+              LMP:SetLayoutKey(DPINS.AYLEID, "texture", pinTextures.paths.Ayleid[index])
+              AyleidPreview:SetTexture(pinTextures.paths.Ayleid[index])
               RedrawAllPins(DPINS.AYLEID)
               break
             end
@@ -8209,6 +8273,85 @@ local function InitSettings()
         disabled = function() return not DestinationsCSSV.filters[DPINS.AYLEID] end,
         default = { r = defaults.pins.pinTextureAyleid.textcolor[1], g = defaults.pins.pinTextureAyleid.textcolor[2], b = defaults.pins.pinTextureAyleid.textcolor[3] }
       })
+---- Deadlands Begin
+      table.insert(submenu, { -- Header
+        type = "header",
+        name = defaults.miscColorCodes.settingsTextAchHeaders:Colorize(GetString(DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER)),
+      })
+      table.insert(submenu, { -- Deadlands pin toggle
+        type = "checkbox",
+        width = "half",
+        name = defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE)) .. " " .. defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_PER_CHAR)),
+        tooltip = GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE_TT) .. " " .. defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_PER_CHAR_TOGGLE_TT)),
+        getFunc = function() return DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        setFunc = function(state)
+          TogglePins(DPINS.DEADLANDS, state)
+          RedrawAllPins(DPINS.DEADLANDS)
+        end,
+        default = defaults.filters[DPINS.DEADLANDS],
+      })
+      table.insert(submenu, { -- Deadlands pintype
+        type = "dropdown",
+        width = "half",
+        reference = "previewpinTextureDeadlands",
+        choices = pinTextures.lists.Deadlands,
+        getFunc = function() return pinTextures.lists.Deadlands[DestinationsSV.pins.pinTextureDeadlands.type] end,
+        setFunc = function(selected)
+          for index, name in ipairs(pinTextures.lists.Deadlands) do
+            if name == selected then
+              DestinationsSV.pins.pinTextureDeadlands.type = index
+              LMP:SetLayoutKey(DPINS.DEADLANDS, "texture", pinTextures.paths.Deadlands[index])
+              DeadlandsPreview:SetTexture(pinTextures.paths.Deadlands[index])
+              RedrawAllPins(DPINS.DEADLANDS)
+              break
+            end
+          end
+        end,
+        disabled = function() return not DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        default = pinTextures.lists.Deadlands[defaults.pins.pinTextureDeadlands.type],
+      })
+      table.insert(submenu, { -- Deadlands pin size
+        type = "slider",
+        name = GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_SIZE),
+        min = 20,
+        max = 70,
+        getFunc = function() return DestinationsSV.pins.pinTextureDeadlands.size end,
+        setFunc = function(size)
+          DestinationsSV.pins.pinTextureDeadlands.size = size
+          DeadlandsPreview:SetDimensions(size, size)
+          LMP:SetLayoutKey(DPINS.DEADLANDS, "size", size)
+          RedrawAllPins(DPINS.DEADLANDS)
+        end,
+        disabled = function() return not DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        default = defaults.pins.pinTextureDeadlands.size
+      })
+      table.insert(submenu, { -- Deadlands pin color
+        type = "colorpicker",
+        name = GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR),
+        tooltip = GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT),
+        getFunc = function() return unpack(DestinationsSV.pins.pinTextureDeadlands.tint) end,
+        setFunc = function(r, g, b, a)
+          DestinationsSV.pins.pinTextureDeadlands.tint = { r, g, b, a }
+          LMP:SetLayoutKey(DPINS.DEADLANDS, "tint", ZO_ColorDef:New(r, g, b, a))
+          DeadlandsPreview:SetColor(r, g, b, a)
+          RedrawAllPins(DPINS.DEADLANDS)
+        end,
+        disabled = function() return not DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        default = { r = defaults.pins.pinTextureDeadlands.tint[1], g = defaults.pins.pinTextureDeadlands.tint[2], b = defaults.pins.pinTextureDeadlands.tint[3], a = defaults.pins.pinTextureDeadlands.tint[4] }
+      })
+      table.insert(submenu, { -- Deadlands pin text color
+        type = "colorpicker",
+        name = GetString(DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR),
+        tooltip = GetString(DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT),
+        getFunc = function() return unpack(DestinationsSV.pins.pinTextureDeadlands.textcolor) end,
+        setFunc = function(r, g, b)
+          DestinationsSV.pins.pinTextureDeadlands.textcolor = { r, g, b }
+          LMP:RefreshPins(DPINS.DEADLANDS)
+        end,
+        disabled = function() return not DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        default = { r = defaults.pins.pinTextureDeadlands.textcolor[1], g = defaults.pins.pinTextureDeadlands.textcolor[2], b = defaults.pins.pinTextureDeadlands.textcolor[3] }
+      })
+---- Deadlands End
       table.insert(submenu, { -- Header
         type = "header",
         name = defaults.miscColorCodes.settingsTextAchHeaders:Colorize(GetString(DEST_SETTINGS_MISC_DWEMER_HEADER)),
@@ -8298,10 +8441,12 @@ local function InitSettings()
         setFunc = function(state)
           TogglePins(DPINS.MISC_COMPASS, state)
           RedrawCompassPinsOnly(DPINS.AYLEID)
+          RedrawCompassPinsOnly(DPINS.DEADLANDS)
           RedrawCompassPinsOnly(DPINS.DWEMER)
         end,
         disabled = function() return
         not DestinationsCSSV.filters[DPINS.AYLEID] and
+          not DestinationsCSSV.filters[DPINS.DEADLANDS] and
           not DestinationsCSSV.filters[DPINS.DWEMER]
         end,
         default = defaults.filters[DPINS.MISC_COMPASS],
@@ -8314,14 +8459,18 @@ local function InitSettings()
         getFunc = function() return DestinationsSV.pins.pinTextureAyleid.maxDistance * 1000 end,
         setFunc = function(maxDistance)
           DestinationsSV.pins.pinTextureAyleid.maxDistance  = maxDistance / 1000
+          DestinationsSV.pins.pinTextureDeadlands.maxDistance  = maxDistance / 1000
           DestinationsSV.pins.pinTextureDwemer.maxDistance  = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.AYLEID].maxDistance = maxDistance / 1000
+          COMPASS_PINS.pinLayouts[DPINS.DEADLANDS].maxDistance = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.DWEMER].maxDistance = maxDistance / 1000
           RedrawCompassPinsOnly(DPINS.AYLEID)
+          RedrawCompassPinsOnly(DPINS.DEADLANDS)
           RedrawCompassPinsOnly(DPINS.DWEMER)
         end,
         disabled = function() return
         (not DestinationsCSSV.filters[DPINS.AYLEID] and
+          not DestinationsCSSV.filters[DPINS.DEADLANDS] and
           not DestinationsCSSV.filters[DPINS.DWEMER]) or
           not DestinationsCSSV.filters[DPINS.MISC_COMPASS]
         end,
@@ -8336,15 +8485,19 @@ local function InitSettings()
         getFunc = function() return DestinationsSV.pins.pinTextureAyleid.level end,
         setFunc = function(level)
           DestinationsSV.pins.pinTextureAyleid.level = level
+          DestinationsSV.pins.pinTextureDeadlands.level = level
           DestinationsSV.pins.pinTextureDwemer.level = level
           LMP:SetLayoutKey(DPINS.AYLEID, "level", level)
+          LMP:SetLayoutKey(DPINS.DEADLANDS, "level", level)
           LMP:SetLayoutKey(DPINS.DWEMER, "level", level)
           RedrawAllPins(DPINS.AYLEID)
+          RedrawAllPins(DPINS.DEADLANDS)
           RedrawAllPins(DPINS.DWEMER)
         end,
         disabled = function() return
         not DestinationsCSSV.filters[DPINS.AYLEID] and
-          not DestinationsCSSV.filters[DPINS.DWEMER]
+          not DestinationsCSSV.filters[DPINS.DWEMER] and
+          not DestinationsCSSV.filters[DPINS.DEADLANDS]
         end,
         default = defaults.pins.pinTextureAyleid.level
       })

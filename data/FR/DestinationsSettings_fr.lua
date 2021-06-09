@@ -45,6 +45,7 @@ local strings = {
   DEST_FILTER_QUESTS_DONE = "(Dest) Quêtes achevées",
 
   DEST_FILTER_AYLEID = "(Dest) Puits ayléides",
+  DEST_FILTER_DEADLANDS_ENTRANCE = "(Dest) Deadlands Entrance",
   DEST_FILTER_DWEMER = "(Dest) Ruines Dwemer",
   DEST_FILTER_BORDER = "(Dest) Frontière de Raidelorn",
 
@@ -156,6 +157,7 @@ local strings = {
   DEST_SETTINGS_MISC_HEADER = "Emplacements des PI divers",
   DEST_SETTINGS_MISC_HEADER_TT = "Ce sous-menu couvre les Puits Ayléides, les ruines Dwemer et la Frontière de Raidelorn.",
   DEST_SETTINGS_MISC_AYLEID_WELL_HEADER = "Puits Ayléide",
+  DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER = "Deadlands Entrance",
   DEST_SETTINGS_MISC_DWEMER_HEADER = "Ruines Dwemer",
   DEST_SETTINGS_MISC_COMPASS_HEADER = "Paramètres Divers",
   DEST_SETTINGS_MISC_BORDER_HEADER = "Frontière de Raidelorn",
@@ -167,6 +169,16 @@ local strings = {
   DEST_SETTINGS_MISC_PIN_AYLEID_WELL_COLOR_TT = "Défini la couleur des icônes des Puits Ayléide",
   DEST_SETTINGS_MISC_PINTEXT_AYLEID_WELL_COLOR = "Couleur du texte des Puits Ayléide",
   DEST_SETTINGS_MISC_PINTEXT_AYLEID_WELL_COLOR_TT = "Défini la couleur du texte des Puits Ayléide",
+
+  -- Deadlands
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE = "Show Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE_TT = "This is for turning Deadlands Entrance on/off on the maps",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_SIZE = "Pin size for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR = "Pin color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the PIN color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR = "Pin text color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the pin TEXT on Deadlands Entrance",
+
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE = "Afficher les Ruines Dwemer",
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE_TT = "Cette option active l'affichage des Ruines Dwemer sur la carrte",
   DEST_SETTINGS_MISC_DWEMER_PIN_SIZE = "Taille de l'icône des Ruines Dwemer",
@@ -408,6 +420,7 @@ local strings = {
   POITYPE_CUTPURSE_ABOVE = zo_strformat(GetAchievementInfo(1383)),
 
   POITYPE_AYLEID_WELL = "Puit Ayléide",
+  POITYPE_DEADLANDS_ENTRANCE = "Deadlands Entrance",
   POITYPE_WWVAMP = "Loup-Garou/Vampire",
   POITYPE_VAMPIRE_ALTAR = "Autel Vampire",
   POITYPE_DWEMER_RUIN = "Ruine Dwemer",

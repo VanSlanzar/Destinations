@@ -44,6 +44,7 @@ local strings = {
   DEST_FILTER_QUESTS_DONE = "(Dest) Quests Done",
 
   DEST_FILTER_AYLEID = "(Dest) Ayleid Wells",
+  DEST_FILTER_DEADLANDS_ENTRANCE = "(Dest) Deadlands Entrance",
   DEST_FILTER_DWEMER = "(Dest) Dwemer Ruins",
   DEST_FILTER_BORDER = "(Dest) Craglorn Border Line",
 
@@ -154,6 +155,7 @@ local strings = {
   DEST_SETTINGS_MISC_HEADER = "Miscellaneous POI Positions",
   DEST_SETTINGS_MISC_HEADER_TT = "This submenu covers Ayleid Wells, Dwemer Ruins and the Craglorn Border line.",
   DEST_SETTINGS_MISC_AYLEID_WELL_HEADER = "Ayleid Wells",
+  DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER = "Deadlands Entrance",
   DEST_SETTINGS_MISC_DWEMER_HEADER = "Dwemer Ruins",
   DEST_SETTINGS_MISC_COMPASS_HEADER = "Misc Settings",
   DEST_SETTINGS_MISC_BORDER_HEADER = "Craglorn Border",
@@ -165,6 +167,16 @@ local strings = {
   DEST_SETTINGS_MISC_PIN_AYLEID_WELL_COLOR_TT = "Affects the PIN color for Ayleid Wells",
   DEST_SETTINGS_MISC_PINTEXT_AYLEID_WELL_COLOR = "Pin text color for Ayleid Wells",
   DEST_SETTINGS_MISC_PINTEXT_AYLEID_WELL_COLOR_TT = "Affects the pin TEXT on Ayleid Wells",
+
+  -- Deadlands
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE = "Show Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE_TT = "This is for turning Deadlands Entrance on/off on the maps",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_SIZE = "Pin size for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR = "Pin color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the PIN color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR = "Pin text color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the pin TEXT on Deadlands Entrance",
+
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE = "Show Dwemer Ruins",
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE_TT = "This is for turning Dwemer Ruins on/off on the maps",
   DEST_SETTINGS_MISC_DWEMER_PIN_SIZE = "Pin size for Dwemer Ruins",
@@ -404,6 +416,7 @@ local strings = {
   POITYPE_CUTPURSE_ABOVE = zo_strformat(GetAchievementInfo(1383)),
 
   POITYPE_AYLEID_WELL = "Ayleid Well",
+  POITYPE_DEADLANDS_ENTRANCE = "Deadlands Entrance",
   POITYPE_WWVAMP = "Werewolf/Vampire",
   POITYPE_VAMPIRE_ALTAR = "Vampire Altar",
   POITYPE_DWEMER_RUIN = "Dwemer Ruin",

@@ -45,6 +45,7 @@ local strings = {
   DEST_FILTER_QUESTS_DONE = "(Dest) クエスト 完了",
 
   DEST_FILTER_AYLEID = "(Dest) アイレイドの井戸",
+  DEST_FILTER_DEADLANDS_ENTRANCE = "(Dest) Deadlands Entrance",
   DEST_FILTER_DWEMER = "(Dest) ドゥエマーの遺跡",
   DEST_FILTER_BORDER = "(Dest) クラグローンの境界線",
 
@@ -156,6 +157,7 @@ local strings = {
   DEST_SETTINGS_MISC_HEADER = "その他の地点",
   DEST_SETTINGS_MISC_HEADER_TT = "このサブメニューは、アイレイドの井戸、ドゥエマーの遺跡、クラグローンの境界線をカバーします",
   DEST_SETTINGS_MISC_AYLEID_WELL_HEADER = "アイレイドの井戸",
+  DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER = "Deadlands Entrance",
   DEST_SETTINGS_MISC_DWEMER_HEADER = "ドゥエマーの遺跡",
   DEST_SETTINGS_MISC_COMPASS_HEADER = "いろいろな設定",
   DEST_SETTINGS_MISC_BORDER_HEADER = "クラグローンの境界線",
@@ -167,6 +169,16 @@ local strings = {
   DEST_SETTINGS_MISC_PIN_AYLEID_WELL_COLOR_TT = "アイレイドの井戸のピンの色に影響する",
   DEST_SETTINGS_MISC_PINTEXT_AYLEID_WELL_COLOR = "アイレイドの井戸のピンのテキストの色",
   DEST_SETTINGS_MISC_PINTEXT_AYLEID_WELL_COLOR_TT = "アイレイドの井戸のピンのテキストに影響する",
+
+  -- Deadlands
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE = "Show Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE_TT = "This is for turning Deadlands Entrance on/off on the maps",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_SIZE = "Pin size for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR = "Pin color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the PIN color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR = "Pin text color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the pin TEXT on Deadlands Entrance",
+
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE = "ドゥエマーの遺跡を表示する",
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE_TT = "地図上のドゥエマーの遺跡のon/offを調整します",
   DEST_SETTINGS_MISC_DWEMER_PIN_SIZE = "ドゥエマーの遺跡のピンのサイズ",
@@ -409,6 +421,7 @@ local strings = {
   POITYPE_CUTPURSE_ABOVE = zo_strformat(GetAchievementInfo(1383)),
 
   POITYPE_AYLEID_WELL = "アイレイドの井戸",
+  POITYPE_DEADLANDS_ENTRANCE = "Deadlands Entrance",
   POITYPE_WWVAMP = "ウェアウルフ/ヴァンパイア",
   POITYPE_VAMPIRE_ALTAR = "ヴァンパイアの変異",
   POITYPE_DWEMER_RUIN = "ドゥエマーの遺跡",

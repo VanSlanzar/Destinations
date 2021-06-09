@@ -44,6 +44,7 @@ local strings = {
   DEST_FILTER_QUESTS_DONE = "(Dest) Ukończone zadania",
 
   DEST_FILTER_AYLEID = "(Dest) Ayleidzkie studnie",
+  DEST_FILTER_DEADLANDS_ENTRANCE = "(Dest) Deadlands Entrance",
   DEST_FILTER_DWEMER = "(Dest) Dwemerowe ruiny",
   DEST_FILTER_BORDER = "(Dest) Craglorn Border Line",
 
@@ -151,6 +152,7 @@ local strings = {
   DEST_SETTINGS_MISC_HEADER = "Pozycja punktów Różności",
   DEST_SETTINGS_MISC_HEADER_TT = "To podmenu obejmuje Ayleidzką studnie, Dwemerowe ruiny i linię granicy Craglorn.",
   DEST_SETTINGS_MISC_AYLEID_WELL_HEADER = "Ayleidzka studnia",
+  DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER = "Deadlands Entrance",
   DEST_SETTINGS_MISC_DWEMER_HEADER = "Dwemerowe ruiny",
   DEST_SETTINGS_MISC_COMPASS_HEADER = "Różne ustawienia",
   DEST_SETTINGS_MISC_BORDER_HEADER = "Granica Craglorn",
@@ -162,6 +164,16 @@ local strings = {
   DEST_SETTINGS_MISC_PIN_AYLEID_WELL_COLOR_TT = "Wpływa na kolor punktów Ayleidzkich Studni",
   DEST_SETTINGS_MISC_PINTEXT_AYLEID_WELL_COLOR = "Kolor tekstu punktów Ayleidzkich Studni",
   DEST_SETTINGS_MISC_PINTEXT_AYLEID_WELL_COLOR_TT = "Wpływa na TEKST punktów Ayleidzkich Studni",
+
+  -- Deadlands
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE = "Show Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE_TT = "This is for turning Deadlands Entrance on/off on the maps",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_SIZE = "Pin size for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR = "Pin color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the PIN color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR = "Pin text color for Deadlands Entrance",
+  DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the pin TEXT on Deadlands Entrance",
+
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE = "Pokaż Dwemerowe ruiny",
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE_TT = "Służy do włączenia i wyłączenia Dwemerowych ruin na mapie",
   DEST_SETTINGS_MISC_DWEMER_PIN_SIZE = "Wielkość punktów Dwemerowych ruin",
@@ -399,6 +411,7 @@ local strings = {
   POITYPE_CUTPURSE_ABOVE = zo_strformat(GetAchievementInfo(1383)),
 
   POITYPE_AYLEID_WELL = "Ayleidzka studnia",
+  POITYPE_DEADLANDS_ENTRANCE = "Deadlands Entrance",
   POITYPE_WWVAMP = "Wilkołaki/Wampiry",
   POITYPE_VAMPIRE_ALTAR = "Wampirzy Ołtarz",
   POITYPE_DWEMER_RUIN = "Dwemerowe ruiny",
