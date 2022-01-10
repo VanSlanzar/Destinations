@@ -1608,7 +1608,7 @@ Destinations.POIsStore                          = {
     [4] = { n = "Velyn Harbor Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     [5] = { n = "Vulkwasten Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     [6] = { n = "Abamath Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
-    [7] = { n = "Wilding Vale Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [7] = { n = "Wilding Run Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     [8] = { n = "Baandari Post Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     [9] = { n = "Bloodtoil Valley Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     [10] = { n = "Valeguard Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
@@ -1663,6 +1663,7 @@ Destinations.POIsStore                          = {
     [59] = { n = "Four Quarry Islet", t = DESTINATIONS_PIN_TYPE_AOI },
     [60] = { n = "Black Vine Villa", t = DESTINATIONS_PIN_TYPE_HOUSING },
     [61] = { n = "Cyrodilic Jungle House", t = DESTINATIONS_PIN_TYPE_HOUSING },
+    [62] = { n = "Doomchar Plateau", t = DESTINATIONS_PIN_TYPE_HOUSING },
     ["zoneName"] = "Malabal Tor",
   },
   [347] = --Coldharbour
