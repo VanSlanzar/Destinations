@@ -1371,6 +1371,7 @@ Destinations.POIsStore                          = {
     [58] = { n = "Dungeon: Crypt of Hearts II", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE },
     [59] = { n = "Ravenhurst", t = DESTINATIONS_PIN_TYPE_HOUSING },
     [60] = { n = "Wraithhome", t = DESTINATIONS_PIN_TYPE_HOUSING },
+    [61] = { n = "Dungeon: Shipwright's Regret", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE },
     ["zoneName"] = "Rivenspire",
   },
   [181] = --Cyrodiil
@@ -1512,6 +1513,7 @@ Destinations.POIsStore                          = {
     [7] = { n = "Carzog's Demise", t = DESTINATIONS_PIN_TYPE_AYLEIDRUIN },
     [8] = { n = "Gilbard's Nook", t = DESTINATIONS_PIN_TYPE_AOI },
     [9] = { n = "Eyearata", t = DESTINATIONS_PIN_TYPE_AOI },
+    [10] = { n = "Seaveil Spire", t = DESTINATIONS_PIN_TYPE_HOUSING },
     ["zoneName"] = "Betnikh",
   },
   [280] = --Bleakrock Isle
@@ -2188,6 +2190,7 @@ Destinations.POIsStore                          = {
     [59] = { n = "Golden Gryphon Garret", t = DESTINATIONS_PIN_TYPE_HOUSING }, --
     [60] = { n = "Alinor Crest Townhouse", t = DESTINATIONS_PIN_TYPE_HOUSING }, --
     [61] = { n = "Colossal Aldmeri Grotto", t = DESTINATIONS_PIN_TYPE_HOUSING }, --
+    [62] = { n = "Dungeon: Coral Aerie", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE  },
     ["zoneName"] = "Summerset",
   },
   [726] = -- Murkmire
