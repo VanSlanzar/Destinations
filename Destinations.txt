@@ -9,9 +9,9 @@
 ## AddOnVersion: 294
 ## Version: 29.4
 ## Author: Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir
-## APIVersion: 101031 101032
+## APIVersion: 101032 101033
 ## SavedVariables: Destinations_Settings
-## DependsOn: LibAddonMenu-2.0>=32 LibMapPins-1.0>=10034 CustomCompassPins>=32 LibQuestData>=235
+## DependsOn: LibAddonMenu-2.0>=33 LibMapPins-1.0>=10034 CustomCompassPins>=32 LibQuestData>=239
 ## OptionalDependsOn: LibDebugLogger DebugLogViewer
 
 data/EN/DestinationsCollectibles_en.lua

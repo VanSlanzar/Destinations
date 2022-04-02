@@ -3218,6 +3218,22 @@ local function AvailableQuestPinTint(pin)
 end
 
 ------------------Quest Givers------------------
+--[[
+DPINS.QUESTS_UNDONE
+DPINS.QUESTS_IN_PROGRESS
+DPINS.QUESTS_DONE
+DPINS.QUESTS_WRITS
+DPINS.QUESTS_DAILIES
+DPINS.QUESTS_REPEATABLES
+DestinationsSV.settings.ShowCadwellsAlmanac
+DestinationsSV.settings.ShowCadwellsAlmanacOnly
+
+-- quest value constants
+Destinations.QUEST_DONE                         = 1
+Destinations.QUEST_IN_PROGRESS                  = 2
+Destinations.QUEST_HIDDEN                       = 5
+
+]]--
 local function Quests_Undone_pinTypeCallback(pinManager)
   if GetMapType() >= MAPTYPE_WORLD then return end
   drtv.pinName = DPINS.QUESTS_UNDONE
@@ -3240,7 +3256,18 @@ local function Quests_Undone_pinTypeCallback(pinManager)
     if useNpcName then
       NPC = zo_strformat(NPCName)
     end
+    --[[ DestinationsCSSV.QuestsDone[]
+
+    This is confusing because QuestsDone indicates a completed quest
+
     isQuestCompleted = true
+
+    LibQuestData uses completed_quests and that is already used for the
+    function in DEST that alters QuestsDone
+
+    local completed = LQD.completed_quests
+    local started   = LQD.started_quests
+    ]]--
     QuestPinFilters(QuestID, dataName, questLine, questSeries)
     --[[
         if questLine >= 10002 and questNumber ~= 10001 then
@@ -3263,7 +3290,7 @@ local function Quests_Undone_pinTypeCallback(pinManager)
             end
         end
         ]]--
-    if dataName ~= Name and DestinationsCSSV.QuestsDone[QuestID] ~= 2 and DestinationsCSSV.QuestsDone[QuestID] ~= 1 and DestinationsCSSV.QuestsDone[QuestID] ~= 5 and isQuestCompleted then
+    if dataName ~= Name and DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_IN_PROGRESS and DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_DONE and DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_HIDDEN then
       local outputQuestName = zo_strformat("<<1>>", Name)
       local outputNpcName   = ""
       local outputQuestLine = ""
@@ -3281,15 +3308,15 @@ local function Quests_Undone_pinTypeCallback(pinManager)
       if Type then
         local QType      = nil
         local Repeatable = nil
-        if Type == 2 then
+        if Type ==  LQD.quest_data_type.quest_type_main_story then
           QType     = GetString(QUESTTYPE_MAIN_STORY)
           tintIndex = 1
-        elseif Type == 5 then
+        elseif Type ==  LQD.quest_data_type.quest_type_dungeon then
           QType     = GetString(QUESTTYPE_DUNGEON)
           tintIndex = 2
         end
         if Rep then
-          if Rep == 1 then
+          if Rep == LQD.quest_data_repeat.quest_repeat_repeatable then
             if DestinationsSV.filters[DPINS.QUESTS_REPEATABLES] then
               skipRep = false
             else
@@ -3297,7 +3324,7 @@ local function Quests_Undone_pinTypeCallback(pinManager)
             end
             Repeatable = GetString(QUESTREPEAT_REPEATABLE)
             tintIndex  = 3
-          elseif Rep == 2 then
+          elseif Rep == LQD.quest_data_repeat.quest_repeat_daily then
             if DestinationsSV.filters[DPINS.QUESTS_DAILIES] then
               skipRep = false
             else
@@ -3369,12 +3396,23 @@ local function Quests_In_Progress_pinTypeCallback(pinManager)
   for _, pinData in ipairs(zoneQuests) do
     local QuestID = pinData[LQD.quest_map_pin_index.quest_id]
     if not QuestID then return end
-    isQuestCompleted  = true
+    --[[ DestinationsCSSV.QuestsDone[]
+
+    This is confusing because QuestsDone indicates a completed quest
+
+    isQuestCompleted = true
+
+    LibQuestData uses completed_quests and that is already used for the
+    function in DEST that alters QuestsDone
+
+    local completed = LQD.completed_quests
+    local started   = LQD.started_quests
+    ]]--
     local dataName    = GetCompletedQuestInfo(QuestID)
     local questLine   = LQD:get_quest_line(QuestID)
     local questSeries = LQD:get_quest_series(QuestID)
     QuestPinFilters(QuestID, dataName, questLine, questSeries)
-    if DestinationsCSSV.QuestsDone[QuestID] and DestinationsCSSV.QuestsDone[QuestID] == 2 and isQuestCompleted then
+    if DestinationsCSSV.QuestsDone[QuestID] and DestinationsCSSV.QuestsDone[QuestID] == Destinations.QUEST_IN_PROGRESS then
       local QuestName = LQD:get_quest_name(QuestID)
       if not QuestName then QuestName = "<<->>" end
       local Name         = zo_strformat(QuestName)
@@ -3402,20 +3440,20 @@ local function Quests_In_Progress_pinTypeCallback(pinManager)
       if Type then
         local QType      = nil
         local Repeatable = nil
-        if Type == 2 then
+        if Type == LQD.quest_data_type.quest_type_main_story then
           QType = GetString(QUESTTYPE_MAIN_STORY)
-        elseif Type == 5 then
+        elseif Type == LQD.quest_data_type.quest_type_dungeon then
           QType = GetString(QUESTTYPE_DUNGEON)
         end
         if Rep then
-          if Rep == 1 then
+          if Rep == LQD.quest_data_repeat.quest_repeat_repeatable then
             if DestinationsSV.filters[DPINS.QUESTS_REPEATABLES] then
               skipRep = false
             else
               skipRep = true
             end
             Repeatable = GetString(QUESTREPEAT_REPEATABLE)
-          elseif Rep == 2 then
+          elseif Rep == LQD.quest_data_repeat.quest_repeat_daily then
             if DestinationsSV.filters[DPINS.QUESTS_DAILIES] then
               skipRep = false
             else
@@ -3489,7 +3527,18 @@ local function Quests_Done_pinTypeCallback(pinManager)
     local QuestName = LQD:get_quest_name(QuestID)
     if not QuestName then QuestName = "<<->>" end
     local Name         = zo_strformat(QuestName)
-    isQuestCompleted   = true
+    --[[ DestinationsCSSV.QuestsDone[]
+
+    This is confusing because QuestsDone indicates a completed quest
+
+    isQuestCompleted = true
+
+    LibQuestData uses completed_quests and that is already used for the
+    function in DEST that alters QuestsDone
+
+    local completed = LQD.completed_quests
+    local started   = LQD.started_quests
+    ]]--
     local dataName     = GetCompletedQuestInfo(QuestID)
     local questLine    = LQD:get_quest_line(QuestID)
     local questSeries  = LQD:get_quest_series(QuestID)
@@ -3502,7 +3551,7 @@ local function Quests_Done_pinTypeCallback(pinManager)
       NPC = zo_strformat(NPCName)
     end
     QuestPinFilters(QuestID, dataName, questLine, questSeries)
-    if (dataName == Name and DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_HIDDEN and isQuestCompleted) or (DestinationsCSSV.QuestsDone[QuestID] == 1 and isQuestCompleted) then
+    if (dataName == Name) and (DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_HIDDEN) or (DestinationsCSSV.QuestsDone[QuestID] == Destinations.QUEST_DONE) then
       local outputQuestName = zo_strformat("<<1>>", Name)
       local outputNpcName   = ""
       local outputQuestLine = ""
@@ -3516,23 +3565,23 @@ local function Quests_Done_pinTypeCallback(pinManager)
       local Rep     = LQD:get_quest_repeat(QuestID)
       local Type    = LQD:get_quest_type(QuestID)
       local skipRep = false
-      if Type ~= 0 then
+      if Type ~= LQD.quest_data_type.quest_type_none then
         local QType      = nil
         local Repeatable = nil
-        if Type == 2 then
+        if Type == LQD.quest_data_type.quest_type_main_story then
           QType = GetString(QUESTTYPE_MAIN_STORY)
-        elseif Type == 5 then
+        elseif Type == LQD.quest_data_type.quest_type_dungeon then
           QType = GetString(QUESTTYPE_DUNGEON)
         end
-        if Rep ~= 0 then
-          if Rep == 1 then
+        if Rep ~= LQD.quest_data_repeat.quest_repeat_not_repeatable then
+          if Rep == LQD.quest_data_repeat.quest_repeat_repeatable then
             if DestinationsSV.filters[DPINS.QUESTS_REPEATABLES] then
               skipRep = false
             else
               skipRep = true
             end
             Repeatable = GetString(QUESTREPEAT_REPEATABLE)
-          elseif Rep == 2 then
+          elseif Rep == LQD.quest_data_repeat.quest_repeat_daily then
             if DestinationsSV.filters[DPINS.QUESTS_DAILIES] then
               skipRep = false
             else
@@ -3766,14 +3815,14 @@ local function Quests_CompassPins()
     local skipRep = false
     LMP:SetLayoutKey(DPINS.QUESTS_UNDONE, "tint", AvailableQuestPinTint)
     if Rep then
-      if Rep == 1 then
+      if Rep == LQD.quest_data_repeat.quest_repeat_repeatable then
         if DestinationsSV.filters[DPINS.QUESTS_REPEATABLES] then
           skipRep = false
         else
           skipRep = true
         end
         Repeatable = GetString(QUESTREPEAT_REPEATABLE)
-      elseif Rep == 2 then
+      elseif Rep == LQD.quest_data_repeat.quest_repeat_daily then
         if DestinationsSV.filters[DPINS.QUESTS_DAILIES] then
           skipRep = false
         else
