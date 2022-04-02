@@ -1,6 +1,7 @@
 -------------------------------------------------
 ----- early helper                          -----
 -------------------------------------------------
+local ADDON_NAME = "Destinations"
 
 local function is_in(search_value, search_table)
   for k, v in pairs(search_table) do
@@ -16,8 +17,6 @@ end
 ----- lang setup                            -----
 -------------------------------------------------
 
-Destinations.client_lang    = GetCVar("language.2")
-Destinations.effective_lang = nil
 --[[
 FX is an alternate Polish lang file
 KB is Korean Beta and TR is some kind of Korean and English
@@ -25,22 +24,104 @@ Index Mix that I don't understand how that works
 
 Most languages only have Quest Names or Quest Givers that
 change, which won't matter once LibQuestData is fully updated
+
+client_lang
+effective_lang
+supported_lang
 ]]--
-Destinations.supported_lang = { "de", "en", "fr", "fx", "jp", "kb", "kr", "pl", "ru", }
-if is_in(Destinations.client_lang, Destinations.supported_lang) then
-  Destinations.effective_lang = Destinations.client_lang
+Destinations.client_lang    = GetCVar("Language.2")
+Destinations.effective_quest_lang = nil
+Destinations.effective_menu_lang = nil
+local supported_quest_langs = { "br", "de", "en", "es", "fr", "fx", "it", "jp", "kb", "kr", "pl", "ru", }
+local supported_menu_langs = { "de", "en", "fr", "fx", "jf", "jp", "pl", "ru", "zh", }
+if is_in(Destinations.client_lang, supported_quest_langs) then
+  Destinations.effective_quest_lang = Destinations.client_lang
 else
-  Destinations.effective_lang = "en"
+  Destinations.effective_quest_lang = "en"
 end
-Destinations.supported_lang                     = Destinations.client_lang == Destinations.effective_lang
+if is_in(Destinations.client_lang, supported_menu_langs) then
+  Destinations.effective_menu_lang = Destinations.client_lang
+else
+  Destinations.effective_menu_lang = "en"
+end
+Destinations.supported_quest_lang = Destinations.client_lang == Destinations.effective_quest_lang
+Destinations.supported_menu_lang = Destinations.client_lang == Destinations.effective_menu_lang
+
+-------------------------------------------------
+----- Destinations                          -----
+-------------------------------------------------
+Dest                        = {}
+if LibDebugLogger then
+  local logger = LibDebugLogger.Create(ADDON_NAME)
+  Dest.logger  = logger
+end
+local SDLV = DebugLogViewer
+if SDLV then Dest.viewer = true else Dest.viewer = false end
+
+local function create_log(log_type, log_content)
+  if not Dest.viewer and log_type == "Info" then
+    CHAT_ROUTER:AddSystemMessage(log_content)
+    return
+  end
+  if not Dest.logger then return end
+  if log_type == "Debug" then
+    Dest.logger:Debug(log_content)
+  end
+  if log_type == "Info" then
+    Dest.logger:Info(log_content)
+  end
+  if log_type == "Verbose" then
+    Dest.logger:Verbose(log_content)
+  end
+  if log_type == "Warn" then
+    Dest.logger:Warn(log_content)
+  end
+end
+
+local function emit_message(log_type, text)
+  if (text == "") then
+    text = "[Empty String]"
+  end
+  create_log(log_type, text)
+end
+
+local function emit_table(log_type, t, indent, table_history)
+  indent        = indent or "."
+  table_history = table_history or {}
+
+  for k, v in pairs(t) do
+    local vType = type(v)
+
+    emit_message(log_type, indent .. "(" .. vType .. "): " .. tostring(k) .. " = " .. tostring(v))
+
+    if (vType == "table") then
+      if (table_history[v]) then
+        emit_message(log_type, indent .. "Avoiding cycle on table...")
+      else
+        table_history[v] = true
+        emit_table(log_type, v, indent .. "  ", table_history)
+      end
+    end
+  end
+end
+
+function Dest:dm(log_type, ...)
+  for i = 1, select("#", ...) do
+    local value = select(i, ...)
+    if (type(value) == "table") then
+      emit_table(log_type, value)
+    else
+      emit_message(log_type, tostring(value))
+    end
+  end
+end
 
 -------------------------------------------------
 ----- Destinations                          -----
 -------------------------------------------------
 
-local ADDON_NAME                                = "Destinations"
 local ADDON_AUTHOR                              = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION                             = "28.4"
+local ADDON_VERSION                             = "29.4"
 local ADDON_WEBSITE                             = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP                                       = LibMapPins
@@ -105,6 +186,7 @@ local DESTINATIONS_PIN_TYPE_GROUPAREAOFINTEREST = 48
 local DESTINATIONS_PIN_TYPE_HOUSING             = 49
 local DESTINATIONS_PIN_TYPE_DWEMERGEAR          = 50
 local DESTINATIONS_PIN_TYPE_NORDBOAT            = 51
+local DESTINATIONS_PIN_TYPE_DEADLANDS           = 52
 local DESTINATIONS_PIN_TYPE_UNKNOWN             = 99
 
 -- quest value constants
@@ -220,6 +302,7 @@ local DPINS                                     = {
 
   AYLEID = "DEST_PinSet_Ayleid",
   DWEMER = "DEST_PinSet_Dwemer",
+  DEADLANDS = "DEST_PinSet_Deadlands",
   MISC_COMPASS = "DEST_Compass_Misc",
 
   WWVAMP = "DEST_PinSet_WWVamp",
@@ -511,6 +594,15 @@ local defaults                                  = {
       tint = { 1, 1, 1, 1 },
       textcolor = { 1, 1, 1 },
     },
+    pinTextureDeadlands = {
+      type = 1,
+      size = 26,
+      level = 30,
+      maxDistance = 0.05,
+      texture = "",
+      tint = { 1, 1, 1, 1 },
+      textcolor = { 1, 1, 1 },
+    },
     pinTextureDwemer = {
       type = 7,
       size = 26,
@@ -707,8 +799,9 @@ local defaults                                  = {
 
     [DPINS.ACHIEVEMENTS_COMPASS] = true,
 
-    [DPINS.DWEMER] = false,
     [DPINS.AYLEID] = false,
+    [DPINS.DWEMER] = false,
+    [DPINS.DEADLANDS] = false,
     [DPINS.MISC_COMPASS] = true,
 
     [DPINS.WWVAMP] = false,
@@ -967,13 +1060,16 @@ local pinTextures                               = {
       [4] = "Destinations/pins/old/Achievement_Cutpurse_colored-complete.dds",
       [5] = "Destinations/pins/old/Achievement_Cutpurse_colored-complete.dds",
     },
-    ayleid = {
+    Ayleid = {
       [1] = "Destinations/pins/Ayleid_Well_1.dds",
       [2] = "Destinations/pins/Ayleid_Well_1_inverted.dds",
       [3] = "Destinations/pins/Ayleid_Well_2.dds",
       [4] = "Destinations/pins/A_Global_Asghaard-aura.dds",
       [5] = "Destinations/pins/old/Ayleid_Well_colored.dds",
       [6] = "Destinations/pins/old/Ayleid_Well_colored_Red.dds",
+    },
+    Deadlands = {
+      [1] = "Destinations/pins/deadlands.dds",
     },
     dwemer = {
       [1] = "Destinations/pins/dummy.dds",
@@ -1175,6 +1271,9 @@ local pinTextures                               = {
       "Old Colored Well",
       "Old Red Circled Well",
     },
+    Deadlands = {
+      "Entrance",
+    },
     Dwemer = {
       defaults.miscColorCodes.settingsTextOnlyText:Colorize(GetString(GLOBAL_SETTINGS_SELECT_TEXT_ONLY)),
       "Helmet",
@@ -1243,6 +1342,7 @@ local pinTextures                               = {
 local poiTypes                                  = {
   [DESTINATIONS_PIN_TYPE_AOI] = GetString(POITYPE_AOI),
   [DESTINATIONS_PIN_TYPE_AYLEIDRUIN] = GetString(POITYPE_QUESTHUB),
+  [DESTINATIONS_PIN_TYPE_DEADLANDS] = GetString(POITYPE_PUBLICDUNGEON),
   [DESTINATIONS_PIN_TYPE_BATTLEFIELD] = GetString(POITYPE_QUESTHUB),
   [DESTINATIONS_PIN_TYPE_CAMP] = GetString(POITYPE_QUESTHUB),
   [DESTINATIONS_PIN_TYPE_CAVE] = GetString(POITYPE_QUESTHUB),
@@ -1413,6 +1513,10 @@ local ZoneIDsToFileNames                        = {
   [267] = "eyevea_base_0",
   [1207] = "reach_base_0",
   [1208] = "u28_blackreach_base_0",
+  [1261] = "blackwood_base_0",
+  [1282] = "u32_fargrave_base_0",
+  [1283] = "u32_theshambles_base_0",
+  [1286] = "u32deadlandszone_base_0",
 }
 
 local achTypes                                  = {
@@ -1437,6 +1541,7 @@ local achTypes                                  = {
   [22] = GetString(POITYPE_VAMPIRE_ALTAR),
   [23] = GetString(POITYPE_DWEMER_RUIN),
   [24] = GetString(POITYPE_WEREWOLF_SHRINE),
+  [25] = GetString(POITYPE_DEADLANDS_ENTRANCE),
   [30] = GetString(POITYPE_COLLECTIBLE),
   [31] = GetString(POITYPE_FISH),
   [50] = GetString(POITYPE_UNDETERMINED),
@@ -1492,37 +1597,6 @@ function on_zone_changed(eventCode, zoneName, subZoneName, newSubzone, zoneId, s
 end
 EVENT_MANAGER:RegisterForEvent(ADDON_NAME .. "_zone_changed", EVENT_ZONE_CHANGED, on_zone_changed)
 
--- Slash commands -------------------------------------------------------------
-local function ShowMyPosition()
-  if SetMapToPlayerLocation() == SET_MAP_RESULT_MAP_CHANGED then
-    CALLBACK_MANAGER:FireCallbacks("OnWorldMapChanged")
-  end
-
-  local x, y    = GetMapPlayerPosition("player")
-
-  local locX    = ("%0.09f"):format(zo_round(x * 10000) / 10000)
-  local locY    = ("%0.09f"):format(zo_round(y * 10000) / 10000)
-
-  local mapname = LMP:GetZoneAndSubzone(true, true, true)
-
-  d(zo_strformat('["<<1>>"] = <<2>>, <<3>>', mapname, locX, locY))
-
-end
-
-SLASH_COMMANDS["/fishloc"] = ShowMyPosition
-
-local function GetPoiTypeName(poiTypeId)
-  return poiTypes[poiTypeId] or poiTypes[99]
-end
-
-local function GetICPoiTypeName(poiTypeId)
-  return poiTypesIC[poiTypeId] or poiTypesIC[99]
-end
-
-local function GetAchTypeName(TYPE)
-  return achTypes[TYPE] or achTypes[55]
-end
-
 --[[ Various map names
     Reference https://wiki.esoui.com/Texture_List/ESO/art/maps
 
@@ -1543,6 +1617,37 @@ local function GetMapTextureName()
   end
 
   return mapTextureName, zoneTextureName
+end
+
+-- Slash commands -------------------------------------------------------------
+local function ShowMyPosition()
+  if SetMapToPlayerLocation() == SET_MAP_RESULT_MAP_CHANGED then
+    CALLBACK_MANAGER:FireCallbacks("OnWorldMapChanged")
+  end
+
+  local x, y    = GetMapPlayerPosition("player")
+
+  local locX    = ("%0.09f"):format(zo_round(x * 10000) / 10000)
+  local locY    = ("%0.09f"):format(zo_round(y * 10000) / 10000)
+
+  local mapname = LMP:GetZoneAndSubzone(false, true, true)
+  GetMapTextureName()
+
+  Dest:dm("Info", zo_strformat('["<<1>>/<<2>>"] = <<3>>, <<4>>', mapname, zoneTextureName, locX, locY))
+end
+
+SLASH_COMMANDS["/fishloc"] = ShowMyPosition
+
+local function GetPoiTypeName(poiTypeId)
+  return poiTypes[poiTypeId] or poiTypes[99]
+end
+
+local function GetICPoiTypeName(poiTypeId)
+  return poiTypesIC[poiTypeId] or poiTypesIC[99]
+end
+
+local function GetAchTypeName(TYPE)
+  return achTypes[TYPE] or achTypes[55]
 end
 
 ------------------- MAP PINS -------------------
@@ -2171,6 +2276,23 @@ local function AyleidpinTypeCallback()
   end
 end
 --------------------Misc POI--------------------
+local function DeadlandspinTypeCallback()
+  -- DESTINATIONS_PIN_TYPE_DEADLANDS
+  if GetMapType() >= MAPTYPE_WORLD then return end
+  drtv.pinName = DPINS.DEADLANDS
+  sharedAchievementsPinData()
+  if not mapData then return end
+  for _, pinData in ipairs(mapData) do
+    drtv.pinType     = pinData[AchIndex.TYPE]
+    drtv.pinTypeName = GetAchTypeName(drtv.pinType)
+    if drtv.pinType == 25 then
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureDeadlands.textcolor)):Colorize(zo_strformat("<<1>>",
+        drtv.pinTypeName)) }
+      LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
+    end
+  end
+end
+--------------------Misc POI--------------------
 local function DwemerRuinpinTypeCallback()
   if GetMapType() >= MAPTYPE_WORLD then return end
   drtv.pinName = DPINS.DWEMER
@@ -2180,7 +2302,7 @@ local function DwemerRuinpinTypeCallback()
     drtv.pinType     = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 23 then
-      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.textcolor)):Colorize(zo_strformat("<<1>>",
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureDwemer.textcolor)):Colorize(zo_strformat("<<1>>",
         drtv.pinTypeName)) }
       LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
     end
@@ -2196,7 +2318,7 @@ local function WWVamppinTypeCallback()
     drtv.pinType     = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 21 then
-      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.textcolor)):Colorize(zo_strformat("<<1>>",
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureWWVamp.textcolor)):Colorize(zo_strformat("<<1>>",
         drtv.pinTypeName)) }
       LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
     end
@@ -2212,7 +2334,7 @@ local function VampireAltarpinTypeCallback()
     drtv.pinType     = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 22 then
-      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.textcolor)):Colorize(zo_strformat("<<1>>",
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureVampAltar.textcolor)):Colorize(zo_strformat("<<1>>",
         drtv.pinTypeName)) }
       LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
     end
@@ -2228,7 +2350,7 @@ local function WerewolfShrinepinTypeCallback()
     drtv.pinType     = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 24 then
-      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.textcolor)):Colorize(zo_strformat("<<1>>",
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureWWShrine.textcolor)):Colorize(zo_strformat("<<1>>",
         drtv.pinTypeName)) }
       LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[AchIndex.X], pinData[AchIndex.Y])
     end
@@ -2824,7 +2946,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
   if questLine == 99990 then
     -- Hide Mage's Guild quest while not the required rank in the guild.
     local skillLineLevel = nil
-    local SkillLine      = LQD:get_quest_giver(500114, Destinations.effective_lang)
+    local SkillLine      = LQD:get_quest_giver(500114, Destinations.effective_quest_lang)
     for i = 1, GetNumSkillLines(SKILL_TYPE_GUILD) do
       local skillLineName = GetSkillLineInfo(SKILL_TYPE_GUILD, i)
       if skillLineName and skillLineName == SkillLine then
@@ -2839,7 +2961,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
   if questLine == 99995 then
     -- Hide Fighter's Guild quest while not the required rank in the guild.
     local skillLineLevel = nil
-    local SkillLine      = LQD:get_quest_giver(500115, Destinations.effective_lang)
+    local SkillLine      = LQD:get_quest_giver(500115, Destinations.effective_quest_lang)
     for i = 1, GetNumSkillLines(SKILL_TYPE_GUILD) do
       local skillLineName = GetSkillLineInfo(SKILL_TYPE_GUILD, i)
       if skillLineName and skillLineName == SkillLine then
@@ -3034,7 +3156,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
   if QuestID == 5549 or QuestID == 5545 or QuestID == 5581 or QuestID == 5553 then
     -- check for Thieves Guild level.
     local skillLineLevel = nil
-    local SkillLine      = LQD:get_quest_giver(500113, Destinations.effective_lang)
+    local SkillLine      = LQD:get_quest_giver(500113, Destinations.effective_quest_lang)
     for i = 1, GetNumSkillLines(SKILL_TYPE_GUILD) do
       local skillLineName = GetSkillLineInfo(SKILL_TYPE_GUILD, i)
       if skillLineName and skillLineName == SkillLine then
@@ -3049,7 +3171,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
   if QuestID == 5595 or QuestID == 5599 or QuestID == 5596 or QuestID == 5567 or QuestID == 5597 or QuestID == 5598 or QuestID == 5600 then
     -- check for Dark Brotherhood level.
     local skillLineLevel = nil
-    local SkillLine      = LQD:get_quest_giver(500119, Destinations.effective_lang)
+    local SkillLine      = LQD:get_quest_giver(500119, Destinations.effective_quest_lang)
     for i = 1, GetNumSkillLines(SKILL_TYPE_GUILD) do
       local skillLineName = GetSkillLineInfo(SKILL_TYPE_GUILD, i)
       if skillLineName and skillLineName == SkillLine then
@@ -3063,6 +3185,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
   end
   return
 end
+--[[
 local function sharedQuestPinData()
   mapData, mapTextureName, zoneTextureName = nil, nil, nil
   if LMP:IsEnabled(drtv.pinName) and DestinationsCSSV.filters[drtv.pinName] then
@@ -3070,6 +3193,7 @@ local function sharedQuestPinData()
     mapData = LQD:get_quest_list(LMP:GetZoneAndSubzone(true, false, true))
   end
 end
+]]--
 local function AvailableQuestPinTint(pin)
   if pin ~= nil then
     if pin.m_PinTag ~= nil then
@@ -3094,6 +3218,22 @@ local function AvailableQuestPinTint(pin)
 end
 
 ------------------Quest Givers------------------
+--[[
+DPINS.QUESTS_UNDONE
+DPINS.QUESTS_IN_PROGRESS
+DPINS.QUESTS_DONE
+DPINS.QUESTS_WRITS
+DPINS.QUESTS_DAILIES
+DPINS.QUESTS_REPEATABLES
+DestinationsSV.settings.ShowCadwellsAlmanac
+DestinationsSV.settings.ShowCadwellsAlmanacOnly
+
+-- quest value constants
+Destinations.QUEST_DONE                         = 1
+Destinations.QUEST_IN_PROGRESS                  = 2
+Destinations.QUEST_HIDDEN                       = 5
+
+]]--
 local function Quests_Undone_pinTypeCallback(pinManager)
   if GetMapType() >= MAPTYPE_WORLD then return end
   drtv.pinName = DPINS.QUESTS_UNDONE
@@ -3116,7 +3256,18 @@ local function Quests_Undone_pinTypeCallback(pinManager)
     if useNpcName then
       NPC = zo_strformat(NPCName)
     end
+    --[[ DestinationsCSSV.QuestsDone[]
+
+    This is confusing because QuestsDone indicates a completed quest
+
     isQuestCompleted = true
+
+    LibQuestData uses completed_quests and that is already used for the
+    function in DEST that alters QuestsDone
+
+    local completed = LQD.completed_quests
+    local started   = LQD.started_quests
+    ]]--
     QuestPinFilters(QuestID, dataName, questLine, questSeries)
     --[[
         if questLine >= 10002 and questNumber ~= 10001 then
@@ -3139,7 +3290,7 @@ local function Quests_Undone_pinTypeCallback(pinManager)
             end
         end
         ]]--
-    if dataName ~= Name and DestinationsCSSV.QuestsDone[QuestID] ~= 2 and DestinationsCSSV.QuestsDone[QuestID] ~= 1 and DestinationsCSSV.QuestsDone[QuestID] ~= 5 and isQuestCompleted then
+    if dataName ~= Name and DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_IN_PROGRESS and DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_DONE and DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_HIDDEN then
       local outputQuestName = zo_strformat("<<1>>", Name)
       local outputNpcName   = ""
       local outputQuestLine = ""
@@ -3157,15 +3308,15 @@ local function Quests_Undone_pinTypeCallback(pinManager)
       if Type then
         local QType      = nil
         local Repeatable = nil
-        if Type == 2 then
+        if Type ==  LQD.quest_data_type.quest_type_main_story then
           QType     = GetString(QUESTTYPE_MAIN_STORY)
           tintIndex = 1
-        elseif Type == 5 then
+        elseif Type ==  LQD.quest_data_type.quest_type_dungeon then
           QType     = GetString(QUESTTYPE_DUNGEON)
           tintIndex = 2
         end
         if Rep then
-          if Rep == 1 then
+          if Rep == LQD.quest_data_repeat.quest_repeat_repeatable then
             if DestinationsSV.filters[DPINS.QUESTS_REPEATABLES] then
               skipRep = false
             else
@@ -3173,7 +3324,7 @@ local function Quests_Undone_pinTypeCallback(pinManager)
             end
             Repeatable = GetString(QUESTREPEAT_REPEATABLE)
             tintIndex  = 3
-          elseif Rep == 2 then
+          elseif Rep == LQD.quest_data_repeat.quest_repeat_daily then
             if DestinationsSV.filters[DPINS.QUESTS_DAILIES] then
               skipRep = false
             else
@@ -3245,12 +3396,23 @@ local function Quests_In_Progress_pinTypeCallback(pinManager)
   for _, pinData in ipairs(zoneQuests) do
     local QuestID = pinData[LQD.quest_map_pin_index.quest_id]
     if not QuestID then return end
-    isQuestCompleted  = true
+    --[[ DestinationsCSSV.QuestsDone[]
+
+    This is confusing because QuestsDone indicates a completed quest
+
+    isQuestCompleted = true
+
+    LibQuestData uses completed_quests and that is already used for the
+    function in DEST that alters QuestsDone
+
+    local completed = LQD.completed_quests
+    local started   = LQD.started_quests
+    ]]--
     local dataName    = GetCompletedQuestInfo(QuestID)
     local questLine   = LQD:get_quest_line(QuestID)
     local questSeries = LQD:get_quest_series(QuestID)
     QuestPinFilters(QuestID, dataName, questLine, questSeries)
-    if DestinationsCSSV.QuestsDone[QuestID] and DestinationsCSSV.QuestsDone[QuestID] == 2 and isQuestCompleted then
+    if DestinationsCSSV.QuestsDone[QuestID] and DestinationsCSSV.QuestsDone[QuestID] == Destinations.QUEST_IN_PROGRESS then
       local QuestName = LQD:get_quest_name(QuestID)
       if not QuestName then QuestName = "<<->>" end
       local Name         = zo_strformat(QuestName)
@@ -3278,20 +3440,20 @@ local function Quests_In_Progress_pinTypeCallback(pinManager)
       if Type then
         local QType      = nil
         local Repeatable = nil
-        if Type == 2 then
+        if Type == LQD.quest_data_type.quest_type_main_story then
           QType = GetString(QUESTTYPE_MAIN_STORY)
-        elseif Type == 5 then
+        elseif Type == LQD.quest_data_type.quest_type_dungeon then
           QType = GetString(QUESTTYPE_DUNGEON)
         end
         if Rep then
-          if Rep == 1 then
+          if Rep == LQD.quest_data_repeat.quest_repeat_repeatable then
             if DestinationsSV.filters[DPINS.QUESTS_REPEATABLES] then
               skipRep = false
             else
               skipRep = true
             end
             Repeatable = GetString(QUESTREPEAT_REPEATABLE)
-          elseif Rep == 2 then
+          elseif Rep == LQD.quest_data_repeat.quest_repeat_daily then
             if DestinationsSV.filters[DPINS.QUESTS_DAILIES] then
               skipRep = false
             else
@@ -3365,7 +3527,18 @@ local function Quests_Done_pinTypeCallback(pinManager)
     local QuestName = LQD:get_quest_name(QuestID)
     if not QuestName then QuestName = "<<->>" end
     local Name         = zo_strformat(QuestName)
-    isQuestCompleted   = true
+    --[[ DestinationsCSSV.QuestsDone[]
+
+    This is confusing because QuestsDone indicates a completed quest
+
+    isQuestCompleted = true
+
+    LibQuestData uses completed_quests and that is already used for the
+    function in DEST that alters QuestsDone
+
+    local completed = LQD.completed_quests
+    local started   = LQD.started_quests
+    ]]--
     local dataName     = GetCompletedQuestInfo(QuestID)
     local questLine    = LQD:get_quest_line(QuestID)
     local questSeries  = LQD:get_quest_series(QuestID)
@@ -3378,7 +3551,7 @@ local function Quests_Done_pinTypeCallback(pinManager)
       NPC = zo_strformat(NPCName)
     end
     QuestPinFilters(QuestID, dataName, questLine, questSeries)
-    if (dataName == Name and DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_HIDDEN and isQuestCompleted) or (DestinationsCSSV.QuestsDone[QuestID] == 1 and isQuestCompleted) then
+    if (dataName == Name) and (DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_HIDDEN) or (DestinationsCSSV.QuestsDone[QuestID] == Destinations.QUEST_DONE) then
       local outputQuestName = zo_strformat("<<1>>", Name)
       local outputNpcName   = ""
       local outputQuestLine = ""
@@ -3392,23 +3565,23 @@ local function Quests_Done_pinTypeCallback(pinManager)
       local Rep     = LQD:get_quest_repeat(QuestID)
       local Type    = LQD:get_quest_type(QuestID)
       local skipRep = false
-      if Type ~= 0 then
+      if Type ~= LQD.quest_data_type.quest_type_none then
         local QType      = nil
         local Repeatable = nil
-        if Type == 2 then
+        if Type == LQD.quest_data_type.quest_type_main_story then
           QType = GetString(QUESTTYPE_MAIN_STORY)
-        elseif Type == 5 then
+        elseif Type == LQD.quest_data_type.quest_type_dungeon then
           QType = GetString(QUESTTYPE_DUNGEON)
         end
-        if Rep ~= 0 then
-          if Rep == 1 then
+        if Rep ~= LQD.quest_data_repeat.quest_repeat_not_repeatable then
+          if Rep == LQD.quest_data_repeat.quest_repeat_repeatable then
             if DestinationsSV.filters[DPINS.QUESTS_REPEATABLES] then
               skipRep = false
             else
               skipRep = true
             end
             Repeatable = GetString(QUESTREPEAT_REPEATABLE)
-          elseif Rep == 2 then
+          elseif Rep == LQD.quest_data_repeat.quest_repeat_daily then
             if DestinationsSV.filters[DPINS.QUESTS_DAILIES] then
               skipRep = false
             else
@@ -3607,6 +3780,9 @@ local function AddMiscCompassPins()
     if drtv.pinType == 20 then
       if not LMP:IsEnabled(DPINS.AYLEID) or not DestinationsCSSV.filters[DPINS.MISC_COMPASS] then return end
       COMPASS_PINS.pinManager:CreatePin(DPINS.AYLEID, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
+    elseif drtv.pinType == 25 then
+      if not LMP:IsEnabled(DPINS.DEADLANDS) or not DestinationsCSSV.filters[DPINS.MISC_COMPASS] then return end
+      COMPASS_PINS.pinManager:CreatePin(DPINS.DEADLANDS, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
     elseif drtv.pinType == 21 then
       if not LMP:IsEnabled(DPINS.WWVAMP) or not DestinationsCSSV.filters[DPINS.VWW_COMPASS] then return end
       COMPASS_PINS.pinManager:CreatePin(DPINS.WWVAMP, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
@@ -3639,14 +3815,14 @@ local function Quests_CompassPins()
     local skipRep = false
     LMP:SetLayoutKey(DPINS.QUESTS_UNDONE, "tint", AvailableQuestPinTint)
     if Rep then
-      if Rep == 1 then
+      if Rep == LQD.quest_data_repeat.quest_repeat_repeatable then
         if DestinationsSV.filters[DPINS.QUESTS_REPEATABLES] then
           skipRep = false
         else
           skipRep = true
         end
         Repeatable = GetString(QUESTREPEAT_REPEATABLE)
-      elseif Rep == 2 then
+      elseif Rep == LQD.quest_data_repeat.quest_repeat_daily then
         if DestinationsSV.filters[DPINS.QUESTS_DAILIES] then
           skipRep = false
         else
@@ -4025,17 +4201,15 @@ local function MapCallback_fakeKnown()
   for poiIndex = 1, GetNumPOIs(zoneIndex) do
     if not mapData[poiIndex] then
       mapData[poiIndex] = { n = "unknown " .. poiIndex, t = DESTINATIONS_PIN_TYPE_UNKNOWN }
-      d("Fake Pin")
     end
   end
 
   for poiIndex = 1, GetNumPOIs(zoneIndex) do
 
-    local normalizedX, normalizedY, poiType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
+    local normalizedX, normalizedY, poiPinType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
       poiIndex)
-    local unknown                                                                                                         = not (isDiscovered or isNearby)
-
-    local seen                                                                                                            = isDiscovered
+    local unknown                                                                                                            = not (isDiscovered or isNearby)
+    local seen                                                                                                               = isDiscovered
 
     if not unknown and mapData[poiIndex] then
 
@@ -4126,9 +4300,9 @@ local function MapCallback_unknown()
 
   for poiIndex = 1, GetNumPOIs(zoneIndex) do
 
-    local normalizedX, normalizedY, poiType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
+    local normalizedX, normalizedY, poiPinType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
       poiIndex)
-    local unknown                                                                                                         = not (isDiscovered or isNearby)
+    local unknown                                                                                                            = not (isDiscovered or isNearby)
 
     if unknown and mapData[poiIndex] then
 
@@ -4199,7 +4373,7 @@ end
 
 local function RegisterQuestDone(eventCode, questName, level, previousExperience, currentExperience, championPoints, questType, instanceDisplayType)
   local questFound, questID = false, 0
-  local tempQuestID         = LQD:get_questids_table(questName, Destinations.effective_lang)
+  local tempQuestID         = LQD:get_questids_table(questName, Destinations.effective_quest_lang)
   local questData           = {}
   if tempQuestID then
     if #tempQuestID == 1 then
@@ -4212,7 +4386,7 @@ local function RegisterQuestDone(eventCode, questName, level, previousExperience
   ]]--
   if questFound then
     if drtv.getQuestInfo then
-      d("Completed: " .. tostring(questID) .. " / " .. questName)
+      Dest:dm("Info", "Completed: " .. tostring(questID) .. " / " .. questName)
     end
     for k, v in pairs(DestinationsCSSV.QuestsDone) do
       if questID == k then
@@ -4246,7 +4420,7 @@ end
 local function RegisterQuestCancelled(eventCode, isCompleted, journalIndex, questName, zoneIndex, poiIndex, questID)
   if isCompleted then return end
   if drtv.getQuestInfo then
-    d("Cancelled: " .. tostring(questID) .. "/" .. questName)
+    Dest:dm("Info", "Cancelled: " .. tostring(questID) .. "/" .. questName)
   end
   local questData = {}
   for k, v in pairs(DestinationsCSSV.QuestsDone) do
@@ -4607,7 +4781,7 @@ local function GetInProgressQuests()
   local numQuests = GetNumJournalQuests()
   for i = 1, numQuests do
     local questName, _, _, _, _, _, _, _, _, _ = GetJournalQuestInfo(i)
-    QTableStore                                = LQD.quest_names[Destinations.effective_lang]
+    QTableStore                                = LQD.quest_names[Destinations.effective_quest_lang]
     for y, z in pairs(QTableStore) do
       if z == questName then
         local questId = y
@@ -4696,8 +4870,8 @@ end
 
 local function SetQuestHidden(pin, questID, questName)
   if drtv.getQuestInfo then
-    d("Hiding questID: " .. questID)
-    d("Name: " .. questName)
+    Dest:dm("Info", "Hiding questID: " .. questID)
+    Dest:dm("Info", "Name: " .. questName)
   end
   DestinationsCSSV.QuestsDone[questID] = Destinations.QUEST_HIDDEN
   RedrawAllPins(DPINS.QUESTS_UNDONE)
@@ -4735,11 +4909,11 @@ local function ShowQuestEditingMenu(pin)
   qName           = string.gsub(qName, "%-", " ")
 
   if drtv.getQuestInfo then
-    d("Quest found: " .. qName)
+    Dest:dm("Info", "Quest found: " .. qName)
   end
 
   local questTableName
-  local allQuestNames = LQD.quest_names[Destinations.effective_lang]
+  local allQuestNames = LQD.quest_names[Destinations.effective_quest_lang]
   for questTableID, questData in pairs(allQuestNames) do
     questTableName = questData
     if questTableName then
@@ -4757,7 +4931,8 @@ local function ShowQuestEditingMenu(pin)
 
   if not questID or questID == 0 then
     if drtv.getQuestInfo then
-      d("The quest could not be identified as no ID was found. For that reason the quest can not be hidden.")
+      Dest:dm("Info",
+        "The quest could not be identified as no ID was found. For that reason the quest can not be hidden.")
     end
     AddMenuItem(defaults.miscColorCodes.settingsTextWarn:Colorize(GetString(QUEST_MENU_NOT_FOUND)), SetQuestHiddenDummy)
   else
@@ -4774,12 +4949,12 @@ function SetQuestEditing()
   if drtv.EditingQuests then
     drtv.EditingQuests = false
     LMP:SetClickHandlers(DPINS.QUESTS_UNDONE, nil)
-    d(GetString(QUEST_EDIT_OFF))
+    Dest:dm("Info", GetString(QUEST_EDIT_OFF))
   else
     drtv.EditingQuests = true
     LMP:SetClickHandlers(DPINS.QUESTS_UNDONE, { [1] = { callback = function(pin) ShowQuestEditingMenu(pin) end } },
       duplicates == false)
-    d(GetString(QUEST_EDIT_ON))
+    Dest:dm("Info", GetString(QUEST_EDIT_ON))
   end
 end
 
@@ -4787,19 +4962,19 @@ SLASH_COMMANDS["/dqin"] = function()
   --Quest Info Debug TOGGLE
   if drtv.getQuestInfo == false then
     drtv.getQuestInfo = true
-    d("Quest debug Info ON")
-    d("Repeat command to turn it off.")
+    Dest:dm("Info", "Quest debug Info ON")
+    Dest:dm("Info", "Repeat command to turn it off.")
   elseif drtv.getQuestInfo == true then
     drtv.getQuestInfo = false
-    d("Quest debug Info OFF")
+    Dest:dm("Info", "Quest debug Info OFF")
   end
 end
 SLASH_COMMANDS["/dhlp"] = function()
   --Show help
-  d(GetString(DESTCOMMANDS))
-  d(GetString(DESTCOMMANDdhlp))
-  d(GetString(DESTCOMMANDdset))
-  d(GetString(DESTCOMMANDdqed))
+  Dest:dm("Info", GetString(DESTCOMMANDS))
+  Dest:dm("Info", GetString(DESTCOMMANDdhlp))
+  Dest:dm("Info", GetString(DESTCOMMANDdset))
+  Dest:dm("Info", GetString(DESTCOMMANDdqed))
 end
 SLASH_COMMANDS["/dlaq"] = function()
   --Refresh all Completed Quests and /reloadui
@@ -4810,7 +4985,7 @@ end
 SLASH_COMMANDS["/dqed"] = SetQuestEditing   --Quest Editing TOGGLE
 SLASH_COMMANDS["/dgcq"] = function()
   --Get Completed Quests (to saved vars)
-  d("Saving all completed quests...")
+  Dest:dm("Info", "Saving all completed quests...")
   local questId   = nil
   local questName = nil
   local questType
@@ -4821,11 +4996,11 @@ SLASH_COMMANDS["/dgcq"] = function()
       DestinationsSV.TEMPPINDATA[questId] = "\v" .. questName .. "\v"
     end
   end
-  d("Done...")
+  Dest:dm("Info", "Done...")
 end
 SLASH_COMMANDS["/dgac"] = function()
   --Get All Achievements (to saved vars)
-  d("Saving all achievements...")
+  Dest:dm("Info", "Saving all achievements...")
   local achId   = nil
   local achName = nil
   local achType
@@ -4836,24 +5011,22 @@ SLASH_COMMANDS["/dgac"] = function()
       DestinationsSV.TEMPPINDATA[achId] = "\v" .. achName .. "\v"
     end
   end
-  d("Done...")
+  Dest:dm("Info", "Done...")
 end
 SLASH_COMMANDS["/dgap"] = function()
   --Get All POI's (to saved vars)
-  d("Saving all POI's...")
-  local zoneIndex = GetCurrentMapZoneIndex()
-  local currentMapId = GetCurrentMapId()
+  Dest:dm("Info", "Saving all POI's...")
+  local zoneIndex    = GetCurrentMapZoneIndex()
+  local currentMapId = GetZoneId(zoneIndex)
   if Destinations_Settings.pointsOfIntrest == nil then Destinations_Settings.pointsOfIntrest = {} end
   if Destinations_Settings.pointsOfIntrest[currentMapId] == nil then Destinations_Settings.pointsOfIntrest[currentMapId] = {} end
   Destinations_Settings.pointsOfIntrest[currentMapId] = {}
-  local saveData                                   = Destinations_Settings.pointsOfIntrest[currentMapId]
+  local saveData                                      = Destinations_Settings.pointsOfIntrest[currentMapId]
   if zoneIndex then
     for i = 1, GetNumPOIs(zoneIndex) do
-      local normalizedX, normalizedY, poiType, icon = GetPOIMapInfo(zoneIndex, i)
-      local objectiveName                           = GetPOIInfo(zoneIndex, i)
-      local _, _, _, objectiveIcon, _, _            = GetPOIMapInfo(zoneIndex, i)
-      local poiTypeId                               = 99
-      local poiTypeName = GetPoiTypeName(poiTypeId)
+      local objectiveName, objectiveLevel, startDescription, finishedDescription = GetPOIInfo(zoneIndex, i)
+      local normalizedX, normalizedY, poiPinType, objectiveIcon, _, _, _, _      = GetPOIMapInfo(zoneIndex, i)
+      local poiTypeId                                                            = 99
       if objectiveName then
         local POIno = tostring(i)
         if string.len(POIno) == 1 then
@@ -4861,16 +5034,16 @@ SLASH_COMMANDS["/dgap"] = function()
         end
         local objectiveString = "{ n = 0x22%s0x22, t = %s },"
         saveData[POIno]       = string.format(objectiveString, objectiveName, objectiveIcon)
-        d(tostring(POIno) .. ": " .. objectiveName)
+        Dest:dm("Info", tostring(POIno) .. ": " .. objectiveName)
         if string.find(objectiveIcon, "/esoui/art/icons/poi/") then
           objectiveIcon = string.gsub(objectiveIcon, "/esoui/art/icons/poi/", "")
         end
-        d(tostring(POIno) .. ": " .. objectiveIcon)
+        Dest:dm("Info", tostring(POIno) .. ": " .. objectiveIcon)
       end
     end
-    d("Done...")
+    Dest:dm("Info", "Done...")
   else
-    d("No data to save...")
+    Dest:dm("Info", "No data to save...")
   end
 end
 
@@ -4880,36 +5053,36 @@ SLASH_COMMANDS["/dsav"] = function(...)
   if (param ~= nil and param ~= "") then
     local cmdparam = nil
     if (param == "ff") then
-      d("Saving Foul Water Fishing Spot.")
+      Dest:dm("Info", "Saving Foul Water Fishing Spot.")
       cmdparam = 40
     elseif (param == "fr") then
-      d("Saving River Fishing Spot.")
+      Dest:dm("Info", "Saving River Fishing Spot.")
       cmdparam = 41
     elseif (param == "fo") then
-      d("Saving Ocean Fishing Spot.")
+      Dest:dm("Info", "Saving Ocean Fishing Spot.")
       cmdparam = 42
     elseif (param == "fl") then
-      d("Saving Lake Fishing Spot.")
+      Dest:dm("Info", "Saving Lake Fishing Spot.")
       cmdparam = 43
     elseif (string.sub(param, 0, 2) == "co") and (string.len(param) >= 5) then
-      d("Saving Collectible Spot.")
+      Dest:dm("Info", "Saving Collectible Spot.")
       cmdparam = 100
     elseif (param == "-h") then
-      d("Write /dsav <param>")
-      d("The following parameters can be used:")
-      d("co* > saves Collectible spot")
-      d("replace the * with the mob name")
-      d("like: /dsav coMudcrab")
-      d("ff > saves Foul Fishing spot")
-      d("fr > saves River Fishing spot")
-      d("fo > saves Ocean Fishing spot")
-      d("fl > saves Lake Fishing spot")
-      d("-h > Shows this help text.")
-      d("Example: /dsav ff")
+      Dest:dm("Info", "Write /dsav <param>")
+      Dest:dm("Info", "The following parameters can be used:")
+      Dest:dm("Info", "co* > saves Collectible spot")
+      Dest:dm("Info", "replace the * with the mob name")
+      Dest:dm("Info", "like: /dsav coMudcrab")
+      Dest:dm("Info", "ff > saves Foul Fishing spot")
+      Dest:dm("Info", "fr > saves River Fishing spot")
+      Dest:dm("Info", "fo > saves Ocean Fishing spot")
+      Dest:dm("Info", "fl > saves Lake Fishing spot")
+      Dest:dm("Info", "-h > Shows this help text.")
+      Dest:dm("Info", "Example: /dsav ff")
       cmdparam = nil
     else
-      d("Unknown parameter!")
-      d("Write /dsav -h for help.")
+      Dest:dm("Info", "Unknown parameter!")
+      Dest:dm("Info", "Write /dsav -h for help.")
       cmdparam = nil
     end
     if cmdparam then
@@ -4940,15 +5113,15 @@ SLASH_COMMANDS["/dsav"] = function(...)
       mapNumber = 1
       while coordData[mapNumber] do
         if drtv.getQuestInfo then
-          d("saving data for " .. mapName[mapNumber] .. "...")
+          Dest:dm("Info", "saving data for " .. mapName[mapNumber] .. "...")
         end
         DestinationsSV.Quests["DQD: " .. mapName[mapNumber] .. "/" .. FormatCoords(mapX) .. FormatCoords(mapY)] = coordData[mapNumber]
         mapNumber                                                                                               = mapNumber + 1
       end
     end
   else
-    d("Missing parameter!")
-    d("Write /dsav -h for help.")
+    Dest:dm("Info", "Missing parameter!")
+    Dest:dm("Info", "Write /dsav -h for help.")
   end
 end
 
@@ -5182,12 +5355,14 @@ local function OnAchievementUpdate(eventCode, achievementId)
   end
 end
 
+--[[TODO What did this do in the past?
+]]--
 local function UpdateInventoryContent()
   MapMiscPOIs = false
   if DestinationsCSSV.filters[DPINS.RELIC_HUNTER] or DestinationsCSSV.filters[DPINS.CUTPURSE] then
     GetMapTextureName()
     if mapTextureName and zoneTextureName then
-      --          d("getting inventory...")
+      -- Dest:dm("Info", "getting inventory...")
     end
   end
 end
@@ -5730,12 +5905,27 @@ local function SetPinLayouts()
   local pinLayout_Ayleid              = {
     maxDistance = DestinationsSV.pins.pinTextureAyleid.maxDistance,
     level = DestinationsSV.pins.pinTextureAyleid.level,
-    texture = pinTextures.paths.ayleid[DestinationsSV.pins.pinTextureAyleid.type],
+    texture = pinTextures.paths.Ayleid[DestinationsSV.pins.pinTextureAyleid.type],
     size = DestinationsSV.pins.pinTextureAyleid.size,
     tint = ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.tint)),
     additionalLayout = {
       function(pin)
         pin:GetNamedChild("Background"):SetColor(unpack(DestinationsSV.pins.pinTextureAyleid.tint))
+      end,
+      function(pin)
+        pin:GetNamedChild("Background"):SetColor(1, 1, 1, 1)
+      end,
+    },
+  }
+  local pinLayout_Deadlands              = {
+    maxDistance = DestinationsSV.pins.pinTextureDeadlands.maxDistance,
+    level = DestinationsSV.pins.pinTextureDeadlands.level,
+    texture = pinTextures.paths.Deadlands[DestinationsSV.pins.pinTextureDeadlands.type],
+    size = DestinationsSV.pins.pinTextureDeadlands.size,
+    tint = ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureDeadlands.tint)),
+    additionalLayout = {
+      function(pin)
+        pin:GetNamedChild("Background"):SetColor(unpack(DestinationsSV.pins.pinTextureDeadlands.tint))
       end,
       function(pin)
         pin:GetNamedChild("Background"):SetColor(1, 1, 1, 1)
@@ -5934,6 +6124,7 @@ local function SetPinLayouts()
   LMP:AddPinType(DPINS.FISHINGDONE, FishDonepinTypeCallback, nil, pinLayout_FishDone, pinTooltipCreator)
 
   LMP:AddPinType(DPINS.AYLEID, AyleidpinTypeCallback, nil, pinLayout_Ayleid, pinTooltipCreator)
+  LMP:AddPinType(DPINS.DEADLANDS, DeadlandspinTypeCallback, nil, pinLayout_Deadlands, pinTooltipCreator)
   LMP:AddPinType(DPINS.WWVAMP, WWVamppinTypeCallback, nil, pinLayout_WWVamp, pinTooltipCreator)
 
   LMP:AddPinType(DPINS.VAMPIRE_ALTAR, VampireAltarpinTypeCallback, nil, pinLayout_VampireAltar, pinTooltipCreator)
@@ -6070,16 +6261,16 @@ local function SetPinLayouts()
   if DestinationsCSSV.settings.MapFiltersMisc then
     LMP:AddPinFilter(DPINS.AYLEID, defaults.miscColorCodes.mapFilterTextDone1:Colorize(GetString(DEST_FILTER_AYLEID)),
       nil, DestinationsCSSV.filters)
+    LMP:AddPinFilter(DPINS.DEADLANDS, defaults.miscColorCodes.mapFilterTextDone1:Colorize(GetString(DEST_FILTER_DEADLANDS_ENTRANCE)),
+      nil, DestinationsCSSV.filters)
     LMP:AddPinFilter(DPINS.WWVAMP, defaults.miscColorCodes.mapFilterTextUndone1:Colorize(GetString(DEST_FILTER_WWVAMP)),
       nil, DestinationsCSSV.filters)
-
     LMP:AddPinFilter(DPINS.VAMPIRE_ALTAR,
       defaults.miscColorCodes.mapFilterTextDone2:Colorize(GetString(DEST_FILTER_VAMPIRE_ALTAR)), nil,
       DestinationsCSSV.filters)
     LMP:AddPinFilter(DPINS.WEREWOLF_SHRINE,
       defaults.miscColorCodes.mapFilterTextUndone2:Colorize(GetString(DEST_FILTER_WEREWOLF_SHRINE)), nil,
       DestinationsCSSV.filters)
-
     LMP:AddPinFilter(DPINS.DWEMER, defaults.miscColorCodes.mapFilterTextDone1:Colorize(GetString(DEST_FILTER_DWEMER)),
       nil, DestinationsCSSV.filters)
   end
@@ -6135,6 +6326,7 @@ local function SetPinLayouts()
   COMPASS_PINS:AddCustomPin(DPINS.FISHINGDONE, CollectibleFishCompassPins, pinLayout_FishDone)
 
   COMPASS_PINS:AddCustomPin(DPINS.AYLEID, AddMiscCompassPins, pinLayout_Ayleid)
+  COMPASS_PINS:AddCustomPin(DPINS.DEADLANDS, AddMiscCompassPins, pinLayout_Deadlands)
   COMPASS_PINS:AddCustomPin(DPINS.WWVAMP, AddMiscCompassPins, pinLayout_WWVamp)
   COMPASS_PINS:AddCustomPin(DPINS.VAMPIRE_ALTAR, AddMiscCompassPins, pinLayout_VampireAltar)
   COMPASS_PINS:AddCustomPin(DPINS.WEREWOLF_SHRINE, AddMiscCompassPins, pinLayout_WereWolfShrine)
@@ -6289,12 +6481,16 @@ end
 
 local function ShowLanguageWarning()
   EVENT_MANAGER:UnregisterForEvent(ADDON_NAME, EVENT_PLAYER_ACTIVATED)
-  CHAT_ROUTER:AddSystemMessage("Destinations is not properly localized for " .. Destinations.client_lang .. ".  English terms will be used and not all POIs may be properly classified.")
+  if Destinations.client_lang == "it" then
+    CHAT_ROUTER:AddSystemMessage("Destinations non è localizzato correttamente dalla lingua italiana. Verranno utilizzati termini inglesi e non tutti i punti di interesse potrebbero essere classificati correttamente.")
+  else
+    CHAT_ROUTER:AddSystemMessage("Destinations is not properly localized for " .. Destinations.client_lang .. ".  English terms will be used and not all POIs may be properly classified.")
+  end
 end
 
 local function DisableEnglishFunctionnalities()
 
-  if Destinations.effective_lang == "en" then
+  if Destinations.client_lang == "en" then
     DestinationsSV.settings.AddEnglishOnUnknwon = false
     DestinationsSV.settings.AddEnglishOnKeeps   = false
   end
@@ -6326,7 +6522,7 @@ local function InitSettings()
   local unknownPoiPreview, otherPreview, otherPreviewDone, MaiqPreview, MaiqPreviewDone, PeacemakerPreview, PeacemakerPreviewDone, NosediverPreview, NosediverPreviewDone
   local EarthlyPosPreview, EarthlyPosPreviewDone, OnMePreview, OnMePreviewDone, BrawlPreview, BrawlPreviewDone, PatronPreview, PatronPreviewDone
   local WrothgarJumperPreview, WrothgarJumperPreviewDone, RelicHunterPreview, RelicHunterPreviewDone, BreakingPreview, BreakingPreviewDone, CutpursePreview, CutpursePreviewDone
-  local ChampionPreview, ChampionPreviewDone, AyleidPreview, DwemerPreview, WWVampPreview, VampAltarPreview, WWShrinePreview
+  local ChampionPreview, ChampionPreviewDone, AyleidPreview, DeadlandsPreview, DwemerPreview, WWVampPreview, VampAltarPreview, WWShrinePreview
   local QuestsUndonePreview, QuestsInProgressPreview, QuestsDonePreview, CollectiblePreview, CollectibleDonePreview, FishPreview, FishDonePreview
 
   CreateIcons         = function(panel)
@@ -6517,9 +6713,16 @@ local function InitSettings()
 
       AyleidPreview = WINDOW_MANAGER:CreateControl(nil, previewpinTextureAyleid, CT_TEXTURE)
       AyleidPreview:SetAnchor(RIGHT, previewpinTextureAyleid.dropdown:GetControl(), LEFT, -10, 0)
-      AyleidPreview:SetTexture(pinTextures.paths.ayleid[DestinationsSV.pins.pinTextureAyleid.type])
+      AyleidPreview:SetTexture(pinTextures.paths.Ayleid[DestinationsSV.pins.pinTextureAyleid.type])
       AyleidPreview:SetDimensions(DestinationsSV.pins.pinTextureAyleid.size, DestinationsSV.pins.pinTextureAyleid.size)
       AyleidPreview:SetColor(unpack(DestinationsSV.pins.pinTextureAyleid.tint))
+
+      -- Deadlands
+      DeadlandsPreview = WINDOW_MANAGER:CreateControl(nil, previewpinTextureDeadlands, CT_TEXTURE)
+      DeadlandsPreview:SetAnchor(RIGHT, previewpinTextureDeadlands.dropdown:GetControl(), LEFT, -10, 0)
+      DeadlandsPreview:SetTexture(pinTextures.paths.Deadlands[DestinationsSV.pins.pinTextureDeadlands.type])
+      DeadlandsPreview:SetDimensions(DestinationsSV.pins.pinTextureDeadlands.size, DestinationsSV.pins.pinTextureDeadlands.size)
+      DeadlandsPreview:SetColor(unpack(DestinationsSV.pins.pinTextureDeadlands.tint))
 
       DwemerPreview = WINDOW_MANAGER:CreateControl(nil, previewpinTextureDwemer, CT_TEXTURE)
       DwemerPreview:SetAnchor(RIGHT, previewpinTextureDwemer.dropdown:GetControl(), LEFT, -10, 0)
@@ -6643,7 +6846,7 @@ local function InitSettings()
           getFunc = function() return DestinationsSV.settings.AddEnglishOnUnknwon end,
           setFunc = function(state) DestinationsSV.settings.AddEnglishOnUnknwon = state end,
           default = defaults.settings.AddEnglishOnUnknwon,
-          disabled = function() return Destinations.effective_lang == "en" end,
+          disabled = function() return Destinations.client_lang == "en" end,
         },
         { -- Color of English name
           type = "colorpicker",
@@ -6664,7 +6867,7 @@ local function InitSettings()
           getFunc = function() return DestinationsSV.settings.AddEnglishOnKeeps end,
           setFunc = function(state) DestinationsSV.settings.AddEnglishOnKeeps = state end,
           default = defaults.settings.AddEnglishOnKeeps,
-          disabled = function() return Destinations.effective_lang == "en" end,
+          disabled = function() return Destinations.client_lang == "en" end,
         },
         { -- Color for English name on Keeps
           type = "colorpicker",
@@ -8089,8 +8292,8 @@ local function InitSettings()
           for index, name in ipairs(pinTextures.lists.Ayleid) do
             if name == selected then
               DestinationsSV.pins.pinTextureAyleid.type = index
-              LMP:SetLayoutKey(DPINS.AYLEID, "texture", pinTextures.paths.ayleid[index])
-              AyleidPreview:SetTexture(pinTextures.paths.ayleid[index])
+              LMP:SetLayoutKey(DPINS.AYLEID, "texture", pinTextures.paths.Ayleid[index])
+              AyleidPreview:SetTexture(pinTextures.paths.Ayleid[index])
               RedrawAllPins(DPINS.AYLEID)
               break
             end
@@ -8140,6 +8343,85 @@ local function InitSettings()
         disabled = function() return not DestinationsCSSV.filters[DPINS.AYLEID] end,
         default = { r = defaults.pins.pinTextureAyleid.textcolor[1], g = defaults.pins.pinTextureAyleid.textcolor[2], b = defaults.pins.pinTextureAyleid.textcolor[3] }
       })
+---- Deadlands Begin
+      table.insert(submenu, { -- Header
+        type = "header",
+        name = defaults.miscColorCodes.settingsTextAchHeaders:Colorize(GetString(DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER)),
+      })
+      table.insert(submenu, { -- Deadlands pin toggle
+        type = "checkbox",
+        width = "half",
+        name = defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE)) .. " " .. defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_PER_CHAR)),
+        tooltip = GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_TOGGLE_TT) .. " " .. defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_PER_CHAR_TOGGLE_TT)),
+        getFunc = function() return DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        setFunc = function(state)
+          TogglePins(DPINS.DEADLANDS, state)
+          RedrawAllPins(DPINS.DEADLANDS)
+        end,
+        default = defaults.filters[DPINS.DEADLANDS],
+      })
+      table.insert(submenu, { -- Deadlands pintype
+        type = "dropdown",
+        width = "half",
+        reference = "previewpinTextureDeadlands",
+        choices = pinTextures.lists.Deadlands,
+        getFunc = function() return pinTextures.lists.Deadlands[DestinationsSV.pins.pinTextureDeadlands.type] end,
+        setFunc = function(selected)
+          for index, name in ipairs(pinTextures.lists.Deadlands) do
+            if name == selected then
+              DestinationsSV.pins.pinTextureDeadlands.type = index
+              LMP:SetLayoutKey(DPINS.DEADLANDS, "texture", pinTextures.paths.Deadlands[index])
+              DeadlandsPreview:SetTexture(pinTextures.paths.Deadlands[index])
+              RedrawAllPins(DPINS.DEADLANDS)
+              break
+            end
+          end
+        end,
+        disabled = function() return not DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        default = pinTextures.lists.Deadlands[defaults.pins.pinTextureDeadlands.type],
+      })
+      table.insert(submenu, { -- Deadlands pin size
+        type = "slider",
+        name = GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_SIZE),
+        min = 20,
+        max = 70,
+        getFunc = function() return DestinationsSV.pins.pinTextureDeadlands.size end,
+        setFunc = function(size)
+          DestinationsSV.pins.pinTextureDeadlands.size = size
+          DeadlandsPreview:SetDimensions(size, size)
+          LMP:SetLayoutKey(DPINS.DEADLANDS, "size", size)
+          RedrawAllPins(DPINS.DEADLANDS)
+        end,
+        disabled = function() return not DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        default = defaults.pins.pinTextureDeadlands.size
+      })
+      table.insert(submenu, { -- Deadlands pin color
+        type = "colorpicker",
+        name = GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR),
+        tooltip = GetString(DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT),
+        getFunc = function() return unpack(DestinationsSV.pins.pinTextureDeadlands.tint) end,
+        setFunc = function(r, g, b, a)
+          DestinationsSV.pins.pinTextureDeadlands.tint = { r, g, b, a }
+          LMP:SetLayoutKey(DPINS.DEADLANDS, "tint", ZO_ColorDef:New(r, g, b, a))
+          DeadlandsPreview:SetColor(r, g, b, a)
+          RedrawAllPins(DPINS.DEADLANDS)
+        end,
+        disabled = function() return not DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        default = { r = defaults.pins.pinTextureDeadlands.tint[1], g = defaults.pins.pinTextureDeadlands.tint[2], b = defaults.pins.pinTextureDeadlands.tint[3], a = defaults.pins.pinTextureDeadlands.tint[4] }
+      })
+      table.insert(submenu, { -- Deadlands pin text color
+        type = "colorpicker",
+        name = GetString(DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR),
+        tooltip = GetString(DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT),
+        getFunc = function() return unpack(DestinationsSV.pins.pinTextureDeadlands.textcolor) end,
+        setFunc = function(r, g, b)
+          DestinationsSV.pins.pinTextureDeadlands.textcolor = { r, g, b }
+          LMP:RefreshPins(DPINS.DEADLANDS)
+        end,
+        disabled = function() return not DestinationsCSSV.filters[DPINS.DEADLANDS] end,
+        default = { r = defaults.pins.pinTextureDeadlands.textcolor[1], g = defaults.pins.pinTextureDeadlands.textcolor[2], b = defaults.pins.pinTextureDeadlands.textcolor[3] }
+      })
+---- Deadlands End
       table.insert(submenu, { -- Header
         type = "header",
         name = defaults.miscColorCodes.settingsTextAchHeaders:Colorize(GetString(DEST_SETTINGS_MISC_DWEMER_HEADER)),
@@ -8229,10 +8511,12 @@ local function InitSettings()
         setFunc = function(state)
           TogglePins(DPINS.MISC_COMPASS, state)
           RedrawCompassPinsOnly(DPINS.AYLEID)
+          RedrawCompassPinsOnly(DPINS.DEADLANDS)
           RedrawCompassPinsOnly(DPINS.DWEMER)
         end,
         disabled = function() return
         not DestinationsCSSV.filters[DPINS.AYLEID] and
+          not DestinationsCSSV.filters[DPINS.DEADLANDS] and
           not DestinationsCSSV.filters[DPINS.DWEMER]
         end,
         default = defaults.filters[DPINS.MISC_COMPASS],
@@ -8245,14 +8529,18 @@ local function InitSettings()
         getFunc = function() return DestinationsSV.pins.pinTextureAyleid.maxDistance * 1000 end,
         setFunc = function(maxDistance)
           DestinationsSV.pins.pinTextureAyleid.maxDistance  = maxDistance / 1000
+          DestinationsSV.pins.pinTextureDeadlands.maxDistance  = maxDistance / 1000
           DestinationsSV.pins.pinTextureDwemer.maxDistance  = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.AYLEID].maxDistance = maxDistance / 1000
+          COMPASS_PINS.pinLayouts[DPINS.DEADLANDS].maxDistance = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.DWEMER].maxDistance = maxDistance / 1000
           RedrawCompassPinsOnly(DPINS.AYLEID)
+          RedrawCompassPinsOnly(DPINS.DEADLANDS)
           RedrawCompassPinsOnly(DPINS.DWEMER)
         end,
         disabled = function() return
         (not DestinationsCSSV.filters[DPINS.AYLEID] and
+          not DestinationsCSSV.filters[DPINS.DEADLANDS] and
           not DestinationsCSSV.filters[DPINS.DWEMER]) or
           not DestinationsCSSV.filters[DPINS.MISC_COMPASS]
         end,
@@ -8267,15 +8555,19 @@ local function InitSettings()
         getFunc = function() return DestinationsSV.pins.pinTextureAyleid.level end,
         setFunc = function(level)
           DestinationsSV.pins.pinTextureAyleid.level = level
+          DestinationsSV.pins.pinTextureDeadlands.level = level
           DestinationsSV.pins.pinTextureDwemer.level = level
           LMP:SetLayoutKey(DPINS.AYLEID, "level", level)
+          LMP:SetLayoutKey(DPINS.DEADLANDS, "level", level)
           LMP:SetLayoutKey(DPINS.DWEMER, "level", level)
           RedrawAllPins(DPINS.AYLEID)
+          RedrawAllPins(DPINS.DEADLANDS)
           RedrawAllPins(DPINS.DWEMER)
         end,
         disabled = function() return
         not DestinationsCSSV.filters[DPINS.AYLEID] and
-          not DestinationsCSSV.filters[DPINS.DWEMER]
+          not DestinationsCSSV.filters[DPINS.DWEMER] and
+          not DestinationsCSSV.filters[DPINS.DEADLANDS]
         end,
         default = defaults.pins.pinTextureAyleid.level
       })
@@ -8993,7 +9285,7 @@ local function InitSettings()
         disabled = function() return not DestinationsCSSV.filters[DPINS.QUESTS_UNDONE] and not DestinationsCSSV.filters[DPINS.QUESTS_IN_PROGRESS] and not DestinationsCSSV.filters[DPINS.QUESTS_DONE] end,
         default = defaults.pins.pinTextureQuestsUndone.level
       })
------------
+      -----------
       table.insert(submenu, { -- Global show Quest Giver in tooltip
         type = "checkbox",
         name = defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_REGISTER_QUEST_GIVER_TOGGLE)) .. " " .. defaults.miscColorCodes.settingsTextAccountWide:Colorize(GetString(DEST_SETTINGS_PER_CHAR)),
@@ -9008,13 +9300,13 @@ local function InitSettings()
           RedrawCompassPinsOnly(DPINS.QUESTS_DONE)
         end,
         disabled = function() return
-          not DestinationsCSSV.filters[DPINS.QUESTS_UNDONE] and
+        not DestinationsCSSV.filters[DPINS.QUESTS_UNDONE] and
           not DestinationsCSSV.filters[DPINS.QUESTS_IN_PROGRESS] and
           not DestinationsCSSV.filters[DPINS.QUESTS_DONE]
         end,
         default = defaults.settings.HideQuestGiverName,
       })
---------------
+      --------------
       table.insert(submenu, { -- Header
         type = "header",
         name = defaults.miscColorCodes.settingsTextAchHeaders:Colorize(GetString(DEST_SETTINGS_QUEST_REGISTER_HEADER)),
@@ -9786,7 +10078,7 @@ local function OnLoad(eventCode, name)
     --d("Checking Map State")
     check_map_state()
 
-    if not Destinations.supported_lang then
+    if not Destinations.supported_menu_lang then
       --chat messages aren't shown before player is activated
       EVENT_MANAGER:RegisterForEvent(ADDON_NAME, EVENT_PLAYER_ACTIVATED, ShowLanguageWarning)
     end

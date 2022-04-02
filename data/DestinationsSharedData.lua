@@ -22,6 +22,7 @@ TYPES:
     22 = "Vampire Altar"
     23 = "Dwemer Ruins"
     24 = "Werewolf Shrine"
+    25 = "Deadlands Entrance"
     30 = "Trophy Area"
     40 = "Foul Water Fishing Spot"
     41 = "River Fishing Spot"
@@ -3131,4 +3132,26 @@ Destinations.ACHDataStore = {
   ["u28_blackreach_base_0"] = {
     { 0.335290551, 0.297058612, 41, 2861, 1, "X" }, -- Sharlikran
   },
+  -- Blackwood
+  ["blackwood_base_0"] = {
+    { 0.2875977754, 0.4839881360, 42, 2981, 1, "X" }, -- Sharlikran
+    { 0.3351792693, 0.6328297853, 20, 999999, 1, "X" }, -- Sharlikran
+    { 0.6207196712, 0.7159832715, 20, 999999, 1, "X" }, -- Sharlikran
+    { 0.4226815402, 0.4672343432, 20, 999999, 1, "X" }, -- Sharlikran
+    { 0.4413733482, 0.1940076649, 20, 999999, 1, "X" }, -- Sharlikran
+    { 0.6365278959, 0.7118381261, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.6542717814, 0.5402227044, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.6057025790, 0.2294649928, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+  },
+  -- Arkthzand Cavern
+  ["vunalk2_base_0"] = {
+    { 0.7836887240, 0.2897340059, 20, 999999, 1, "X" }, -- Sharlikran
+  },
+  -- Deadlands
+  ["u32deadlandszone_base_0"] = {
+    { 0.8387016057, 0.2812155783, 40, 3144, 1, "X" }, -- Sharlikran
+  },
 }
+
+-- vunalk
+Destinations.ACHDataStore["vunalk1_base_0"]  = Destinations.ACHDataStore["vunalk2_base_0"]

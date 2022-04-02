@@ -1,9 +1,9 @@
 Destinations                      = Destinations or {}
 
 Destinations.CollectibleDataIndex = {
-  KEY    = 1,
+  KEY = 1,
   NUMBER = 2,
-  NAME   = 3,
+  NAME = 3,
 }
 
 Destinations.CollectibleDataStore = {
