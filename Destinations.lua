@@ -121,7 +121,7 @@ end
 -------------------------------------------------
 
 local ADDON_AUTHOR                              = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION                             = "29.5"
+local ADDON_VERSION                             = "29.6"
 local ADDON_WEBSITE                             = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP                                       = LibMapPins
@@ -1471,12 +1471,6 @@ local ZoneToAchievements                        = {
 }
 --------- ZoneId to mapTile name conversion ---------
 local ZoneIDsToFileNames                        = {
-  [381] = "auridon_base_0",
-  [383] = "grahtwood_base_0",
-  [108] = "greenshade_base_0",
-  [537] = "khenarthisroost_base_0",
-  [58] = "malabaltor_base_0",
-  [382] = "reapersmarch_base_0",
   [281] = "balfoyen_base_0",
   [280] = "bleakrock_base_0",
   [57] = "deshaan_base_0",
@@ -1491,32 +1485,42 @@ local ZoneIDsToFileNames                        = {
   [20] = "rivenspire_base_0",
   [19] = "stormhaven_base_0",
   [534] = "strosmkai_base_0",
+  [381] = "auridon_base_0",
+  [383] = "grahtwood_base_0",
+  [108] = "greenshade_base_0",
+  [537] = "khenarthisroost_base_0",
+  [58] = "malabaltor_base_0",
+  [382] = "reapersmarch_base_0",
   [1027] = "artaeum_base_0",
-  [1161] = "blackreach_base_0",
+  [1208] = "u28_blackreach_base_0", -- Arkthzand
+  [1161] = "blackreach_base_0", -- Greymoor
+  [1261] = "blackwood_base_0",
   [980] = "clockwork_base_0",
   [981] = "brassfortress_base_0",
   [982] = "clockworkoutlawsrefuge_base_0",
   [347] = "coldharbour_base_0",
   [888] = "craglorn_base_0",
+  --[[ since there are two entries with 1283 the table is
+  messed up. So for Fargrave and The Shambles the mapId
+  will be used.
+  ]]--
+  [2119] = "u32_fargravezone_base_0", -- The zone, 1283
+  [1282] = "u32_fargrave_base_0", -- Fargrave City
+  [2082] = "u32_theshambles_base_0", -- The Shambles, 1283
   [823] = "goldcoast_base_0",
   [816] = "hewsbane_base_0",
   [726] = "murkmire_base_0",
-  [1072] = "swampisland_ext_base_0",
   [1086] = "elsweyr_base_0",
   [1133] = "southernelsweyr_base_0",
   [1011] = "summerset_base_0",
+  [1286] = "u32deadlandszone_base_0",
+  [1207] = "reach_base_0",
   [849] = "vvardenfell_base_0",
   [1160] = "westernskryim_base_0",
   [684] = "wrothgar_base_0",
   [181] = "ava_whole_0",
   [584] = "imperialcity_base_0",
   [267] = "eyevea_base_0",
-  [1207] = "reach_base_0",
-  [1208] = "u28_blackreach_base_0",
-  [1261] = "blackwood_base_0",
-  [1282] = "u32_fargrave_base_0",
-  [1283] = "u32_theshambles_base_0",
-  [1286] = "u32deadlandszone_base_0",
 }
 
 local achTypes                                  = {
@@ -1610,7 +1614,13 @@ EVENT_MANAGER:RegisterForEvent(ADDON_NAME .. "_zone_changed", EVENT_ZONE_CHANGED
    "art/maps/elsweyr/jodesembrace1.base_0.dds",
 ]]--
 local function GetMapTextureName()
-  zoneTextureName   = ZoneIDsToFileNames[GetZoneId(GetCurrentMapZoneIndex())]
+  local zoneId = GetZoneId(GetCurrentMapZoneIndex())
+  local mapId = GetCurrentMapId()
+  if zoneId == 1283 then
+    zoneTextureName   = ZoneIDsToFileNames[mapId]
+  else
+    zoneTextureName   = ZoneIDsToFileNames[zoneId]
+  end
   _, mapTextureName = LMP:GetZoneAndSubzone(false, true, true)
   if not zoneTextureName then
     zoneTextureName = mapTextureName
@@ -1620,20 +1630,24 @@ local function GetMapTextureName()
 end
 
 -- Slash commands -------------------------------------------------------------
+--prints message to chat
+local function ChatPrint(...)
+  local ChatEditControl = CHAT_SYSTEM.textEntry.editControl
+  if (not ChatEditControl:HasFocus()) then StartChatInput() end
+  ChatEditControl:InsertText(...)
+end
+
 local function ShowMyPosition()
   if SetMapToPlayerLocation() == SET_MAP_RESULT_MAP_CHANGED then
     CALLBACK_MANAGER:FireCallbacks("OnWorldMapChanged")
   end
 
   local x, y    = GetMapPlayerPosition("player")
-
-  local locX    = ("%0.09f"):format(zo_round(x * 10000) / 10000)
-  local locY    = ("%0.09f"):format(zo_round(y * 10000) / 10000)
-
   local mapname = LMP:GetZoneAndSubzone(false, true, true)
   GetMapTextureName()
-
-  Dest:dm("Info", zo_strformat('["<<1>>/<<2>>"] = <<3>>, <<4>>', mapname, zoneTextureName, locX, locY))
+  local xs = '"X"'
+  local locationString = string.format("{ %.6f, %.6f, 0, 0, 1, %s }, -- %s/%s", x, y, xs, mapname, zoneTextureName)
+  ChatPrint(locationString)
 end
 
 SLASH_COMMANDS["/fishloc"] = ShowMyPosition
