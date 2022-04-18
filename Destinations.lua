@@ -33,7 +33,7 @@ Destinations.client_lang    = GetCVar("Language.2")
 Destinations.effective_quest_lang = nil
 Destinations.effective_menu_lang = nil
 local supported_quest_langs = { "br", "de", "en", "es", "fr", "fx", "it", "jp", "kb", "kr", "pl", "ru", }
-local supported_menu_langs = { "de", "en", "fr", "fx", "jf", "jp", "pl", "ru", "zh", }
+local supported_menu_langs = { "de", "en", "cs", "fr", "fx", "jf", "jp", "pl", "ru", "zh", }
 if is_in(Destinations.client_lang, supported_quest_langs) then
   Destinations.effective_quest_lang = Destinations.client_lang
 else
@@ -121,7 +121,7 @@ end
 -------------------------------------------------
 
 local ADDON_AUTHOR                              = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION                             = "29.6"
+local ADDON_VERSION                             = "29.7"
 local ADDON_WEBSITE                             = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP                                       = LibMapPins
