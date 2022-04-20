@@ -1,6 +1,6 @@
-Destinations                = Destinations or {}
+Destinations = Destinations or {}
 
-Destinations.AchIDs         = {                     -- using dummy code 999999 for things that have no achievements.
+Destinations.AchIDs = {                     -- using dummy code 999999 for things that have no achievements.
   [872] = (GetAchievementInfo(872)), --"I like M'aiq"
   [873] = (GetAchievementInfo(873)), --"Lightbringer"        ------  using shared code: 767167 (decimal numbers for the letters LGC)
   [871] = (GetAchievementInfo(871)), --"Give to the Poor"    ------  using shared code: 767167 (decimal numbers for the letters LGC)
@@ -31,7 +31,7 @@ Destinations.CollectibleIDs = {
   [847] = (GetAchievementInfo(847)), --"Atronach Element Collector"
   [848] = (GetAchievementInfo(848)), --"Oblivion Shard Gatherer"
 }
-Destinations.FishIDs        = {
+Destinations.FishIDs = {
   [471] = (GetAchievementInfo(471)), --"Glenumbra Angler"
   [472] = (GetAchievementInfo(472)), --"Stormhaven Angler"
   [473] = (GetAchievementInfo(473)), --"Rivenspire Angler"
@@ -74,7 +74,7 @@ Destinations.FishIDs        = {
   [2981] = (GetAchievementInfo(2981)), --"Blackwood Master Angler"
   [3144] = (GetAchievementInfo(3144)), --"Deadlands Master Angler"
 }
-Destinations.FishLocs       = {
+Destinations.FishLocs = {
   ["glenumbra_base_0"] = 471, --"Glenumbra Angler"
   ["stormhaven_base_0"] = 472, --"Stormhaven Angler"
   ["rivenspire_base_0"] = 473, --"Rivenspire Angler"

@@ -1,6 +1,6 @@
-Destinations                       = Destinations or {}
+Destinations = Destinations or {}
 
-Destinations.FishLocationsIndex    = {
+Destinations.FishLocationsIndex = {
   FISHNUMBER = 1,
   LOCATION = 2,
   --  40 = Foul   > Crawler/Fish Roe  (Slaughterfish/Trodh/Chub)
@@ -10,13 +10,13 @@ Destinations.FishLocationsIndex    = {
   --  44 = Unknown
 }
 
-local DESTINATIONS_FISH_TYPE_FOUL  = 1
+local DESTINATIONS_FISH_TYPE_FOUL = 1
 local DESTINATIONS_FISH_TYPE_RIVER = 2
 local DESTINATIONS_FISH_TYPE_OCEAN = 3
-local DESTINATIONS_FISH_TYPE_LAKE  = 4
+local DESTINATIONS_FISH_TYPE_LAKE = 4
 
 -- key is achievementId
-Destinations.FishLocationsStore    = {
+Destinations.FishLocationsStore = {
   [471] = { -- Glenumbra
     { 1, DESTINATIONS_FISH_TYPE_FOUL },
     { 2, DESTINATIONS_FISH_TYPE_LAKE },

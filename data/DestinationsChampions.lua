@@ -1415,19 +1415,19 @@ Destinations.ChampionTableStore = {
     { 0.6409398913, 0.1782415807, 2971, 5 }, -- Bloodrun Cave
     { 0.8396684527, 0.6944055557, 2971, 6 }, -- Vunalk
     -- silent hills leads
-    { 0.5771709680, 0.6442354321, 2996, 1},--Kao'kuul
-    { 0.5771709680, 0.6442354321, 2996, 2},--The Silent Sentry
-    { 0.5771709680, 0.6442354321, 2996, 3},--The Rootwhisperer
-    { 0.5771709680, 0.6442354321, 2996, 4},--Vor'chul the Beastbreaker
-    { 0.5771709680, 0.6442354321, 2996, 5},--Dread Irenan
-    { 0.5771709680, 0.6442354321, 2994, 1},--Warlord Iaza
+    { 0.5771709680, 0.6442354321, 2996, 1 }, --Kao'kuul
+    { 0.5771709680, 0.6442354321, 2996, 2 }, --The Silent Sentry
+    { 0.5771709680, 0.6442354321, 2996, 3 }, --The Rootwhisperer
+    { 0.5771709680, 0.6442354321, 2996, 4 }, --Vor'chul the Beastbreaker
+    { 0.5771709680, 0.6442354321, 2996, 5 }, --Dread Irenan
+    { 0.5771709680, 0.6442354321, 2994, 1 }, --Warlord Iaza
     -- Zenithar's Abbey leads
-    { 0.4583237767, 0.3125061392, 2997, 1},--Grapnur the Crusher and Burthar Meatwise
-    { 0.4583237767, 0.3125061392, 2997, 2},--The Frigid Temptress
-    { 0.4583237767, 0.3125061392, 2997, 3},--Gloom-Tooth
-    { 0.4583237767, 0.3125061392, 2997, 4},--Arbitrator Tasellis
-    { 0.4583237767, 0.3125061392, 2997, 5},--Fulciinius the Bone Miser
-    { 0.4583237767, 0.3125061392, 2995, 1},--Ra'back the Trap Master
+    { 0.4583237767, 0.3125061392, 2997, 1 }, --Grapnur the Crusher and Burthar Meatwise
+    { 0.4583237767, 0.3125061392, 2997, 2 }, --The Frigid Temptress
+    { 0.4583237767, 0.3125061392, 2997, 3 }, --Gloom-Tooth
+    { 0.4583237767, 0.3125061392, 2997, 4 }, --Arbitrator Tasellis
+    { 0.4583237767, 0.3125061392, 2997, 5 }, --Fulciinius the Bone Miser
+    { 0.4583237767, 0.3125061392, 2995, 1 }, --Ra'back the Trap Master
   },
   ["u30_undertowcavern_base_0"] = {
     { 0.5030580759, 0.1559633016, 2971, 1 }, -- Undertow Cavern
@@ -1447,75 +1447,75 @@ Destinations.ChampionTableStore = {
   ["vunalk2_base_0"] = {
     { 0.3007254302, 0.4141569435, 2971, 6 }, -- Vunalk
   },
-  ["zhmain_base_0"] = {	--Zenithar's Abbey
-    { 0.3503184616, 0.4681295752, 2997, 1},--Grapnur the Crusher and Burthar Meatwise
-    { 0.2010581940, 0.7187500000, 2997, 2},--The Frigid Temptress
-    { 0.3853503167, 0.1786833852, 2997, 3},--Gloom-Tooth
-    { 0.5460454821, 0.4861995875, 2997, 4},--Arbitrator Tasellis
-    { 0.8677419424, 0.5305498838, 2997, 5},--Fulciinius the Bone Miser
+  ["zhmain_base_0"] = {  --Zenithar's Abbey
+    { 0.3503184616, 0.4681295752, 2997, 1 }, --Grapnur the Crusher and Burthar Meatwise
+    { 0.2010581940, 0.7187500000, 2997, 2 }, --The Frigid Temptress
+    { 0.3853503167, 0.1786833852, 2997, 3 }, --Gloom-Tooth
+    { 0.5460454821, 0.4861995875, 2997, 4 }, --Arbitrator Tasellis
+    { 0.8677419424, 0.5305498838, 2997, 5 }, --Fulciinius the Bone Miser
     -- lead
-    { 0.6032258272, 0.7148675918, 2995, 1},--Ra'back the Trap Master
+    { 0.6032258272, 0.7148675918, 2995, 1 }, --Ra'back the Trap Master
   },
-  ["zhgroupevent_base_0"] = {	--Zenithar's Abbey Group Event
-    { 0.5949367284, 0.5333333611, 2995, 1},--Ra'back the Trap Master
+  ["zhgroupevent_base_0"] = {  --Zenithar's Abbey Group Event
+    { 0.5949367284, 0.5333333611, 2995, 1 }, --Ra'back the Trap Master
   },
   ["u30_silenthalls_int01_base_0"] = {
-    { 0.5326797366, 0.1846405267, 2996, 4},--Vor'chul the Beastbreaker
-    { 0.2467320263, 0.6004902124, 2996, 3},--The Rootwhisperer
+    { 0.5326797366, 0.1846405267, 2996, 4 }, --Vor'chul the Beastbreaker
+    { 0.2467320263, 0.6004902124, 2996, 3 }, --The Rootwhisperer
     -- leads 1 - Left
-    { 0.6397058963, 0.0735294148, 2996, 5},--Dread Irenan
-    { 0.6397058963, 0.0735294148, 2994, 1},--Warlord Iaza
+    { 0.6397058963, 0.0735294148, 2996, 5 }, --Dread Irenan
+    { 0.6397058963, 0.0735294148, 2994, 1 }, --Warlord Iaza
     -- leads 2 - Right
-    { 0.7777777910, 0.3047385513, 2996, 5},--Dread Irenan
-    { 0.7777777910, 0.3047385513, 2994, 1},--Warlord Iaza
+    { 0.7777777910, 0.3047385513, 2996, 5 }, --Dread Irenan
+    { 0.7777777910, 0.3047385513, 2994, 1 }, --Warlord Iaza
   },
   ["u30_silenthalls_int02_base_0"] = {
-    { 0.4624182879, 0.7475489974, 2996, 5},--Dread Irenan
-    { 0.6192810535, 0.2810457646, 2994, 1},--Warlord Iaza
+    { 0.4624182879, 0.7475489974, 2996, 5 }, --Dread Irenan
+    { 0.6192810535, 0.2810457646, 2994, 1 }, --Warlord Iaza
   },
   ["u30_silenthalls_ext01_base_0"] = { --The Silent Halls
-    { 0.5989847779, 0.3299492299, 2996, 1},--Kao'kuul
-    { 0.3472081124, 0.7106599211, 2996, 2},--The Silent Sentry
+    { 0.5989847779, 0.3299492299, 2996, 1 }, --Kao'kuul
+    { 0.3472081124, 0.7106599211, 2996, 2 }, --The Silent Sentry
     -- leads
-    { 0.3106598854, 0.6040608882, 2996, 4},--Vor'chul the Beastbreaker
-    { 0.3106598854, 0.6040608882, 2996, 3},--The Rootwhisperer
+    { 0.3106598854, 0.6040608882, 2996, 4 }, --Vor'chul the Beastbreaker
+    { 0.3106598854, 0.6040608882, 2996, 3 }, --The Rootwhisperer
   },
   ["u32deadlandszone_base_0"] = { --Deadlands
-    { 0.8933273553, 0.2688917815, 3138, 2},
-    { 0.1448765397, 0.5360811352, 3138, 1},
+    { 0.8933273553, 0.2688917815, 3138, 2 },
+    { 0.1448765397, 0.5360811352, 3138, 1 },
   },
   ["u32_folly_delve_base_0"] = { --Deadlands
-    { 0.5496475696, 0.4482638537, 3138, 2},
+    { 0.5496475696, 0.4482638537, 3138, 2 },
   },
   ["u32_dreaded_refuge_ext_base_0"] = {
-    { 0.2167935371, 0.1269224733, 3138, 1},
-    { 0.3966909945, 0.1203977018, 3138, 1},
+    { 0.2167935371, 0.1269224733, 3138, 1 },
+    { 0.3966909945, 0.1203977018, 3138, 1 },
   },
   ["u32_dreaded_refuge_int_base2_0"] = {
-    { 0.4977623522, 0.4356679320, 3138, 1},
+    { 0.4977623522, 0.4356679320, 3138, 1 },
   },
 }
 -- X: 0.5710620880127 Y: 0.63778245449066
 
 -- alias for pulkupper_base_0
-Destinations.ChampionTableStore["pulkupper_base_0"]  = Destinations.ChampionTableStore["pulklower_base_0"]
+Destinations.ChampionTableStore["pulkupper_base_0"] = Destinations.ChampionTableStore["pulklower_base_0"]
 
 -- alias for Gloomreach
-Destinations.ChampionTableStore["gloomreach2_base_0"]  = Destinations.ChampionTableStore["gloomreach_base_0"]
+Destinations.ChampionTableStore["gloomreach2_base_0"] = Destinations.ChampionTableStore["gloomreach_base_0"]
 Destinations.ChampionTableStore["gloomreach2b_base_0"] = Destinations.ChampionTableStore["gloomreach_base_0"]
 Destinations.ChampionTableStore["gloomreach2c_base_0"] = Destinations.ChampionTableStore["gloomreach_base_0"]
-Destinations.ChampionTableStore["gloomreach3_base_0"]  = Destinations.ChampionTableStore["gloomreach_base_0"]
-Destinations.ChampionTableStore["gloomreach4_base_0"]  = Destinations.ChampionTableStore["gloomreach_base_0"]
-Destinations.ChampionTableStore["gloomreach5_base_0"]  = Destinations.ChampionTableStore["gloomreach_base_0"]
+Destinations.ChampionTableStore["gloomreach3_base_0"] = Destinations.ChampionTableStore["gloomreach_base_0"]
+Destinations.ChampionTableStore["gloomreach4_base_0"] = Destinations.ChampionTableStore["gloomreach_base_0"]
+Destinations.ChampionTableStore["gloomreach5_base_0"] = Destinations.ChampionTableStore["gloomreach_base_0"]
 Destinations.ChampionTableStore["gloomreach5b_base_0"] = Destinations.ChampionTableStore["gloomreach_base_0"]
 
 -- Alias for Blackwood
-Destinations.ChampionTableStore["arpeniah_base_0"]  = Destinations.ChampionTableStore["arpenial_base_0"]
-Destinations.ChampionTableStore["arpeniah2_base_0"]  = Destinations.ChampionTableStore["arpenial_base_0"]
-Destinations.ChampionTableStore["arpenial3_base_0"]  = Destinations.ChampionTableStore["arpenial_base_0"]
+Destinations.ChampionTableStore["arpeniah_base_0"] = Destinations.ChampionTableStore["arpenial_base_0"]
+Destinations.ChampionTableStore["arpeniah2_base_0"] = Destinations.ChampionTableStore["arpenial_base_0"]
+Destinations.ChampionTableStore["arpenial3_base_0"] = Destinations.ChampionTableStore["arpenial_base_0"]
 
 -- vunalk
-Destinations.ChampionTableStore["vunalk1_base_0"]  = Destinations.ChampionTableStore["vunalk2_base_0"]
+Destinations.ChampionTableStore["vunalk1_base_0"] = Destinations.ChampionTableStore["vunalk2_base_0"]
 
 --u32_dreaded_refuge_int_base_0
-Destinations.ChampionTableStore["u32_dreaded_refuge_int_base_0"]  = Destinations.ChampionTableStore["u32_dreaded_refuge_int_base2_0"]
+Destinations.ChampionTableStore["u32_dreaded_refuge_int_base_0"] = Destinations.ChampionTableStore["u32_dreaded_refuge_int_base2_0"]

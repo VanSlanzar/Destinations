@@ -29,7 +29,7 @@ client_lang
 effective_lang
 supported_lang
 ]]--
-Destinations.client_lang    = GetCVar("Language.2")
+Destinations.client_lang = GetCVar("Language.2")
 Destinations.effective_quest_lang = nil
 Destinations.effective_menu_lang = nil
 local supported_quest_langs = { "br", "de", "en", "es", "fr", "fx", "it", "jp", "kb", "kr", "pl", "ru", }
@@ -50,10 +50,10 @@ Destinations.supported_menu_lang = Destinations.client_lang == Destinations.effe
 -------------------------------------------------
 ----- Destinations                          -----
 -------------------------------------------------
-Dest                        = {}
+Dest = {}
 if LibDebugLogger then
   local logger = LibDebugLogger.Create(ADDON_NAME)
-  Dest.logger  = logger
+  Dest.logger = logger
 end
 local SDLV = DebugLogViewer
 if SDLV then Dest.viewer = true else Dest.viewer = false end
@@ -86,7 +86,7 @@ local function emit_message(log_type, text)
 end
 
 local function emit_table(log_type, t, indent, table_history)
-  indent        = indent or "."
+  indent = indent or "."
   table_history = table_history or {}
 
   for k, v in pairs(t) do
@@ -120,84 +120,84 @@ end
 ----- Destinations                          -----
 -------------------------------------------------
 
-local ADDON_AUTHOR                              = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION                             = "29.7"
-local ADDON_WEBSITE                             = "http://www.esoui.com/downloads/info667-Destinations.html"
+local ADDON_AUTHOR = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
+local ADDON_VERSION = "29.71"
+local ADDON_WEBSITE = "http://www.esoui.com/downloads/info667-Destinations.html"
 
-local LMP                                       = LibMapPins
-local LQD                                       = LibQuestData
+local LMP = LibMapPins
+local LQD = LibQuestData
 
-local isQuestCompleted                          = true
+local isQuestCompleted = true
 local mapTextureName, zoneTextureName, mapData, zoneQuests
 local DestinationsSV, DestinationsCSSV, DestinationsAWSV, playerAlliance
 
-local destinationsSetsData                      = {}
+local destinationsSetsData = {}
 
 local INFORMATION_TOOLTIP
 
-local DESTINATIONS_PIN_TYPE_AOI                 = 1
-local DESTINATIONS_PIN_TYPE_AYLEIDRUIN          = 2
-local DESTINATIONS_PIN_TYPE_BATTLEFIELD         = 3
-local DESTINATIONS_PIN_TYPE_CAMP                = 4
-local DESTINATIONS_PIN_TYPE_CAVE                = 5
-local DESTINATIONS_PIN_TYPE_CEMETERY            = 6
-local DESTINATIONS_PIN_TYPE_CITY                = 7
-local DESTINATIONS_PIN_TYPE_CRAFTING            = 8
-local DESTINATIONS_PIN_TYPE_CRYPT               = 9
-local DESTINATIONS_PIN_TYPE_DAEDRICRUIN         = 10
-local DESTINATIONS_PIN_TYPE_DELVE               = 11
-local DESTINATIONS_PIN_TYPE_DOCK                = 12
-local DESTINATIONS_PIN_TYPE_DUNGEON             = 13
-local DESTINATIONS_PIN_TYPE_DWEMERRUIN          = 14
-local DESTINATIONS_PIN_TYPE_ESTATE              = 15
-local DESTINATIONS_PIN_TYPE_FARM                = 16
-local DESTINATIONS_PIN_TYPE_GATE                = 17
-local DESTINATIONS_PIN_TYPE_GROUPBOSS           = 18
-local DESTINATIONS_PIN_TYPE_GROUPDELVE          = 19
-local DESTINATIONS_PIN_TYPE_GROUPINSTANCE       = 20
-local DESTINATIONS_PIN_TYPE_GROVE               = 21
-local DESTINATIONS_PIN_TYPE_KEEP                = 22
-local DESTINATIONS_PIN_TYPE_LIGHTHOUSE          = 23
-local DESTINATIONS_PIN_TYPE_MINE                = 24
-local DESTINATIONS_PIN_TYPE_MUNDUS              = 25
-local DESTINATIONS_PIN_TYPE_PORTAL              = 26
-local DESTINATIONS_PIN_TYPE_RAIDDUNGEON         = 27
-local DESTINATIONS_PIN_TYPE_RUIN                = 28
-local DESTINATIONS_PIN_TYPE_SEWER               = 29
-local DESTINATIONS_PIN_TYPE_SOLOTRIAL           = 30
-local DESTINATIONS_PIN_TYPE_TOWER               = 31
-local DESTINATIONS_PIN_TYPE_TOWN                = 32
-local DESTINATIONS_PIN_TYPE_WAYSHRINE           = 33
-local DESTINATIONS_PIN_TYPE_GUILDKIOSK          = 34
-local DESTINATIONS_PIN_TYPE_PLANARARMORSCRAPS   = 35
-local DESTINATIONS_PIN_TYPE_TINYCLAW            = 36
-local DESTINATIONS_PIN_TYPE_MONSTROUSTEETH      = 37
-local DESTINATIONS_PIN_TYPE_BONESHARD           = 38
-local DESTINATIONS_PIN_TYPE_MARKLEGION          = 39
-local DESTINATIONS_PIN_TYPE_DARKETHER           = 40
-local DESTINATIONS_PIN_TYPE_DARKBROTHERHOOD     = 41
-local DESTINATIONS_PIN_TYPE_GROUPLIGHTHOUSE     = 42
-local DESTINATIONS_PIN_TYPE_GROUPESTATE         = 43
-local DESTINATIONS_PIN_TYPE_GROUPRUIN           = 44
-local DESTINATIONS_PIN_TYPE_GROUPCAVE           = 45
-local DESTINATIONS_PIN_TYPE_GROUPCEMETERY       = 46
-local DESTINATIONS_PIN_TYPE_GROUPKEEP           = 47
+local DESTINATIONS_PIN_TYPE_AOI = 1
+local DESTINATIONS_PIN_TYPE_AYLEIDRUIN = 2
+local DESTINATIONS_PIN_TYPE_BATTLEFIELD = 3
+local DESTINATIONS_PIN_TYPE_CAMP = 4
+local DESTINATIONS_PIN_TYPE_CAVE = 5
+local DESTINATIONS_PIN_TYPE_CEMETERY = 6
+local DESTINATIONS_PIN_TYPE_CITY = 7
+local DESTINATIONS_PIN_TYPE_CRAFTING = 8
+local DESTINATIONS_PIN_TYPE_CRYPT = 9
+local DESTINATIONS_PIN_TYPE_DAEDRICRUIN = 10
+local DESTINATIONS_PIN_TYPE_DELVE = 11
+local DESTINATIONS_PIN_TYPE_DOCK = 12
+local DESTINATIONS_PIN_TYPE_DUNGEON = 13
+local DESTINATIONS_PIN_TYPE_DWEMERRUIN = 14
+local DESTINATIONS_PIN_TYPE_ESTATE = 15
+local DESTINATIONS_PIN_TYPE_FARM = 16
+local DESTINATIONS_PIN_TYPE_GATE = 17
+local DESTINATIONS_PIN_TYPE_GROUPBOSS = 18
+local DESTINATIONS_PIN_TYPE_GROUPDELVE = 19
+local DESTINATIONS_PIN_TYPE_GROUPINSTANCE = 20
+local DESTINATIONS_PIN_TYPE_GROVE = 21
+local DESTINATIONS_PIN_TYPE_KEEP = 22
+local DESTINATIONS_PIN_TYPE_LIGHTHOUSE = 23
+local DESTINATIONS_PIN_TYPE_MINE = 24
+local DESTINATIONS_PIN_TYPE_MUNDUS = 25
+local DESTINATIONS_PIN_TYPE_PORTAL = 26
+local DESTINATIONS_PIN_TYPE_RAIDDUNGEON = 27
+local DESTINATIONS_PIN_TYPE_RUIN = 28
+local DESTINATIONS_PIN_TYPE_SEWER = 29
+local DESTINATIONS_PIN_TYPE_SOLOTRIAL = 30
+local DESTINATIONS_PIN_TYPE_TOWER = 31
+local DESTINATIONS_PIN_TYPE_TOWN = 32
+local DESTINATIONS_PIN_TYPE_WAYSHRINE = 33
+local DESTINATIONS_PIN_TYPE_GUILDKIOSK = 34
+local DESTINATIONS_PIN_TYPE_PLANARARMORSCRAPS = 35
+local DESTINATIONS_PIN_TYPE_TINYCLAW = 36
+local DESTINATIONS_PIN_TYPE_MONSTROUSTEETH = 37
+local DESTINATIONS_PIN_TYPE_BONESHARD = 38
+local DESTINATIONS_PIN_TYPE_MARKLEGION = 39
+local DESTINATIONS_PIN_TYPE_DARKETHER = 40
+local DESTINATIONS_PIN_TYPE_DARKBROTHERHOOD = 41
+local DESTINATIONS_PIN_TYPE_GROUPLIGHTHOUSE = 42
+local DESTINATIONS_PIN_TYPE_GROUPESTATE = 43
+local DESTINATIONS_PIN_TYPE_GROUPRUIN = 44
+local DESTINATIONS_PIN_TYPE_GROUPCAVE = 45
+local DESTINATIONS_PIN_TYPE_GROUPCEMETERY = 46
+local DESTINATIONS_PIN_TYPE_GROUPKEEP = 47
 local DESTINATIONS_PIN_TYPE_GROUPAREAOFINTEREST = 48
-local DESTINATIONS_PIN_TYPE_HOUSING             = 49
-local DESTINATIONS_PIN_TYPE_DWEMERGEAR          = 50
-local DESTINATIONS_PIN_TYPE_NORDBOAT            = 51
-local DESTINATIONS_PIN_TYPE_DEADLANDS           = 52
-local DESTINATIONS_PIN_TYPE_UNKNOWN             = 99
+local DESTINATIONS_PIN_TYPE_HOUSING = 49
+local DESTINATIONS_PIN_TYPE_DWEMERGEAR = 50
+local DESTINATIONS_PIN_TYPE_NORDBOAT = 51
+local DESTINATIONS_PIN_TYPE_DEADLANDS = 52
+local DESTINATIONS_PIN_TYPE_UNKNOWN = 99
 
 -- quest value constants
-Destinations.QUEST_DONE                         = 1
-Destinations.QUEST_IN_PROGRESS                  = 2
-Destinations.QUEST_HIDDEN                       = 5
+Destinations.QUEST_DONE = 1
+Destinations.QUEST_IN_PROGRESS = 2
+Destinations.QUEST_HIDDEN = 5
 
 local ENGLISH_POI_COLOR, ENGLISH_KEEP_COLOR
 
 -- Define Runtime Variables
-local drtv                                      = {
+local drtv = {
   EditingQuests = false,
   getQuestInfo = false,
   MapMiscPOIs = false,
@@ -263,7 +263,7 @@ local KeepsStore
 local MundusStore
 
 -- Define Pins
-local DPINS                                     = {
+local DPINS = {
 
   -- This filter cannot be disabled. They are fake pins for displaying tooltips on Seen / Complete POI
   FAKEKNOWN = "DEST_PinSet_FakeKnown",
@@ -335,7 +335,7 @@ local DPINS                                     = {
 }
 
 -- Define Defaults
-local defaults                                  = {
+local defaults = {
   pins = {
     pinTextureUnknown = {
       type = 7,
@@ -847,7 +847,7 @@ local defaults                                  = {
   TEMPPINDATA = {},
 }
 
-local pinTextures                               = {
+local pinTextures = {
   paths = {
     Unknown = {
       [1] = "Destinations/pins/A_Global_Asghaard-croix_black.dds",
@@ -1339,7 +1339,7 @@ local pinTextures                               = {
   },
 }
 
-local poiTypes                                  = {
+local poiTypes = {
   [DESTINATIONS_PIN_TYPE_AOI] = GetString(POITYPE_AOI),
   [DESTINATIONS_PIN_TYPE_AYLEIDRUIN] = GetString(POITYPE_QUESTHUB),
   [DESTINATIONS_PIN_TYPE_DEADLANDS] = GetString(POITYPE_PUBLICDUNGEON),
@@ -1395,7 +1395,7 @@ local poiTypes                                  = {
   [DESTINATIONS_PIN_TYPE_UNKNOWN] = GetString(POITYPE_UNKNOWN),
 }
 
-local poiTypesIC                                = {
+local poiTypesIC = {
   [DESTINATIONS_PIN_TYPE_AOI] = GetString(POITYPE_AOI),
   [DESTINATIONS_PIN_TYPE_BATTLEFIELD] = GetString(POITYPE_GROUPBOSS),
   [DESTINATIONS_PIN_TYPE_CRAFTING] = GetString(POITYPE_CRAFTING),
@@ -1411,7 +1411,7 @@ local poiTypesIC                                = {
   [DESTINATIONS_PIN_TYPE_UNKNOWN] = GetString(POITYPE_UNKNOWN),
 }
 
-local ZoneToAchievements                        = {
+local ZoneToAchievements = {
   [872] = { -- M'aiq zone conversion
     ["khenarthisroost_base_0"] = 1,
     ["auridon_base_0"] = 2,
@@ -1470,7 +1470,7 @@ local ZoneToAchievements                        = {
   }
 }
 --------- ZoneId to mapTile name conversion ---------
-local ZoneIDsToFileNames                        = {
+local ZoneIDsToFileNames = {
   [281] = "balfoyen_base_0",
   [280] = "bleakrock_base_0",
   [57] = "deshaan_base_0",
@@ -1523,7 +1523,7 @@ local ZoneIDsToFileNames                        = {
   [267] = "eyevea_base_0",
 }
 
-local achTypes                                  = {
+local achTypes = {
   [1] = GetString(POITYPE_MAIQ),
   [2] = GetString(POITYPE_LB_GTTP_CP),
   [3] = GetString(POITYPE_PEACEMAKER),
@@ -1617,9 +1617,9 @@ local function GetMapTextureName()
   local zoneId = GetZoneId(GetCurrentMapZoneIndex())
   local mapId = GetCurrentMapId()
   if zoneId == 1283 then
-    zoneTextureName   = ZoneIDsToFileNames[mapId]
+    zoneTextureName = ZoneIDsToFileNames[mapId]
   else
-    zoneTextureName   = ZoneIDsToFileNames[zoneId]
+    zoneTextureName = ZoneIDsToFileNames[zoneId]
   end
   _, mapTextureName = LMP:GetZoneAndSubzone(false, true, true)
   if not zoneTextureName then
@@ -1642,7 +1642,7 @@ local function ShowMyPosition()
     CALLBACK_MANAGER:FireCallbacks("OnWorldMapChanged")
   end
 
-  local x, y    = GetMapPlayerPosition("player")
+  local x, y = GetMapPlayerPosition("player")
   local mapname = LMP:GetZoneAndSubzone(false, true, true)
   GetMapTextureName()
   local xs = '"X"'
@@ -1682,13 +1682,13 @@ local function OtherpinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 2 then
-      local COMP                               = ZoneToAchievements[767167][zoneTextureName]
-      local desca, completedLB, requiredLB     = GetAchievementCriterion(873, COMP)
+      local COMP = ZoneToAchievements[767167][zoneTextureName]
+      local desca, completedLB, requiredLB = GetAchievementCriterion(873, COMP)
       local descb, completedGTTP, requiredGTTP = GetAchievementCriterion(871, COMP)
-      local descc, completedCP, requiredCP     = GetAchievementCriterion(869, COMP)
-      local completed                          = completedLB + completedGTTP + completedCP
-      local required                           = requiredLB + requiredGTTP + requiredCP
-      drtv.pinTag                              = {}
+      local descc, completedCP, requiredCP = GetAchievementCriterion(869, COMP)
+      local completed = completedLB + completedGTTP + completedCP
+      local required = requiredLB + requiredGTTP + requiredCP
+      drtv.pinTag = {}
       if completed ~= required then
         local pinTextLine = 0
         if completedCP ~= requiredCP then
@@ -1723,14 +1723,14 @@ local function OtherpinTypeCallbackDone()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 2 then
-      local COMP                               = ZoneToAchievements[767167][zoneTextureName]
-      local desca, completedLB, requiredLB     = GetAchievementCriterion(873, COMP)
+      local COMP = ZoneToAchievements[767167][zoneTextureName]
+      local desca, completedLB, requiredLB = GetAchievementCriterion(873, COMP)
       local descb, completedGTTP, requiredGTTP = GetAchievementCriterion(871, COMP)
-      local descc, completedCP, requiredCP     = GetAchievementCriterion(869, COMP)
-      local completed                          = completedLB + completedGTTP + completedCP
-      local required                           = requiredLB + requiredGTTP + requiredCP
-      drtv.pinTag                              = {}
-      local pinTextLine                        = 0
+      local descc, completedCP, requiredCP = GetAchievementCriterion(869, COMP)
+      local completed = completedLB + completedGTTP + completedCP
+      local required = requiredLB + requiredGTTP + requiredCP
+      drtv.pinTag = {}
+      local pinTextLine = 0
       if not LMP:IsEnabled(DPINS.LB_GTTP_CP) then
         LMP:SetLayoutKey(drtv.pinName, "level", DestinationsSV.pins.pinTextureMaiq.level)
         if completed == required then
@@ -1781,9 +1781,9 @@ local function MaiqpinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 1 then
-      local COMP                      = ZoneToAchievements[872][zoneTextureName]
+      local COMP = ZoneToAchievements[872][zoneTextureName]
       local desc, completed, required = GetAchievementCriterion(872, COMP)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureMaiq.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1801,9 +1801,9 @@ local function MaiqpinTypeCallbackDone()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 1 then
-      local COMP                      = ZoneToAchievements[872][zoneTextureName]
+      local COMP = ZoneToAchievements[872][zoneTextureName]
       local desc, completed, required = GetAchievementCriterion(872, COMP)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureMaiqDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1823,7 +1823,7 @@ local function PeacemakerpinTypeCallback()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 3 then
       local desc, completed, required = GetAchievementCriterion(716)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTexturePeacemaker.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1842,7 +1842,7 @@ local function PeacemakerpinTypeCallbackDone()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 3 then
       local desc, completed, required = GetAchievementCriterion(716)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTexturePeacemakerDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1862,7 +1862,7 @@ local function NosediverpinTypeCallback()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 7 then
       local desc, completed, required = GetAchievementCriterion(406)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureNosediver.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1881,7 +1881,7 @@ local function NosediverpinTypeCallbackDone()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 7 then
       local desc, completed, required = GetAchievementCriterion(406)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureNosediverDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1901,7 +1901,7 @@ local function EarthlyPospinTypeCallback()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 8 then
       local desc, completed, required = GetAchievementCriterion(1121)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureEarthlyPos.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1920,7 +1920,7 @@ local function EarthlyPospinTypeCallbackDone()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 8 then
       local desc, completed, required = GetAchievementCriterion(1121)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureEarthlyPosDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1939,9 +1939,9 @@ local function OnMepinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 9 then
-      local COMP                      = ZoneToAchievements[704][zoneTextureName]
+      local COMP = ZoneToAchievements[704][zoneTextureName]
       local desc, completed, required = GetAchievementCriterion(704, COMP)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureOnMe.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1959,9 +1959,9 @@ local function OnMepinTypeCallbackDone()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 9 then
-      local COMP                         = ZoneToAchievements[704][zoneTextureName]
+      local COMP = ZoneToAchievements[704][zoneTextureName]
       local subName, completed, required = GetAchievementCriterion(704, COMP)
-      drtv.pinTag                        = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureOnMeDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -1981,7 +1981,7 @@ local function BrawlpinTypeCallback()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 10 then
       local desc, completed, required = GetAchievementCriterion(1247)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureBrawl.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2000,7 +2000,7 @@ local function BrawlpinTypeCallbackDone()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 10 then
       local desc, completed, required = GetAchievementCriterion(1247)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureBrawlDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2020,7 +2020,7 @@ local function PatronpinTypeCallback()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 11 then
       local desc, completed, required = GetAchievementCriterion(1316)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTexturePatron.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2039,7 +2039,7 @@ local function PatronpinTypeCallbackDone()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 11 then
       local desc, completed, required = GetAchievementCriterion(1316)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTexturePatronDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2059,7 +2059,7 @@ local function WrothgarJumperpinTypeCallback()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 12 then
       local _, completed, required = GetAchievementCriterion(1331)
-      drtv.pinTag                  = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureWrothgarJumper.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2078,7 +2078,7 @@ local function WrothgarJumperpinTypeCallbackDone()
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 12 then
       local desc, completed, required = GetAchievementCriterion(1331)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureWrothgarJumperDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2097,9 +2097,9 @@ local function RelicHunterpinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 14 then
-      local NUMBER                    = tonumber(pinData[AchIndex.KEYCODE])
+      local NUMBER = tonumber(pinData[AchIndex.KEYCODE])
       local desc, completed, required = GetAchievementCriterion(1250, NUMBER)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureRelicHunter.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2117,9 +2117,9 @@ local function RelicHunterpinTypeCallbackDone()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 14 then
-      local NUMBER                    = tonumber(pinData[AchIndex.KEYCODE])
+      local NUMBER = tonumber(pinData[AchIndex.KEYCODE])
       local desc, completed, required = GetAchievementCriterion(1250, NUMBER)
-      drtv.pinTag                     = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureRelicHunterDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2138,9 +2138,9 @@ local function BreakingpinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 15 then
-      local achNum                       = pinData[AchIndex.KEYCODE]
+      local achNum = pinData[AchIndex.KEYCODE]
       local subName, completed, required = GetAchievementCriterion(1349, achNum)
-      drtv.pinTag                        = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureBreaking.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2161,9 +2161,9 @@ local function BreakingpinTypeCallbackDone()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 15 then
-      local achNum                       = pinData[AchIndex.KEYCODE]
+      local achNum = pinData[AchIndex.KEYCODE]
       local subName, completed, required = GetAchievementCriterion(1349, achNum)
-      drtv.pinTag                        = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureBreakingDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2185,10 +2185,10 @@ local function CutpursepinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 16 then
-      local achNum                       = pinData[AchIndex.KEYCODE]
-      local _, completedM, requiredM     = GetAchievementCriterion(1383)
+      local achNum = pinData[AchIndex.KEYCODE]
+      local _, completedM, requiredM = GetAchievementCriterion(1383)
       local subName, completed, required = GetAchievementCriterion(pinData[AchIndex.ID], achNum)
-      drtv.pinTag                        = {}
+      drtv.pinTag = {}
       if completed ~= required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureCutpurse.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2209,10 +2209,10 @@ local function CutpursepinTypeCallbackDone()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 16 then
-      local achNum                       = pinData[AchIndex.KEYCODE]
-      local _, completedM, requiredM     = GetAchievementCriterion(1383)
+      local achNum = pinData[AchIndex.KEYCODE]
+      local _, completedM, requiredM = GetAchievementCriterion(1383)
       local subName, completed, required = GetAchievementCriterion(pinData[AchIndex.ID], achNum)
-      drtv.pinTag                        = {}
+      drtv.pinTag = {}
       if completed == required then
         table.insert(drtv.pinTag, 1,
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureCutpurseDone.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2236,10 +2236,10 @@ local function ChampionpinTypeCallback()
     mapData = DBossStore[mapTextureName]
     if mapData then
       for _, pinData in ipairs(mapData) do
-        local CHAMPACH                       = pinData[DBossIndex.ACH]
-        local CHAMPIDX                       = pinData[DBossIndex.IDX]
+        local CHAMPACH = pinData[DBossIndex.ACH]
+        local CHAMPIDX = pinData[DBossIndex.IDX]
         local CHAMPNAME, completed, required = GetAchievementCriterion(tonumber(CHAMPACH), tonumber(CHAMPIDX))
-        drtv.pinTag                          = {}
+        drtv.pinTag = {}
         if completed ~= required then
           drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureChampion.textcolor)):Colorize(zo_strformat("<<1>>",
             CHAMPNAME)) }
@@ -2259,10 +2259,10 @@ local function ChampionpinTypeCallbackDone()
     mapData = DBossStore[mapTextureName]
     if mapData then
       for _, pinData in ipairs(mapData) do
-        local CHAMPACH                       = pinData[DBossIndex.ACH]
-        local CHAMPIDX                       = pinData[DBossIndex.IDX]
+        local CHAMPACH = pinData[DBossIndex.ACH]
+        local CHAMPIDX = pinData[DBossIndex.IDX]
         local CHAMPNAME, completed, required = GetAchievementCriterion(tonumber(CHAMPACH), tonumber(CHAMPIDX))
-        drtv.pinTag                          = {}
+        drtv.pinTag = {}
         if completed == required then
           drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureChampionDone.textcolor)):Colorize(zo_strformat("<<1>>",
             CHAMPNAME)) }
@@ -2280,7 +2280,7 @@ local function AyleidpinTypeCallback()
   sharedAchievementsPinData()
   if not mapData then return end
   for _, pinData in ipairs(mapData) do
-    drtv.pinType     = pinData[AchIndex.TYPE]
+    drtv.pinType = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 20 then
       drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureAyleid.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2297,7 +2297,7 @@ local function DeadlandspinTypeCallback()
   sharedAchievementsPinData()
   if not mapData then return end
   for _, pinData in ipairs(mapData) do
-    drtv.pinType     = pinData[AchIndex.TYPE]
+    drtv.pinType = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 25 then
       drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureDeadlands.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2313,7 +2313,7 @@ local function DwemerRuinpinTypeCallback()
   sharedAchievementsPinData()
   if not mapData then return end
   for _, pinData in ipairs(mapData) do
-    drtv.pinType     = pinData[AchIndex.TYPE]
+    drtv.pinType = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 23 then
       drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureDwemer.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2329,7 +2329,7 @@ local function WWVamppinTypeCallback()
   sharedAchievementsPinData()
   if not mapData then return end
   for _, pinData in ipairs(mapData) do
-    drtv.pinType     = pinData[AchIndex.TYPE]
+    drtv.pinType = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 21 then
       drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureWWVamp.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2345,7 +2345,7 @@ local function VampireAltarpinTypeCallback()
   sharedAchievementsPinData()
   if not mapData then return end
   for _, pinData in ipairs(mapData) do
-    drtv.pinType     = pinData[AchIndex.TYPE]
+    drtv.pinType = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 22 then
       drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureVampAltar.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2361,7 +2361,7 @@ local function WerewolfShrinepinTypeCallback()
   sharedAchievementsPinData()
   if not mapData then return end
   for _, pinData in ipairs(mapData) do
-    drtv.pinType     = pinData[AchIndex.TYPE]
+    drtv.pinType = pinData[AchIndex.TYPE]
     drtv.pinTypeName = GetAchTypeName(drtv.pinType)
     if drtv.pinType == 24 then
       drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureWWShrine.textcolor)):Colorize(zo_strformat("<<1>>",
@@ -2380,18 +2380,18 @@ local function CollectiblepinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 30 then
-      local collectibleID                 = pinData[AchIndex.ID]
-      local collectibleCode               = pinData[AchIndex.KEYCODE]
+      local collectibleID = pinData[AchIndex.ID]
+      local collectibleCode = pinData[AchIndex.KEYCODE]
       local completedTotal, requiredTotal = 0, GetAchievementNumCriteria(collectibleID)
-      local desc, completed, required     = nil, 0, 0
+      local desc, completed, required = nil, 0, 0
       for i = 1, requiredTotal, 1 do
         desc, completed, required = GetAchievementCriterion(collectibleID, i)
         if completed == 1 then
           completedTotal = completedTotal + 1
         end
       end
-      drtv.pinTag             = {}
-      local textLine          = 0
+      drtv.pinTag = {}
+      local textLine = 0
       local countCN, countCND = 0, 0
       if completedTotal ~= requiredTotal then
         textLine = textLine + 1
@@ -2399,9 +2399,9 @@ local function CollectiblepinTypeCallback()
           ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureCollectible.textcolortitle)):Colorize(zo_strformat("<<1>>",
             CollectibleIDs[collectibleID])))
         local collectibleName, collectibleNumber, collectibleItem = nil, nil, nil, nil
-        local collectibledata                                     = CollectibleStore[collectibleID]
-        local ColName, ColNumber, ColKey                          = nil, nil, nil
-        local collectibleMobNumber                                = nil
+        local collectibledata = CollectibleStore[collectibleID]
+        local ColName, ColNumber, ColKey = nil, nil, nil
+        local collectibleMobNumber = nil
         for i = 1, requiredTotal, 1 do
           for _, pinData in ipairs(collectibledata) do
             collectibleNumber = pinData[CollectibleIndex.NUMBER]
@@ -2428,7 +2428,7 @@ local function CollectiblepinTypeCallback()
           for i = 1, requiredTotal, 1 do
             for _, pinData in ipairs(collectibledata) do
               collectibleNumber = pinData[CollectibleIndex.NUMBER]
-              collectibleName   = pinData[CollectibleIndex.NAME]
+              collectibleName = pinData[CollectibleIndex.NAME]
               if i == 10 then
                 collectibleMobNumber = "A"
               elseif i == 11 then
@@ -2486,25 +2486,25 @@ local function CollectibleDonepinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType == 30 then
-      local collectibleID                 = pinData[AchIndex.ID]
-      local collectibleCode               = pinData[AchIndex.KEYCODE]
+      local collectibleID = pinData[AchIndex.ID]
+      local collectibleCode = pinData[AchIndex.KEYCODE]
       local completedTotal, requiredTotal = 0, GetAchievementNumCriteria(collectibleID)
-      local desc, completed, required     = nil, 0, 0
+      local desc, completed, required = nil, 0, 0
       for i = 1, requiredTotal, 1 do
         desc, completed, required = GetAchievementCriterion(collectibleID, i)
         if completed == 1 then
           completedTotal = completedTotal + 1
         end
       end
-      drtv.pinTag    = {}
+      drtv.pinTag = {}
       local textLine = 0
-      local countCN  = 0
-      textLine       = textLine + 1
+      local countCN = 0
+      textLine = textLine + 1
       table.insert(drtv.pinTag, textLine,
         ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureCollectible.textcolortitle)):Colorize(zo_strformat("<<1>>",
           CollectibleIDs[collectibleID])))
       local collectibleName, collectibleNumber, collectibleItem = nil, nil, nil
-      local collectibledata                                     = CollectibleStore[collectibleID]
+      local collectibledata = CollectibleStore[collectibleID]
       for i = 1, requiredTotal, 1 do
         for _, pinData in ipairs(collectibledata) do
           collectibleNumber = pinData[CollectibleIndex.NUMBER]
@@ -2520,7 +2520,7 @@ local function CollectibleDonepinTypeCallback()
         for i = 1, requiredTotal, 1 do
           for _, pinData in ipairs(collectibledata) do
             collectibleNumber = pinData[CollectibleIndex.NUMBER]
-            collectibleName   = pinData[CollectibleIndex.NAME]
+            collectibleName = pinData[CollectibleIndex.NAME]
             if collectibleNumber == i and string.find(collectibleCode, i) then
               collectibleItem, completed, _ = GetAchievementCriterion(collectibleID, i)
               if completed == 1 then
@@ -2551,10 +2551,10 @@ end
 --------------------Fishing---------------------
 local function FishpinTypeCallback()
 
-  local DESTINATIONS_FISH_TYPE_FOUL  = 1
+  local DESTINATIONS_FISH_TYPE_FOUL = 1
   local DESTINATIONS_FISH_TYPE_RIVER = 2
   local DESTINATIONS_FISH_TYPE_OCEAN = 3
-  local DESTINATIONS_FISH_TYPE_LAKE  = 4
+  local DESTINATIONS_FISH_TYPE_LAKE = 4
 
   if GetMapType() >= MAPTYPE_WORLD then return end
   drtv.pinName = DPINS.FISHING
@@ -2599,9 +2599,9 @@ local function FishpinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType and drtv.pinType >= 40 and drtv.pinType <= 44 then
-      local fishID                        = pinData[AchIndex.ID]
+      local fishID = pinData[AchIndex.ID]
       local completedTotal, requiredTotal = 0, GetAchievementNumCriteria(fishID)
-      local desc, completed, required     = nil, 0, 0
+      local desc, completed, required = nil, 0, 0
       for i = 1, requiredTotal, 1 do
         desc, completed, required = GetAchievementCriterion(fishID, i)
         if completed == 1 then
@@ -2612,25 +2612,25 @@ local function FishpinTypeCallback()
       local fishingBait, waterType = nil
       if drtv.pinType == 40 then
         fishingBait = GetString(FISHING_FOUL_BAIT)
-        waterType   = GetString(FISHING_FOUL)
+        waterType = GetString(FISHING_FOUL)
       elseif drtv.pinType == 41 then
         fishingBait = GetString(FISHING_RIVER_BAIT)
-        waterType   = GetString(FISHING_RIVER)
+        waterType = GetString(FISHING_RIVER)
       elseif drtv.pinType == 42 then
         fishingBait = GetString(FISHING_OCEAN_BAIT)
-        waterType   = GetString(FISHING_OCEAN)
+        waterType = GetString(FISHING_OCEAN)
       elseif drtv.pinType == 43 then
         fishingBait = GetString(FISHING_LAKE_BAIT)
-        waterType   = GetString(FISHING_LAKE)
+        waterType = GetString(FISHING_LAKE)
       elseif drtv.pinType == 44 then
         waterType = GetString(FISHING_UNKNOWN)
       end
-      drtv.pinTag                              = {}
-      local textLine                           = 0
-      local countF, countL, countO, countR     = 0, 0, 0, 0
+      drtv.pinTag = {}
+      local textLine = 0
+      local countF, countL, countO, countR = 0, 0, 0, 0
       local countFN, countLN, countON, countRN = 0, 0, 0, 0
-      local fishdata                           = FishStore[fishID]
-      local FishName, FishNumber, FishLoc      = nil, nil, nil
+      local fishdata = FishStore[fishID]
+      local FishName, FishNumber, FishLoc = nil, nil, nil
       for _, pinData in ipairs(fishdata) do
         FishLoc = pinData[FishIndex.LOCATION]
         if FishLoc == DESTINATIONS_FISH_TYPE_FOUL then
@@ -2645,7 +2645,7 @@ local function FishpinTypeCallback()
       end
       for i = 1, requiredTotal, 1 do
         for _, pinData in ipairs(fishdata) do
-          FishLoc    = pinData[FishIndex.LOCATION]
+          FishLoc = pinData[FishIndex.LOCATION]
           FishNumber = pinData[FishIndex.FISHNUMBER]
           if FishNumber == i then
             if drtv.pinType == 40 and FishLoc == DESTINATIONS_FISH_TYPE_FOUL then
@@ -2679,10 +2679,10 @@ local function FishpinTypeCallback()
       if DestinationsSV.filters[DPINS.FISHING_SHOW_FISHNAME] then
         for i = 1, requiredTotal, 1 do
           for _, pinData in ipairs(fishdata) do
-            local fishFound        = false
-            local fishMiss         = false
-            FishLoc                = pinData[FishIndex.LOCATION]
-            FishNumber             = pinData[FishIndex.FISHNUMBER]
+            local fishFound = false
+            local fishMiss = false
+            FishLoc = pinData[FishIndex.LOCATION]
+            FishNumber = pinData[FishIndex.FISHNUMBER]
             FishName, completed, _ = GetAchievementCriterion(fishID, i)
             if FishNumber == i then
               if drtv.pinType == 40 and FishLoc == DESTINATIONS_FISH_TYPE_FOUL then
@@ -2802,10 +2802,10 @@ local function FishpinTypeCallback()
 end
 local function FishDonepinTypeCallback()
 
-  local DESTINATIONS_FISH_TYPE_FOUL  = 1
+  local DESTINATIONS_FISH_TYPE_FOUL = 1
   local DESTINATIONS_FISH_TYPE_RIVER = 2
   local DESTINATIONS_FISH_TYPE_OCEAN = 3
-  local DESTINATIONS_FISH_TYPE_LAKE  = 4
+  local DESTINATIONS_FISH_TYPE_LAKE = 4
 
   if GetMapType() >= MAPTYPE_WORLD then return end
   drtv.pinName = DPINS.FISHINGDONE
@@ -2814,31 +2814,31 @@ local function FishDonepinTypeCallback()
   for _, pinData in ipairs(mapData) do
     drtv.pinType = pinData[AchIndex.TYPE]
     if drtv.pinType and drtv.pinType >= 40 and drtv.pinType <= 44 then
-      local fishID                    = pinData[AchIndex.ID]
-      local _, requiredTotal          = 0, GetAchievementNumCriteria(fishID)
+      local fishID = pinData[AchIndex.ID]
+      local _, requiredTotal = 0, GetAchievementNumCriteria(fishID)
       local desc, completed, required = nil, 0, 0
-      local fishingBait, waterType    = nil
+      local fishingBait, waterType = nil
       if drtv.pinType == 40 then
         fishingBait = GetString(FISHING_FOUL_BAIT)
-        waterType   = GetString(FISHING_FOUL)
+        waterType = GetString(FISHING_FOUL)
       elseif drtv.pinType == 41 then
         fishingBait = GetString(FISHING_RIVER_BAIT)
-        waterType   = GetString(FISHING_RIVER)
+        waterType = GetString(FISHING_RIVER)
       elseif drtv.pinType == 42 then
         fishingBait = GetString(FISHING_OCEAN_BAIT)
-        waterType   = GetString(FISHING_OCEAN)
+        waterType = GetString(FISHING_OCEAN)
       elseif drtv.pinType == 43 then
         fishingBait = GetString(FISHING_LAKE_BAIT)
-        waterType   = GetString(FISHING_LAKE)
+        waterType = GetString(FISHING_LAKE)
       elseif drtv.pinType == 44 then
         waterType = GetString(FISHING_UNKNOWN)
       end
-      drtv.pinTag                              = {}
-      local textLine                           = 0
-      local countF, countL, countO, countR     = 0, 0, 0, 0
+      drtv.pinTag = {}
+      local textLine = 0
+      local countF, countL, countO, countR = 0, 0, 0, 0
       local countFN, countLN, countON, countRN = 0, 0, 0, 0
-      local fishdata                           = FishStore[fishID]
-      local FishName, FishNumber, FishLoc      = nil, nil, nil
+      local fishdata = FishStore[fishID]
+      local FishName, FishNumber, FishLoc = nil, nil, nil
 
       for _, pinData in ipairs(fishdata) do
         FishLoc = pinData[FishIndex.LOCATION]
@@ -2860,7 +2860,7 @@ local function FishDonepinTypeCallback()
         local FishNumber, FishLoc = nil, nil
         for i = 1, requiredTotal, 1 do
           for _, pinData in ipairs(fishdata) do
-            FishLoc    = pinData[FishIndex.LOCATION]
+            FishLoc = pinData[FishIndex.LOCATION]
             FishNumber = pinData[FishIndex.FISHNUMBER]
             if FishNumber == i then
               _, completed, _ = GetAchievementCriterion(fishID, i)
@@ -2881,7 +2881,7 @@ local function FishDonepinTypeCallback()
         if DestinationsSV.filters[DPINS.FISHING_SHOW_FISHNAME] then
           for i = 1, requiredTotal, 1 do
             for _, pinData in ipairs(fishdata) do
-              FishLoc    = pinData[FishIndex.LOCATION]
+              FishLoc = pinData[FishIndex.LOCATION]
               FishNumber = pinData[FishIndex.FISHNUMBER]
               if FishNumber == i then
                 FishName, completed, _ = GetAchievementCriterion(fishID, i)
@@ -2930,7 +2930,7 @@ end
 
 ----------------Quest Giver Data---------------
 local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
-  local questInfo                      = nil
+  local questInfo = nil
   local _, _, _, _, HoWcompleted, _, _ = GetAchievementInfo(1248)
   if QuestID == 5479 and not HoWcompleted then
     -- Hide "A Cold Wind From the Mountain" while missing the achievement "Hero of Wrothgar".
@@ -2960,7 +2960,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
   if questLine == 99990 then
     -- Hide Mage's Guild quest while not the required rank in the guild.
     local skillLineLevel = nil
-    local SkillLine      = LQD:get_quest_giver(500114, Destinations.effective_quest_lang)
+    local SkillLine = LQD:get_quest_giver(500114, Destinations.effective_quest_lang)
     for i = 1, GetNumSkillLines(SKILL_TYPE_GUILD) do
       local skillLineName = GetSkillLineInfo(SKILL_TYPE_GUILD, i)
       if skillLineName and skillLineName == SkillLine then
@@ -2975,7 +2975,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
   if questLine == 99995 then
     -- Hide Fighter's Guild quest while not the required rank in the guild.
     local skillLineLevel = nil
-    local SkillLine      = LQD:get_quest_giver(500115, Destinations.effective_quest_lang)
+    local SkillLine = LQD:get_quest_giver(500115, Destinations.effective_quest_lang)
     for i = 1, GetNumSkillLines(SKILL_TYPE_GUILD) do
       local skillLineName = GetSkillLineInfo(SKILL_TYPE_GUILD, i)
       if skillLineName and skillLineName == SkillLine then
@@ -3170,7 +3170,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
   if QuestID == 5549 or QuestID == 5545 or QuestID == 5581 or QuestID == 5553 then
     -- check for Thieves Guild level.
     local skillLineLevel = nil
-    local SkillLine      = LQD:get_quest_giver(500113, Destinations.effective_quest_lang)
+    local SkillLine = LQD:get_quest_giver(500113, Destinations.effective_quest_lang)
     for i = 1, GetNumSkillLines(SKILL_TYPE_GUILD) do
       local skillLineName = GetSkillLineInfo(SKILL_TYPE_GUILD, i)
       if skillLineName and skillLineName == SkillLine then
@@ -3185,7 +3185,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
   if QuestID == 5595 or QuestID == 5599 or QuestID == 5596 or QuestID == 5567 or QuestID == 5597 or QuestID == 5598 or QuestID == 5600 then
     -- check for Dark Brotherhood level.
     local skillLineLevel = nil
-    local SkillLine      = LQD:get_quest_giver(500119, Destinations.effective_quest_lang)
+    local SkillLine = LQD:get_quest_giver(500119, Destinations.effective_quest_lang)
     for i = 1, GetNumSkillLines(SKILL_TYPE_GUILD) do
       local skillLineName = GetSkillLineInfo(SKILL_TYPE_GUILD, i)
       if skillLineName and skillLineName == SkillLine then
@@ -3239,17 +3239,17 @@ local function Quests_Undone_pinTypeCallback(pinManager)
   for _, pinData in ipairs(zoneQuests) do
     local QuestID = pinData[LQD.quest_map_pin_index.quest_id]
     if not QuestID then return end
-    local dataName  = GetCompletedQuestInfo(QuestID)
+    local dataName = GetCompletedQuestInfo(QuestID)
     local QuestName = LQD:get_quest_name(QuestID)
     if not QuestName then QuestName = "<<->>" end
-    local Name         = zo_strformat(QuestName)
-    local questLine    = LQD:get_quest_line(QuestID)
-    local questNumber  = LQD:get_quest_number(QuestID)
-    local questSeries  = LQD:get_quest_series(QuestID)
-    local NPCID        = LQD:get_quest_npc_id(pinData)
+    local Name = zo_strformat(QuestName)
+    local questLine = LQD:get_quest_line(QuestID)
+    local questNumber = LQD:get_quest_number(QuestID)
+    local questSeries = LQD:get_quest_series(QuestID)
+    local NPCID = LQD:get_quest_npc_id(pinData)
     local NPCName, NPC = nil, nil
-    local useNpcName   = true
-    NPCName            = LQD:get_quest_giver(NPCID)
+    local useNpcName = true
+    NPCName = LQD:get_quest_giver(NPCID)
     if not NPCName then useNpcName = false end
     if useNpcName then
       NPC = zo_strformat(NPCName)
@@ -3279,27 +3279,27 @@ local function Quests_Undone_pinTypeCallback(pinManager)
         ]]--
     if dataName ~= Name and DestinationsCSSV.QuestsDone[QuestID] ~= 2 and DestinationsCSSV.QuestsDone[QuestID] ~= 1 and DestinationsCSSV.QuestsDone[QuestID] ~= 5 and isQuestCompleted then
       local outputQuestName = zo_strformat("<<1>>", Name)
-      local outputNpcName   = ""
+      local outputNpcName = ""
       local outputQuestLine = ""
       if useNpcName and not DestinationsCSSV.settings.HideQuestGiverName then
-        outputNpcName   = zo_strformat("<<C:1>>", NPC)
+        outputNpcName = zo_strformat("<<C:1>>", NPC)
         outputQuestLine = string.format("%s [%s]", outputQuestName, outputNpcName)
       else
         outputQuestLine = string.format("%s", outputQuestName)
       end
-      drtv.pinTag              = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQuestsUndone.textcolor)):Colorize(outputQuestLine) }
-      local Rep                = LQD:get_quest_repeat(QuestID)
-      local Type               = LQD:get_quest_type(QuestID)
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQuestsUndone.textcolor)):Colorize(outputQuestLine) }
+      local Rep = LQD:get_quest_repeat(QuestID)
+      local Type = LQD:get_quest_type(QuestID)
       local tintIndex, skipRep = 0, false
       LMP:SetLayoutKey(drtv.pinName, "tint", AvailableQuestPinTint)
       if Type then
-        local QType      = nil
+        local QType = nil
         local Repeatable = nil
         if Type == 2 then
-          QType     = GetString(QUESTTYPE_MAIN_STORY)
+          QType = GetString(QUESTTYPE_MAIN_STORY)
           tintIndex = 1
         elseif Type == 5 then
-          QType     = GetString(QUESTTYPE_DUNGEON)
+          QType = GetString(QUESTTYPE_DUNGEON)
           tintIndex = 2
         end
         if Rep then
@@ -3310,7 +3310,7 @@ local function Quests_Undone_pinTypeCallback(pinManager)
               skipRep = true
             end
             Repeatable = GetString(QUESTREPEAT_REPEATABLE)
-            tintIndex  = 3
+            tintIndex = 3
           elseif Rep == 2 then
             if DestinationsSV.filters[DPINS.QUESTS_DAILIES] then
               skipRep = false
@@ -3318,7 +3318,7 @@ local function Quests_Undone_pinTypeCallback(pinManager)
               skipRep = true
             end
             Repeatable = GetString(QUESTREPEAT_DAILY)
-            tintIndex  = 4
+            tintIndex = 4
           end
         end
         if QType then
@@ -3340,7 +3340,7 @@ local function Quests_Undone_pinTypeCallback(pinManager)
       end
       if skipRep == false then
         drtv.pinTag.IsAvailableQuest = true
-        drtv.pinTag.tintIndex        = tintIndex
+        drtv.pinTag.tintIndex = tintIndex
         if not DestinationsSV.settings.ShowCadwellsAlmanac then
           LMP:CreatePin(drtv.pinName, drtv.pinTag, pinData[LQD.quest_map_pin_index.local_x],
             pinData[LQD.quest_map_pin_index.local_y])
@@ -3383,38 +3383,38 @@ local function Quests_In_Progress_pinTypeCallback(pinManager)
   for _, pinData in ipairs(zoneQuests) do
     local QuestID = pinData[LQD.quest_map_pin_index.quest_id]
     if not QuestID then return end
-    isQuestCompleted  = true
-    local dataName    = GetCompletedQuestInfo(QuestID)
-    local questLine   = LQD:get_quest_line(QuestID)
+    isQuestCompleted = true
+    local dataName = GetCompletedQuestInfo(QuestID)
+    local questLine = LQD:get_quest_line(QuestID)
     local questSeries = LQD:get_quest_series(QuestID)
     QuestPinFilters(QuestID, dataName, questLine, questSeries)
     if DestinationsCSSV.QuestsDone[QuestID] and DestinationsCSSV.QuestsDone[QuestID] == 2 and isQuestCompleted then
       local QuestName = LQD:get_quest_name(QuestID)
       if not QuestName then QuestName = "<<->>" end
-      local Name         = zo_strformat(QuestName)
-      local NPCID        = LQD:get_quest_npc_id(pinData)
+      local Name = zo_strformat(QuestName)
+      local NPCID = LQD:get_quest_npc_id(pinData)
       local NPCName, NPC = nil, nil
-      local useNpcName   = true
-      NPCName            = LQD:get_quest_giver(NPCID)
+      local useNpcName = true
+      NPCName = LQD:get_quest_giver(NPCID)
       if not NPCName then useNpcName = false end
       if useNpcName then
         NPC = zo_strformat(NPCName)
       end
       local outputQuestName = zo_strformat("<<1>>", Name)
-      local outputNpcName   = ""
+      local outputNpcName = ""
       local outputQuestLine = ""
       if useNpcName and not DestinationsCSSV.settings.HideQuestGiverName then
-        outputNpcName   = zo_strformat("<<C:1>>", NPC)
+        outputNpcName = zo_strformat("<<C:1>>", NPC)
         outputQuestLine = string.format("%s [%s]", outputQuestName, outputNpcName)
       else
         outputQuestLine = string.format("%s", outputQuestName)
       end
-      drtv.pinTag   = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQuestsInProgress.textcolor)):Colorize(outputQuestLine) }
-      local Rep     = LQD:get_quest_repeat(QuestID)
-      local Type    = LQD:get_quest_type(QuestID)
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQuestsInProgress.textcolor)):Colorize(outputQuestLine) }
+      local Rep = LQD:get_quest_repeat(QuestID)
+      local Type = LQD:get_quest_type(QuestID)
       local skipRep = false
       if Type then
-        local QType      = nil
+        local QType = nil
         local Repeatable = nil
         if Type == 2 then
           QType = GetString(QUESTTYPE_MAIN_STORY)
@@ -3499,18 +3499,18 @@ local function Quests_Done_pinTypeCallback(pinManager)
   for _, pinData in ipairs(zoneQuests) do
     local QuestID = pinData[LQD.quest_map_pin_index.quest_id]
     if not QuestID then return end
-    local dataName  = GetCompletedQuestInfo(QuestID)
+    local dataName = GetCompletedQuestInfo(QuestID)
     local QuestName = LQD:get_quest_name(QuestID)
     if not QuestName then QuestName = "<<->>" end
-    local Name         = zo_strformat(QuestName)
-    isQuestCompleted   = true
-    local dataName     = GetCompletedQuestInfo(QuestID)
-    local questLine    = LQD:get_quest_line(QuestID)
-    local questSeries  = LQD:get_quest_series(QuestID)
-    local NPCID        = LQD:get_quest_npc_id(pinData)
+    local Name = zo_strformat(QuestName)
+    isQuestCompleted = true
+    local dataName = GetCompletedQuestInfo(QuestID)
+    local questLine = LQD:get_quest_line(QuestID)
+    local questSeries = LQD:get_quest_series(QuestID)
+    local NPCID = LQD:get_quest_npc_id(pinData)
     local NPCName, NPC = nil, nil
-    local useNpcName   = true
-    NPCName            = LQD:get_quest_giver(NPCID)
+    local useNpcName = true
+    NPCName = LQD:get_quest_giver(NPCID)
     if not NPCName then useNpcName = false end
     if useNpcName then
       NPC = zo_strformat(NPCName)
@@ -3518,20 +3518,20 @@ local function Quests_Done_pinTypeCallback(pinManager)
     QuestPinFilters(QuestID, dataName, questLine, questSeries)
     if (dataName == Name and DestinationsCSSV.QuestsDone[QuestID] ~= Destinations.QUEST_HIDDEN and isQuestCompleted) or (DestinationsCSSV.QuestsDone[QuestID] == 1 and isQuestCompleted) then
       local outputQuestName = zo_strformat("<<1>>", Name)
-      local outputNpcName   = ""
+      local outputNpcName = ""
       local outputQuestLine = ""
       if useNpcName and not DestinationsCSSV.settings.HideQuestGiverName then
-        outputNpcName   = zo_strformat("<<C:1>>", NPC)
+        outputNpcName = zo_strformat("<<C:1>>", NPC)
         outputQuestLine = string.format("%s [%s]", outputQuestName, outputNpcName)
       else
         outputQuestLine = string.format("%s", outputQuestName)
       end
-      drtv.pinTag   = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQuestsDone.textcolor)):Colorize(outputQuestLine) }
-      local Rep     = LQD:get_quest_repeat(QuestID)
-      local Type    = LQD:get_quest_type(QuestID)
+      drtv.pinTag = { ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQuestsDone.textcolor)):Colorize(outputQuestLine) }
+      local Rep = LQD:get_quest_repeat(QuestID)
+      local Type = LQD:get_quest_type(QuestID)
       local skipRep = false
       if Type ~= 0 then
-        local QType      = nil
+        local QType = nil
         local Repeatable = nil
         if Type == 2 then
           QType = GetString(QUESTTYPE_MAIN_STORY)
@@ -3626,7 +3626,7 @@ local function AddAchievementCompassPins()
     for _, pinData in ipairs(mapData) do
       drtv.pinType = pinData[AchIndex.TYPE]
       if drtv.pinType == 15 and ((LMP:IsEnabled(DPINS.BREAKING) and DestinationsCSSV.filters[DPINS.BREAKING]) or (LMP:IsEnabled(DPINS.BREAKING_DONE) and DestinationsCSSV.filters[DPINS.BREAKING_DONE])) then
-        local NUMBER                    = tonumber(pinData[AchIndex.KEYCODE])
+        local NUMBER = tonumber(pinData[AchIndex.KEYCODE])
         local desc, completed, required = GetAchievementCriterion(1250, NUMBER)
         if completed ~= required then
           COMPASS_PINS.pinManager:CreatePin(DPINS.BREAKING, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
@@ -3634,7 +3634,7 @@ local function AddAchievementCompassPins()
           COMPASS_PINS.pinManager:CreatePin(DPINS.BREAKING_DONE, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
         end
       elseif drtv.pinType == 14 and ((LMP:IsEnabled(DPINS.RELIC_HUNTER) and DestinationsCSSV.filters[DPINS.RELIC_HUNTER]) or (LMP:IsEnabled(DPINS.RELIC_HUNTER_DONE) and DestinationsCSSV.filters[DPINS.RELIC_HUNTER_DONE])) then
-        local NUMBER                    = tonumber(pinData[AchIndex.KEYCODE])
+        local NUMBER = tonumber(pinData[AchIndex.KEYCODE])
         local desc, completed, required = GetAchievementCriterion(1250, NUMBER)
         if completed ~= required then
           COMPASS_PINS.pinManager:CreatePin(DPINS.RELIC_HUNTER, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
@@ -3664,7 +3664,7 @@ local function AddAchievementCompassPins()
           COMPASS_PINS.pinManager:CreatePin(DPINS.BRAWL_DONE, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
         end
       elseif drtv.pinType == 9 and ((LMP:IsEnabled(DPINS.ON_ME) and DestinationsCSSV.filters[DPINS.ON_ME]) or (LMP:IsEnabled(DPINS.ON_ME_DONE) and DestinationsCSSV.filters[DPINS.ON_ME_DONE])) then
-        local COMP                      = ZoneToAchievements[704][zoneTextureName]
+        local COMP = ZoneToAchievements[704][zoneTextureName]
         local desc, completed, required = GetAchievementCriterion(704, COMP)
         if completed ~= required then
           COMPASS_PINS.pinManager:CreatePin(DPINS.ON_ME, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
@@ -3693,19 +3693,19 @@ local function AddAchievementCompassPins()
           COMPASS_PINS.pinManager:CreatePin(DPINS.PEACEMAKER_DONE, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
         end
       elseif drtv.pinType == 2 and ((LMP:IsEnabled(DPINS.LB_GTTP_CP) and DestinationsCSSV.filters[DPINS.LB_GTTP_CP]) or (LMP:IsEnabled(DPINS.LB_GTTP_CP_DONE) and DestinationsCSSV.filters[DPINS.LB_GTTP_CP_DONE])) then
-        local COMP                               = ZoneToAchievements[767167][zoneTextureName]
-        local desca, completedLB, requiredLB     = GetAchievementCriterion(873, COMP)
+        local COMP = ZoneToAchievements[767167][zoneTextureName]
+        local desca, completedLB, requiredLB = GetAchievementCriterion(873, COMP)
         local descb, completedGTTP, requiredGTTP = GetAchievementCriterion(871, COMP)
-        local descc, completedCP, requiredCP     = GetAchievementCriterion(869, COMP)
-        local completed                          = completedLB + completedGTTP + completedCP
-        local required                           = requiredLB + requiredGTTP + requiredCP
+        local descc, completedCP, requiredCP = GetAchievementCriterion(869, COMP)
+        local completed = completedLB + completedGTTP + completedCP
+        local required = requiredLB + requiredGTTP + requiredCP
         if completed ~= required then
           COMPASS_PINS.pinManager:CreatePin(DPINS.LB_GTTP_CP, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
         elseif LMP:IsEnabled(DPINS.LB_GTTP_CP_DONE) and DestinationsCSSV.filters[DPINS.LB_GTTP_CP_DONE] then
           COMPASS_PINS.pinManager:CreatePin(DPINS.LB_GTTP_CP_DONE, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
         end
       elseif drtv.pinType == 1 and ((LMP:IsEnabled(DPINS.MAIQ) and DestinationsCSSV.filters[DPINS.MAIQ]) or (LMP:IsEnabled(DPINS.MAIQ_DONE) and DestinationsCSSV.filters[DPINS.MAIQ_DONE])) then
-        local COMP                      = ZoneToAchievements[872][zoneTextureName]
+        local COMP = ZoneToAchievements[872][zoneTextureName]
         local desc, completed, required = GetAchievementCriterion(872, COMP)
         if completed ~= required then
           COMPASS_PINS.pinManager:CreatePin(DPINS.MAIQ, pinData, pinData[AchIndex.X], pinData[AchIndex.Y])
@@ -3721,8 +3721,8 @@ local function AddAchievementCompassPins()
     mapData = DBossStore[mapTextureName]
     if not mapData then return end
     for _, pinData in ipairs(mapData) do
-      local CHAMPACH               = pinData[DBossIndex.ACH]
-      local CHAMPIDX               = pinData[DBossIndex.IDX]
+      local CHAMPACH = pinData[DBossIndex.ACH]
+      local CHAMPIDX = pinData[DBossIndex.IDX]
       local _, completed, required = GetAchievementCriterion(tonumber(CHAMPACH), tonumber(CHAMPIDX))
       if completed ~= required then
         COMPASS_PINS.pinManager:CreatePin(DPINS.CHAMPION, pinData, pinData[DBossIndex.X], pinData[DBossIndex.Y])
@@ -3776,7 +3776,7 @@ local function Quests_CompassPins()
   if not zoneQuests then return end
   for _, pinData in ipairs(zoneQuests) do
     local QuestID = pinData[LQD.quest_map_pin_index.quest_id]
-    local Rep     = LQD:get_quest_repeat(QuestID)
+    local Rep = LQD:get_quest_repeat(QuestID)
     local skipRep = false
     LMP:SetLayoutKey(DPINS.QUESTS_UNDONE, "tint", AvailableQuestPinTint)
     if Rep then
@@ -3798,13 +3798,13 @@ local function Quests_CompassPins()
     end
     if skipRep == false then
       if not QuestID then return end
-      local dataName  = GetCompletedQuestInfo(QuestID)
+      local dataName = GetCompletedQuestInfo(QuestID)
       local QuestName = LQD:get_quest_name(QuestID)
       if not QuestName then QuestName = "<<->>" end
-      local questLine   = LQD:get_quest_line(QuestID)
+      local questLine = LQD:get_quest_line(QuestID)
       local questNumber = LQD:get_quest_number(QuestID)
       local questSeries = LQD:get_quest_series(QuestID)
-      isQuestCompleted  = true
+      isQuestCompleted = true
       QuestPinFilters(QuestID, dataName, questLine, questSeries)
       --[[
             if questLine >= 10002 and questNumber ~= 10001 then
@@ -3882,14 +3882,14 @@ local function CollectibleFishCompassPins()
     local TYPE = pinData[AchIndex.TYPE]
     if TYPE >= 40 and TYPE <= 44 then
       if not DestinationsCSSV.filters[DPINS.FISHING_COMPASS] or not (LMP:IsEnabled(DPINS.FISHING) and not LMP:IsEnabled(DPINS.FISHING_DONE)) then return end
-      local fishID                                 = pinData[AchIndex.ID]
-      local _, requiredTotal                       = 0, GetAchievementNumCriteria(fishID)
-      local desc, completed                        = nil, 0, 0
-      local countF, countL, countO, countR         = 0, 0, 0, 0
-      local countFN, countLN, countON, countRN     = 0, 0, 0, 0
+      local fishID = pinData[AchIndex.ID]
+      local _, requiredTotal = 0, GetAchievementNumCriteria(fishID)
+      local desc, completed = nil, 0, 0
+      local countF, countL, countO, countR = 0, 0, 0, 0
+      local countFN, countLN, countON, countRN = 0, 0, 0, 0
       local countFND, countLND, countOND, countRND = 0, 0, 0, 0
-      local fishdata                               = FishStore[fishID]
-      local FishName, FishNumber, FishLoc          = nil, nil, nil
+      local fishdata = FishStore[fishID]
+      local FishName, FishNumber, FishLoc = nil, nil, nil
       for _, pinData in ipairs(fishdata) do
         FishLoc = pinData[FishIndex.LOCATION]
         if FishLoc == DESTINATIONS_FISH_TYPE_FOUL then
@@ -3904,7 +3904,7 @@ local function CollectibleFishCompassPins()
       end
       for i = 1, requiredTotal, 1 do
         for _, pinData in ipairs(fishdata) do
-          FishLoc    = pinData[FishIndex.LOCATION]
+          FishLoc = pinData[FishIndex.LOCATION]
           FishNumber = pinData[FishIndex.FISHNUMBER]
           if FishNumber == i then
             if TYPE == 40 and FishLoc == DESTINATIONS_FISH_TYPE_FOUL then
@@ -3946,13 +3946,13 @@ local function CollectibleFishCompassPins()
       end
     elseif TYPE == 30 then
       if not DestinationsCSSV.filters[DPINS.COLLECTIBLES_COMPASS] or not (LMP:IsEnabled(DPINS.COLLECTIBLES) and not LMP:IsEnabled(DPINS.COLLECTIBLES_DONE)) then return end
-      local collectibleID     = pinData[AchIndex.ID]
-      local _, requiredTotal  = 0, GetAchievementNumCriteria(collectibleID)
-      local completed         = 0
+      local collectibleID = pinData[AchIndex.ID]
+      local _, requiredTotal = 0, GetAchievementNumCriteria(collectibleID)
+      local completed = 0
       local collectibleNumber = nil
-      local collectibledata   = CollectibleStore[collectibleID]
-      local collectibleCode   = pinData[AchIndex.KEYCODE]
-      local countCN           = 0
+      local collectibledata = CollectibleStore[collectibleID]
+      local collectibleCode = pinData[AchIndex.KEYCODE]
+      local countCN = 0
       for i = 1, requiredTotal, 1 do
         for _, pinData in ipairs(collectibledata) do
           collectibleNumber = pinData[CollectibleIndex.NUMBER]
@@ -4120,21 +4120,21 @@ local function InitializeSetDescription()
 
   for setIndex, setData in ipairs(SetsStore) do
 
-    local itemLink               = ("|H1:item:%d:370:50:0:0:0:0:0:0:0:0:0:0:0:0:1:0:0:0:10000:0|h|h"):format(setData[1])
+    local itemLink = ("|H1:item:%d:370:50:0:0:0:0:0:0:0:0:0:0:0:0:1:0:0:0:10000:0|h|h"):format(setData[1])
     local _, setName, numBonuses = GetItemLinkSetInfo(itemLink)
 
-    local setRequirement         = zo_strformat(DEST_SET_REQUIREMENT, setData[2])
-    local setBonuses             = ""
+    local setRequirement = zo_strformat(DEST_SET_REQUIREMENT, setData[2])
+    local setBonuses = ""
 
     local numRequired, bonusDescription
     for bonusIndex = 1, numBonuses do
       numRequired, bonusDescription = GetItemLinkSetBonusInfo(itemLink, false, bonusIndex)
-      setBonuses                    = setBonuses .. bonusDescription .. "\n"
+      setBonuses = setBonuses .. bonusDescription .. "\n"
     end
 
-    local setHeader                = zo_strformat(SI_ITEM_FORMAT_STR_SET_NAME, setName, numRequired, numRequired)
+    local setHeader = zo_strformat(SI_ITEM_FORMAT_STR_SET_NAME, setName, numRequired, numRequired)
 
-    setBonuses                     = string.sub(setBonuses, 1, -2)
+    setBonuses = string.sub(setBonuses, 1, -2)
     destinationsSetsData[setIndex] = { setHeader, setRequirement, setBonuses }
 
   end
@@ -4156,7 +4156,7 @@ local function MapCallback_fakeKnown()
 
   mapData, mapTextureName, zoneTextureName = nil, nil, nil
   GetMapTextureName()
-  mapData         = POIsStore[GetZoneId(GetCurrentMapZoneIndex())]
+  mapData = POIsStore[GetZoneId(GetCurrentMapZoneIndex())]
 
   local zoneIndex = GetCurrentMapZoneIndex()
 
@@ -4173,8 +4173,8 @@ local function MapCallback_fakeKnown()
 
     local normalizedX, normalizedY, poiPinType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
       poiIndex)
-    local unknown                                                                                                            = not (isDiscovered or isNearby)
-    local seen                                                                                                               = isDiscovered
+    local unknown = not (isDiscovered or isNearby)
+    local seen = isDiscovered
 
     if not unknown and mapData[poiIndex] then
 
@@ -4182,10 +4182,10 @@ local function MapCallback_fakeKnown()
 
       if destinationsPinType == DESTINATIONS_PIN_TYPE_MUNDUS or destinationsPinType == DESTINATIONS_PIN_TYPE_CRAFTING then
 
-        local englishName   = mapData[poiIndex].n
+        local englishName = mapData[poiIndex].n
         local objectiveName = zo_strformat(SI_WORLD_MAP_LOCATION_NAME, GetPOIInfo(zoneIndex, poiIndex))
 
-        local pinTag        = {
+        local pinTag = {
           newFormat = true,
           objectiveName = objectiveName,
           englishName = englishName,
@@ -4203,13 +4203,13 @@ local function MapCallback_fakeKnown()
 
         local createPin
         if pinTag.destinationsPinType == DESTINATIONS_PIN_TYPE_MUNDUS and DestinationsSV.settings.ImproveMundus then
-          createPin      = true
+          createPin = true
           pinTag.special = MundusStore[mapData[poiIndex].s]
         elseif pinTag.destinationsPinType == DESTINATIONS_PIN_TYPE_CRAFTING and DestinationsSV.settings.ImproveCrafting then
-          createPin             = true
-          pinTag.special        = GetSetDescription(mapData[poiIndex].s)
-          local r1, g1, b1      = ZO_SELECTED_TEXT:UnpackRGB()
-          local r2, g2, b2      = ZO_HIGHLIGHT_TEXT:UnpackRGB()
+          createPin = true
+          pinTag.special = GetSetDescription(mapData[poiIndex].s)
+          local r1, g1, b1 = ZO_SELECTED_TEXT:UnpackRGB()
+          local r2, g2, b2 = ZO_HIGHLIGHT_TEXT:UnpackRGB()
           pinTag.multipleFormat = {
             k = {
               [1] = { "ZoFontWinT2", r1, g1, b1, TOPLEFT, MODIFY_TEXT_TYPE_UPPERCASE, TEXT_ALIGN_CENTER, true },
@@ -4244,7 +4244,7 @@ local function MapCallback_unknown()
 
   if GetMapType() >= MAPTYPE_WORLD then return end
 
-  drtv.pinName                             = DPINS.UNKNOWN
+  drtv.pinName = DPINS.UNKNOWN
 
   mapData, mapTextureName, zoneTextureName = nil, nil, nil
   if LMP:IsEnabled(drtv.pinName) and DestinationsCSSV.filters[drtv.pinName] then
@@ -4267,15 +4267,15 @@ local function MapCallback_unknown()
 
     local normalizedX, normalizedY, poiPinType, icon, isShownInCurrentMap, linkedCollectibleIsLocked, isDiscovered, isNearby = GetPOIMapInfo(zoneIndex,
       poiIndex)
-    local unknown                                                                                                            = not (isDiscovered or isNearby)
+    local unknown = not (isDiscovered or isNearby)
 
     if unknown and mapData[poiIndex] then
 
-      local englishName         = mapData[poiIndex].n
+      local englishName = mapData[poiIndex].n
       local destinationsPinType = mapData[poiIndex].t
-      local objectiveName       = zo_strformat(SI_WORLD_MAP_LOCATION_NAME, GetPOIInfo(zoneIndex, poiIndex))
+      local objectiveName = zo_strformat(SI_WORLD_MAP_LOCATION_NAME, GetPOIInfo(zoneIndex, poiIndex))
 
-      local pinTag              = {
+      local pinTag = {
         newFormat = true,
         objectiveName = objectiveName,
         englishName = englishName,
@@ -4295,9 +4295,9 @@ local function MapCallback_unknown()
       if pinTag.destinationsPinType == DESTINATIONS_PIN_TYPE_MUNDUS then
         pinTag.special = GetAbilityDescription(mapData[poiIndex].s)
       elseif pinTag.destinationsPinType == DESTINATIONS_PIN_TYPE_CRAFTING then
-        pinTag.special        = GetSetDescription(mapData[poiIndex].s)
-        local r1, g1, b1      = ZO_SELECTED_TEXT:UnpackRGB()
-        local r2, g2, b2      = ZO_HIGHLIGHT_TEXT:UnpackRGB()
+        pinTag.special = GetSetDescription(mapData[poiIndex].s)
+        local r1, g1, b1 = ZO_SELECTED_TEXT:UnpackRGB()
+        local r2, g2, b2 = ZO_HIGHLIGHT_TEXT:UnpackRGB()
         pinTag.multipleFormat = {
           k = {
             [1] = { "ZoFontWinT2", r1, g1, b1, TOPLEFT, MODIFY_TEXT_TYPE_UPPERCASE, TEXT_ALIGN_CENTER, true },
@@ -4338,12 +4338,12 @@ end
 
 local function RegisterQuestDone(eventCode, questName, level, previousExperience, currentExperience, championPoints, questType, instanceDisplayType)
   local questFound, questID = false, 0
-  local tempQuestID         = LQD:get_questids_table(questName, Destinations.effective_quest_lang)
-  local questData           = {}
+  local tempQuestID = LQD:get_questids_table(questName, Destinations.effective_quest_lang)
+  local questData = {}
   if tempQuestID then
     if #tempQuestID == 1 then
       questFound = true
-      questID    = tempQuestID[1]
+      questID = tempQuestID[1]
     end
   end
   --[[TODO this need to be redone and added to the routine when you complete
@@ -4406,323 +4406,323 @@ end
 
 local function CheckBreadrumbQuests()
   local questName = nil
-  questName       = GetCompletedQuestInfo(4453) -- "Message To Mournhold" (breadcrumb quest to A Favor Returned)
+  questName = GetCompletedQuestInfo(4453) -- "Message To Mournhold" (breadcrumb quest to A Favor Returned)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3956] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3686) -- "Onward To Shadowfen" (breadcrumb quest to Three Tender Souls)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4163] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3799) -- "Overrun" (breadcrumb quest to Scales of Retribution)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3732] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3978) -- "To Pinepeak Caverns" (breadcrumb quest to Tomb Beneath the Mountain)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4184] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3978) -- "Calling Hakra" (breadcrumb quest to Tomb Beneath the Mountain)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5035] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3191) -- "To The Wyrd Tree" (breadcrumb quest to Reclaiming the Elements)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3183] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3060) -- "The Wyrd Sisters" (breadcrumb quest to Seeking the Guardians)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3026] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(2251) -- "The Scholar of Bergama" (breadcrumb quest to Gone Missing)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[2193] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4712) -- "To Saifa in Rawl'kha" (breadcrumb quest to The First Step)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4799] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4712) -- "The Champions at Rawl'kha" (breadcrumb quest to The First Step)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5092] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3632) -- "Taking Precautions" (breadcrumb quest to Breaking Fort Virak)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5040] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(974) -- "Werewolves To The North" (breadcrumb quest to A Duke in Exile)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3283] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(521) -- "An Offering To Azura" (breadcrumb quest to Azura's Aid)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5052] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(1799) -- "Kingdom in Mourning" and "Dark Wings" (breadcrumb quests to A City in Black)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3566] = 1 -- breadcrumb
     DestinationsCSSV.QuestsDone[4991] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4850) -- "Breaking the Ward" (breadcrumb quest to Shades Of Green)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4790] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4689) -- breadcrumb quests to A Door into Moonlight
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5091] = 1 -- "Hallowed to Grimwatch"
     DestinationsCSSV.QuestsDone[5093] = 1 -- "Moons Over Grimwatch"
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4479) -- "To Moonmont" (breadcrumb quest to Motes in the Moonlight)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4802] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4139) -- "Honrich Tower" (breadcrumb quest to Shattered Hopes)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5036] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4364) -- A Thorn in Your Side (alternate quest to A Bargain With Shadows and The Will of the Worm)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4370] = 1 -- "A Bargain With Shadows"
     DestinationsCSSV.QuestsDone[4369] = 1 -- "The Will of the Worm"
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4370) -- A Bargain With Shadows (alternate quest to The Will of the Worm and A Thorn in Your Side)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4369] = 1 -- "The Will of the Worm"
     DestinationsCSSV.QuestsDone[4364] = 1 -- "A Thorn in Your Side"
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4369) -- The Will of the Worm (alternate quest to A Thorn in Your Side and A Bargain With Shadows)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4364] = 1 -- "A Thorn in Your Side"
     DestinationsCSSV.QuestsDone[4370] = 1 -- "A Bargain With Shadows"
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4833) -- Brackenleaf's Briars (breadcrumb quest to Bosmer Insight)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4974] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4712) -- Hallowed to Rawl'kha (breadcrumb quest to The First Step)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4759] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3695) -- City at the Spire (breadcrumb quest to Aggressive Negotiations)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3635] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3678) -- What Happened at Murkwater (breadcrumb quest to Trials of the Burnished Scales)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3802] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3840) -- Bound to the Bog (breadcrumb quest to Saving the Relics)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3982] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3615) -- Mystery of Othrenis (breadcrumb to Wake the Dead)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3855] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4899) -- Leading the Stand (breadcrumb to Beyond the Call)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3281] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4652) -- breadcrumbs to The Colovian Occupation
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3981] = 1 -- To Taarengrav
     DestinationsCSSV.QuestsDone[4710] = 1 -- Hallowed To Arenthia
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4147) -- A Grave Situation (breadcrumb to The Shackled Guardian)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5034] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4293) -- "To Mathiisen" (breadcrumb to "Putting the Pieces Together")
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4366] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4255) -- "To Auridon" (breadcrumb to "Ensuring Security")
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4818] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(2552) -- "To Alcaire Castle" (breadcrumb to "Army at the Gates")
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4443] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4546) -- "Naemon's Return" (breadcrumb to "Retaking the Pass")
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5088] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(5088) -- "Report to Marbruk" (breadcrumb to "Naemon's Return")
   if (questName and string.len(questName) >= 3) or (DestinationsCSSV.QuestsDone[5088] and DestinationsCSSV.QuestsDone[5088] == 1) then
     DestinationsCSSV.QuestsDone[4821] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4574) -- "Woodhearth" (breadcrumb to "Veil of Illusion")
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4853] = 1 -- breadcrumb
-    questName                         = nil
+    questName = nil
   end
 end
 
 local function CheckAlternateQuests()
   local questName = nil
-  questName       = GetCompletedQuestInfo(4255) -- Ensuring Security (alternate quest to All the Fuss & Missive to the Queen)
+  questName = GetCompletedQuestInfo(4255) -- Ensuring Security (alternate quest to All the Fuss & Missive to the Queen)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5055] = 1
     DestinationsCSSV.QuestsDone[5058] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(5058) -- All the Fuss (alternate quest to Missive to the Queen)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5055] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(5055) -- Missive to the Queen (alternate quest to All the Fuss)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5058] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(2130) -- Rise of the Dead (alternate quest to Word from the Throne)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4694] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4330) -- Lifting the Veil (alternate quest to Back to Skywatch)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4549] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(1803) -- The Water Stone (alternate quest to Sunken Knowledge)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[1804] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(1804) -- Sunken Knowledge (alternate quest to The Water Stone)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[1803] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(1536) -- An Offering To Azura (alternate quest to Fire in the Fields)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5052] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(5052) -- Fire in the Fields (alternate quest to An Offering To Azura)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[1536] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4028) -- Breaking The Tide (alternate quest to Zeren in Peril)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4026] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4026) -- Zeren in Peril (alternate quest to Breaking The Tide)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4028] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3595) -- Wayward Son (alternate quest to Giving for the Greater Good)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3598] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3598) -- Giving for the Greater Good (alternate quest to Wayward Son)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3595] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3653) -- Ratting Them Out (alternate quest to A Timely Matter)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3658] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(3658) -- A Timely Matter (alternate quest to Ratting Them Out)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[3653] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4679) -- The Shadow's Embrace (alternate quest to An Unusual Circumstance)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4654] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4654) -- Unusual Circumstance (alternate quest to The Shadow's Embrace)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4679] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4364) -- A Thorn in Your Side (alternate quest to A Bargain With Shadows and The Will of the Worm)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4369] = 1
     DestinationsCSSV.QuestsDone[4370] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4369) -- A Bargain With Shadows (alternate quest to The Will of the Worm and A Thorn in Your Side)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4370] = 1
     DestinationsCSSV.QuestsDone[4364] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4370) -- The Will of the Worm (alternate quest to A Thorn in Your Side and A Bargain With Shadows)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4364] = 1
     DestinationsCSSV.QuestsDone[4369] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(5072) -- Aid for bramblebreach (alternate quest to The Staff of Magnus)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4735] = 1
-    questName                         = nil
+    questName = nil
   end
   questName = GetCompletedQuestInfo(4735) -- The Staff of Magnus (alternate quest to Aid for bramblebreach)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[5072] = 1
-    questName                         = nil
+    questName = nil
   end
   --Cyrodiil
   questName = GetCompletedQuestInfo(4706) -- Reporting for Duty (alternate quest to Welcome to Cyrodiil and Siege Warfare)
   if questName and string.len(questName) >= 3 then
     DestinationsCSSV.QuestsDone[4704] = 1
     DestinationsCSSV.QuestsDone[4705] = 1
-    questName                         = nil
+    questName = nil
   end
 end
 
 -- sets that the quest is started when the player accepts a quest
 function Destinations.UpdateQuestsDoneLQD(questDataTable)
   local completed = LQD.completed_quests
-  local started   = LQD.started_quests
+  local started = LQD.started_quests
   local questData = questDataTable or {}
   for k, v in pairs(DestinationsCSSV.QuestsDone) do
     if v == Destinations.QUEST_HIDDEN then
@@ -4746,7 +4746,7 @@ local function GetInProgressQuests()
   local numQuests = GetNumJournalQuests()
   for i = 1, numQuests do
     local questName, _, _, _, _, _, _, _, _, _ = GetJournalQuestInfo(i)
-    QTableStore                                = LQD.quest_names[Destinations.effective_quest_lang]
+    QTableStore = LQD.quest_names[Destinations.effective_quest_lang]
     for y, z in pairs(QTableStore) do
       if z == questName then
         local questId = y
@@ -4868,10 +4868,10 @@ local function ShowQuestEditingMenu(pin)
 
   local _, pinTag = pin:GetPinTypeAndTag()
   local questName = pinTag[1]
-  local qName     = string.gsub(questName, "|c......", "")
+  local qName = string.gsub(questName, "|c......", "")
 
-  qName           = string.gsub(qName, "|r", "")
-  qName           = string.gsub(qName, "%-", " ")
+  qName = string.gsub(qName, "|r", "")
+  qName = string.gsub(qName, "%-", " ")
 
   if drtv.getQuestInfo then
     Dest:dm("Info", "Quest found: " .. qName)
@@ -4951,11 +4951,11 @@ SLASH_COMMANDS["/dqed"] = SetQuestEditing   --Quest Editing TOGGLE
 SLASH_COMMANDS["/dgcq"] = function()
   --Get Completed Quests (to saved vars)
   Dest:dm("Info", "Saving all completed quests...")
-  local questId   = nil
+  local questId = nil
   local questName = nil
   local questType
   for i = 1, 7000 do
-    questId              = i
+    questId = i
     questName, questType = GetCompletedQuestInfo(questId)
     if string.len(questName) >= 3 then
       DestinationsSV.TEMPPINDATA[questId] = "\v" .. questName .. "\v"
@@ -4966,11 +4966,11 @@ end
 SLASH_COMMANDS["/dgac"] = function()
   --Get All Achievements (to saved vars)
   Dest:dm("Info", "Saving all achievements...")
-  local achId   = nil
+  local achId = nil
   local achName = nil
   local achType
   for i = 1, 5000 do
-    achId                           = i
+    achId = i
     achName, achType, _, _, _, _, _ = GetAchievementInfo(achId)
     if string.len(achName) >= 3 then
       DestinationsSV.TEMPPINDATA[achId] = "\v" .. achName .. "\v"
@@ -4981,24 +4981,24 @@ end
 SLASH_COMMANDS["/dgap"] = function()
   --Get All POI's (to saved vars)
   Dest:dm("Info", "Saving all POI's...")
-  local zoneIndex    = GetCurrentMapZoneIndex()
+  local zoneIndex = GetCurrentMapZoneIndex()
   local currentMapId = GetZoneId(zoneIndex)
   if Destinations_Settings.pointsOfIntrest == nil then Destinations_Settings.pointsOfIntrest = {} end
   if Destinations_Settings.pointsOfIntrest[currentMapId] == nil then Destinations_Settings.pointsOfIntrest[currentMapId] = {} end
   Destinations_Settings.pointsOfIntrest[currentMapId] = {}
-  local saveData                                      = Destinations_Settings.pointsOfIntrest[currentMapId]
+  local saveData = Destinations_Settings.pointsOfIntrest[currentMapId]
   if zoneIndex then
     for i = 1, GetNumPOIs(zoneIndex) do
       local objectiveName, objectiveLevel, startDescription, finishedDescription = GetPOIInfo(zoneIndex, i)
-      local normalizedX, normalizedY, poiPinType, objectiveIcon, _, _, _, _      = GetPOIMapInfo(zoneIndex, i)
-      local poiTypeId                                                            = 99
+      local normalizedX, normalizedY, poiPinType, objectiveIcon, _, _, _, _ = GetPOIMapInfo(zoneIndex, i)
+      local poiTypeId = 99
       if objectiveName then
         local POIno = tostring(i)
         if string.len(POIno) == 1 then
           POIno = "0" .. POIno
         end
         local objectiveString = "{ n = 0x22%s0x22, t = %s },"
-        saveData[POIno]       = string.format(objectiveString, objectiveName, objectiveIcon)
+        saveData[POIno] = string.format(objectiveString, objectiveName, objectiveIcon)
         Dest:dm("Info", tostring(POIno) .. ": " .. objectiveName)
         if string.find(objectiveIcon, "/esoui/art/icons/poi/") then
           objectiveIcon = string.gsub(objectiveIcon, "/esoui/art/icons/poi/", "")
@@ -5053,8 +5053,8 @@ SLASH_COMMANDS["/dsav"] = function(...)
     if cmdparam then
       GetMapTextureName()
       if not mapTextureName then return end
-      local mapNumber                                       = 1
-      local coordData, mapName                              = {}, {}
+      local mapNumber = 1
+      local coordData, mapName = {}, {}
       local xtra1, xtra2, xtra3, xtra4, xtra5, xtra6, xtra7 = " ", " ", " ", " ", " ", " ", " "
       if cmdparam >= 40 and cmdparam <= 43 then
         xtra1 = FishLocs[zoneTextureName]
@@ -5067,10 +5067,10 @@ SLASH_COMMANDS["/dsav"] = function(...)
       while (GetMapContentType() == MAP_CONTENT_DUNGEON) or (GetMapType() == MAPTYPE_SUBZONE) or (GetMapType() == MAPTYPE_ZONE) do
         GetMapTextureName()
         if mapTextureName then
-          mapName[mapNumber]   = mapTextureName
-          mapX, mapY           = GetMapPlayerPosition("player")
+          mapName[mapNumber] = mapTextureName
+          mapX, mapY = GetMapPlayerPosition("player")
           coordData[mapNumber] = mapName[mapNumber] .. "{" .. FormatCoords(mapX) .. ", " .. FormatCoords(mapY) .. ",\\t" .. cmdparam .. ",\\t" .. xtra1 .. ",\\t" .. xtra2 .. ",\\t" .. xtra3 .. ",\\t" .. xtra4 .. ",\\t" .. xtra5 .. ",\\t" .. xtra6 .. ",\\t" .. xtra7 .. "},"
-          mapNumber            = mapNumber + 1
+          mapNumber = mapNumber + 1
           MapZoomOut()
         end
       end
@@ -5081,7 +5081,7 @@ SLASH_COMMANDS["/dsav"] = function(...)
           Dest:dm("Info", "saving data for " .. mapName[mapNumber] .. "...")
         end
         DestinationsSV.Quests["DQD: " .. mapName[mapNumber] .. "/" .. FormatCoords(mapX) .. FormatCoords(mapY)] = coordData[mapNumber]
-        mapNumber                                                                                               = mapNumber + 1
+        mapNumber = mapNumber + 1
       end
     end
   else
@@ -5103,7 +5103,7 @@ end
 
 local function InitVariables()
 
-  playerAlliance                                   = GetUnitAlliance("player")
+  playerAlliance = GetUnitAlliance("player")
   DestinationsCSSV.settings.activateReloaduiButton = false
 
   for _, pinName in pairs(drtv.AchPinTex) do
@@ -5350,14 +5350,14 @@ end
 
 local function SetPinLayouts()
 
-  local pinLayout_Faked               = {
+  local pinLayout_Faked = {
     maxDistance = 0.05,
     level = 30,
     texture = GetFakedPinTexture,
     size = 26,
   }
 
-  local pinLayout_unknown             = {
+  local pinLayout_unknown = {
     maxDistance = DestinationsSV.pins.pinTextureUnknown.maxDistance,
     level = DestinationsSV.pins.pinTextureUnknown.level,
     texture = GetPinTextureUnknown,
@@ -5372,7 +5372,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_other               = {
+  local pinLayout_other = {
     maxDistance = DestinationsSV.pins.pinTextureOther.maxDistance,
     level = DestinationsSV.pins.pinTextureOther.level,
     texture = pinTextures.paths.Other[DestinationsSV.pins.pinTextureOther.type],
@@ -5387,7 +5387,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_other_Done          = {
+  local pinLayout_other_Done = {
     maxDistance = DestinationsSV.pins.pinTextureOtherDone.maxDistance,
     level = DestinationsSV.pins.pinTextureOtherDone.level,
     texture = pinTextures.paths.OtherDone[DestinationsSV.pins.pinTextureOtherDone.type],
@@ -5402,7 +5402,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Maiq                = {
+  local pinLayout_Maiq = {
     maxDistance = DestinationsSV.pins.pinTextureMaiq.maxDistance,
     level = DestinationsSV.pins.pinTextureMaiq.level,
     texture = pinTextures.paths.Maiq[DestinationsSV.pins.pinTextureMaiq.type],
@@ -5417,7 +5417,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Maiq_Done           = {
+  local pinLayout_Maiq_Done = {
     maxDistance = DestinationsSV.pins.pinTextureMaiqDone.maxDistance,
     level = DestinationsSV.pins.pinTextureMaiqDone.level,
     texture = pinTextures.paths.MaiqDone[DestinationsSV.pins.pinTextureMaiqDone.type],
@@ -5432,7 +5432,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Peacemaker          = {
+  local pinLayout_Peacemaker = {
     maxDistance = DestinationsSV.pins.pinTexturePeacemaker.maxDistance,
     level = DestinationsSV.pins.pinTexturePeacemaker.level,
     texture = pinTextures.paths.Peacemaker[DestinationsSV.pins.pinTexturePeacemaker.type],
@@ -5447,7 +5447,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Peacemaker_Done     = {
+  local pinLayout_Peacemaker_Done = {
     maxDistance = DestinationsSV.pins.pinTexturePeacemakerDone.maxDistance,
     level = DestinationsSV.pins.pinTexturePeacemakerDone.level,
     texture = pinTextures.paths.PeacemakerDone[DestinationsSV.pins.pinTexturePeacemakerDone.type],
@@ -5462,7 +5462,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Nosediver           = {
+  local pinLayout_Nosediver = {
     maxDistance = DestinationsSV.pins.pinTextureNosediver.maxDistance,
     level = DestinationsSV.pins.pinTextureNosediver.level,
     texture = pinTextures.paths.Nosediver[DestinationsSV.pins.pinTextureNosediver.type],
@@ -5477,7 +5477,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Nosediver_Done      = {
+  local pinLayout_Nosediver_Done = {
     maxDistance = DestinationsSV.pins.pinTextureNosediverDone.maxDistance,
     level = DestinationsSV.pins.pinTextureNosediverDone.level,
     texture = pinTextures.paths.NosediverDone[DestinationsSV.pins.pinTextureNosediverDone.type],
@@ -5492,7 +5492,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_EarthlyPos          = {
+  local pinLayout_EarthlyPos = {
     maxDistance = DestinationsSV.pins.pinTextureEarthlyPos.maxDistance,
     level = DestinationsSV.pins.pinTextureEarthlyPos.level,
     texture = pinTextures.paths.Earthlypos[DestinationsSV.pins.pinTextureEarthlyPos.type],
@@ -5507,7 +5507,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_EarthlyPos_Done     = {
+  local pinLayout_EarthlyPos_Done = {
     maxDistance = DestinationsSV.pins.pinTextureEarthlyPosDone.maxDistance,
     level = DestinationsSV.pins.pinTextureEarthlyPosDone.level,
     texture = pinTextures.paths.EarthlyposDone[DestinationsSV.pins.pinTextureEarthlyPosDone.type],
@@ -5522,7 +5522,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_OnMe                = {
+  local pinLayout_OnMe = {
     maxDistance = DestinationsSV.pins.pinTextureOnMe.maxDistance,
     level = DestinationsSV.pins.pinTextureOnMe.level,
     texture = pinTextures.paths.OnMe[DestinationsSV.pins.pinTextureOnMe.type],
@@ -5537,7 +5537,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_OnMe_Done           = {
+  local pinLayout_OnMe_Done = {
     maxDistance = DestinationsSV.pins.pinTextureOnMeDone.maxDistance,
     level = DestinationsSV.pins.pinTextureOnMeDone.level,
     texture = pinTextures.paths.OnMeDone[DestinationsSV.pins.pinTextureOnMeDone.type],
@@ -5552,7 +5552,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Brawl               = {
+  local pinLayout_Brawl = {
     maxDistance = DestinationsSV.pins.pinTextureBrawl.maxDistance,
     level = DestinationsSV.pins.pinTextureBrawl.level,
     texture = pinTextures.paths.Brawl[DestinationsSV.pins.pinTextureBrawl.type],
@@ -5567,7 +5567,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Brawl_Done          = {
+  local pinLayout_Brawl_Done = {
     maxDistance = DestinationsSV.pins.pinTextureBrawlDone.maxDistance,
     level = DestinationsSV.pins.pinTextureBrawlDone.level,
     texture = pinTextures.paths.BrawlDone[DestinationsSV.pins.pinTextureBrawlDone.type],
@@ -5582,7 +5582,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Patron              = {
+  local pinLayout_Patron = {
     maxDistance = DestinationsSV.pins.pinTexturePatron.maxDistance,
     level = DestinationsSV.pins.pinTexturePatron.level,
     texture = pinTextures.paths.Patron[DestinationsSV.pins.pinTexturePatron.type],
@@ -5597,7 +5597,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Patron_Done         = {
+  local pinLayout_Patron_Done = {
     maxDistance = DestinationsSV.pins.pinTexturePatronDone.maxDistance,
     level = DestinationsSV.pins.pinTexturePatronDone.level,
     texture = pinTextures.paths.PatronDone[DestinationsSV.pins.pinTexturePatronDone.type],
@@ -5612,7 +5612,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_WrothgarJumper      = {
+  local pinLayout_WrothgarJumper = {
     maxDistance = DestinationsSV.pins.pinTextureWrothgarJumper.maxDistance,
     level = DestinationsSV.pins.pinTextureWrothgarJumper.level,
     texture = pinTextures.paths.WrothgarJumper[DestinationsSV.pins.pinTextureWrothgarJumper.type],
@@ -5642,7 +5642,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_RelicHunter         = {
+  local pinLayout_RelicHunter = {
     maxDistance = DestinationsSV.pins.pinTextureRelicHunter.maxDistance,
     level = DestinationsSV.pins.pinTextureRelicHunter.level,
     texture = pinTextures.paths.RelicHunter[DestinationsSV.pins.pinTextureRelicHunter.type],
@@ -5657,7 +5657,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_RelicHunter_Done    = {
+  local pinLayout_RelicHunter_Done = {
     maxDistance = DestinationsSV.pins.pinTextureRelicHunterDone.maxDistance,
     level = DestinationsSV.pins.pinTextureRelicHunterDone.level,
     texture = pinTextures.paths.RelicHunterDone[DestinationsSV.pins.pinTextureRelicHunterDone.type],
@@ -5672,7 +5672,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Champion            = {
+  local pinLayout_Champion = {
     maxDistance = DestinationsSV.pins.pinTextureChampion.maxDistance,
     level = DestinationsSV.pins.pinTextureChampion.level,
     texture = pinTextures.paths.Champion[DestinationsSV.pins.pinTextureChampion.type],
@@ -5687,7 +5687,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Champion_Done       = {
+  local pinLayout_Champion_Done = {
     maxDistance = DestinationsSV.pins.pinTextureChampionDone.maxDistance,
     level = DestinationsSV.pins.pinTextureChampionDone.level,
     texture = pinTextures.paths.ChampionDone[DestinationsSV.pins.pinTextureChampionDone.type],
@@ -5702,7 +5702,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Breaking            = {
+  local pinLayout_Breaking = {
     maxDistance = DestinationsSV.pins.pinTextureBreaking.maxDistance,
     level = DestinationsSV.pins.pinTextureBreaking.level,
     texture = pinTextures.paths.Breaking[DestinationsSV.pins.pinTextureBreaking.type],
@@ -5717,7 +5717,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Breaking_Done       = {
+  local pinLayout_Breaking_Done = {
     maxDistance = DestinationsSV.pins.pinTextureBreakingDone.maxDistance,
     level = DestinationsSV.pins.pinTextureBreakingDone.level,
     texture = pinTextures.paths.BreakingDone[DestinationsSV.pins.pinTextureBreakingDone.type],
@@ -5732,7 +5732,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Cutpurse            = {
+  local pinLayout_Cutpurse = {
     maxDistance = DestinationsSV.pins.pinTextureCutpurse.maxDistance,
     level = DestinationsSV.pins.pinTextureCutpurse.level,
     texture = pinTextures.paths.Cutpurse[DestinationsSV.pins.pinTextureCutpurse.type],
@@ -5747,7 +5747,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Cutpurse_Done       = {
+  local pinLayout_Cutpurse_Done = {
     maxDistance = DestinationsSV.pins.pinTextureCutpurseDone.maxDistance,
     level = DestinationsSV.pins.pinTextureCutpurseDone.level,
     texture = pinTextures.paths.CutpurseDone[DestinationsSV.pins.pinTextureCutpurseDone.type],
@@ -5762,7 +5762,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_QuestsUndone        = {
+  local pinLayout_QuestsUndone = {
     maxDistance = DestinationsSV.pins.pinTextureQuestsUndone.maxDistance,
     level = DestinationsSV.pins.pinTextureQuestsUndone.level,
     texture = pinTextures.paths.Quests[DestinationsSV.pins.pinTextureQuestsUndone.type],
@@ -5777,7 +5777,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_QuestsInProgress    = {
+  local pinLayout_QuestsInProgress = {
     maxDistance = DestinationsSV.pins.pinTextureQuestsInProgress.maxDistance,
     level = DestinationsSV.pins.pinTextureQuestsInProgress.level,
     texture = pinTextures.paths.Quests[DestinationsSV.pins.pinTextureQuestsInProgress.type],
@@ -5792,7 +5792,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_QuestsDone          = {
+  local pinLayout_QuestsDone = {
     maxDistance = DestinationsSV.pins.pinTextureQuestsDone.maxDistance,
     level = DestinationsSV.pins.pinTextureQuestsDone.level,
     texture = pinTextures.paths.Quests[DestinationsSV.pins.pinTextureQuestsDone.type],
@@ -5807,7 +5807,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Collectible         = {
+  local pinLayout_Collectible = {
     maxDistance = DestinationsSV.pins.pinTextureCollectible.maxDistance,
     level = DestinationsSV.pins.pinTextureCollectible.level,
     texture = pinTextures.paths.collectible[DestinationsSV.pins.pinTextureCollectible.type],
@@ -5822,7 +5822,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_CollectibleDone     = {
+  local pinLayout_CollectibleDone = {
     maxDistance = DestinationsSV.pins.pinTextureCollectibleDone.maxDistance,
     level = DestinationsSV.pins.pinTextureCollectibleDone.level,
     texture = pinTextures.paths.collectibledone[DestinationsSV.pins.pinTextureCollectibleDone.type],
@@ -5837,7 +5837,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Fish                = {
+  local pinLayout_Fish = {
     maxDistance = DestinationsSV.pins.pinTextureFish.maxDistance,
     level = DestinationsSV.pins.pinTextureFish.level,
     texture = pinTextures.paths.fish[DestinationsSV.pins.pinTextureFish.type],
@@ -5852,7 +5852,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_FishDone            = {
+  local pinLayout_FishDone = {
     maxDistance = DestinationsSV.pins.pinTextureFishDone.maxDistance,
     level = DestinationsSV.pins.pinTextureFishDone.level,
     texture = pinTextures.paths.fishdone[DestinationsSV.pins.pinTextureFishDone.type],
@@ -5867,7 +5867,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Ayleid              = {
+  local pinLayout_Ayleid = {
     maxDistance = DestinationsSV.pins.pinTextureAyleid.maxDistance,
     level = DestinationsSV.pins.pinTextureAyleid.level,
     texture = pinTextures.paths.Ayleid[DestinationsSV.pins.pinTextureAyleid.type],
@@ -5882,7 +5882,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Deadlands              = {
+  local pinLayout_Deadlands = {
     maxDistance = DestinationsSV.pins.pinTextureDeadlands.maxDistance,
     level = DestinationsSV.pins.pinTextureDeadlands.level,
     texture = pinTextures.paths.Deadlands[DestinationsSV.pins.pinTextureDeadlands.type],
@@ -5897,7 +5897,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_Dwemer              = {
+  local pinLayout_Dwemer = {
     maxDistance = DestinationsSV.pins.pinTextureDwemer.maxDistance,
     level = DestinationsSV.pins.pinTextureDwemer.level,
     texture = pinTextures.paths.dwemer[DestinationsSV.pins.pinTextureDwemer.type],
@@ -5912,7 +5912,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_WWVamp              = {
+  local pinLayout_WWVamp = {
     maxDistance = DestinationsSV.pins.pinTextureWWVamp.maxDistance,
     level = DestinationsSV.pins.pinTextureWWVamp.level,
     texture = pinTextures.paths.wwvamp[DestinationsSV.pins.pinTextureWWVamp.type],
@@ -5927,7 +5927,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_VampireAltar        = {
+  local pinLayout_VampireAltar = {
     maxDistance = DestinationsSV.pins.pinTextureVampAltar.maxDistance,
     level = DestinationsSV.pins.pinTextureVampAltar.level,
     texture = pinTextures.paths.vampirealtar[DestinationsSV.pins.pinTextureVampAltar.type],
@@ -5942,7 +5942,7 @@ local function SetPinLayouts()
       end,
     },
   }
-  local pinLayout_WereWolfShrine      = {
+  local pinLayout_WereWolfShrine = {
     maxDistance = DestinationsSV.pins.pinTextureWWShrine.maxDistance,
     level = DestinationsSV.pins.pinTextureWWShrine.level,
     texture = pinTextures.paths.werewolfshrine[DestinationsSV.pins.pinTextureWWShrine.type],
@@ -5959,7 +5959,7 @@ local function SetPinLayouts()
   }
 
   --Activate the Tooltip Creator for the pins
-  local pinTooltipCreator             = {
+  local pinTooltipCreator = {
     creator = function(pin)
       local _, pinTag = pin:GetPinTypeAndTag()
       if pinTag.newFormat then
@@ -6307,10 +6307,10 @@ local function HookPoiTooltips()
   local function AddEnglishName(pin)
 
     if DestinationsSV.settings.AddEnglishOnUnknwon then
-      local zoneId   = GetZoneId(pin:GetPOIZoneIndex())
+      local zoneId = GetZoneId(pin:GetPOIZoneIndex())
       local poiIndex = pin:GetPOIIndex()
 
-      local mapData  = POIsStore[zoneId]
+      local mapData = POIsStore[zoneId]
 
       if mapData and mapData[poiIndex] then
         local englishName = mapData[poiIndex].n
@@ -6324,13 +6324,13 @@ local function HookPoiTooltips()
 
   end
 
-  local CreatorPOISeen                                          = ZO_MapPin.TOOLTIP_CREATORS[MAP_PIN_TYPE_POI_SEEN].creator
-  ZO_MapPin.TOOLTIP_CREATORS[MAP_PIN_TYPE_POI_SEEN].creator     = function(...)
+  local CreatorPOISeen = ZO_MapPin.TOOLTIP_CREATORS[MAP_PIN_TYPE_POI_SEEN].creator
+  ZO_MapPin.TOOLTIP_CREATORS[MAP_PIN_TYPE_POI_SEEN].creator = function(...)
     CreatorPOISeen(...) --original tooltip creator
     AddEnglishName(...)
   end
 
-  local CreatorPOIComplete                                      = ZO_MapPin.TOOLTIP_CREATORS[MAP_PIN_TYPE_POI_COMPLETE].creator
+  local CreatorPOIComplete = ZO_MapPin.TOOLTIP_CREATORS[MAP_PIN_TYPE_POI_COMPLETE].creator
   ZO_MapPin.TOOLTIP_CREATORS[MAP_PIN_TYPE_POI_COMPLETE].creator = function(...)
     CreatorPOIComplete(...) --original tooltip creator
     AddEnglishName(...)
@@ -6342,7 +6342,7 @@ end
 local function HookKeepTooltips()
 
   local englishKeepNames = KeepsStore
-  ENGLISH_KEEP_COLOR     = ZO_ColorDef:New(DestinationsSV.settings.EnglishColorKeeps)
+  ENGLISH_KEEP_COLOR = ZO_ColorDef:New(DestinationsSV.settings.EnglishColorKeeps)
 
   local function AnchorTo(control, anchorTo)
     local isValid, point, _, relPoint, offsetX, offsetY = control:GetAnchor(0)
@@ -6353,9 +6353,9 @@ local function HookKeepTooltips()
   end
 
   local function ModifyKeepTooltip(self, keepId)
-    local keepName        = GetKeepName(keepId)
+    local keepName = GetKeepName(keepId)
     local englishKeepName = englishKeepNames[keepId]
-    local nameLabel       = self:GetNamedChild("Name")
+    local nameLabel = self:GetNamedChild("Name")
     local allianceLabel, guildLabel, englishLabel, lineHeight
     if self.lastLine and nameLabel then
       local lastLine = self.lastLine
@@ -6364,11 +6364,11 @@ local function HookKeepTooltips()
         local anchoredTo = select(3, lastLine:GetAnchor(0))
         if anchoredTo == nameLabel then
           allianceLabel = lastLine
-          guildLabel    = previousLine
+          guildLabel = previousLine
           break
         end
         previousLine = lastLine
-        lastLine     = anchoredTo
+        lastLine = anchoredTo
       end
     end
     if englishKeepName and DestinationsSV.settings.AddNewLineOnKeeps then
@@ -6411,15 +6411,15 @@ local function HookKeepTooltips()
   end
 
   --hooks
-  local SetKeep                  = ZO_KeepTooltip.SetKeep
-  ZO_KeepTooltip.SetKeep         = function(self, keepId, ...)
+  local SetKeep = ZO_KeepTooltip.SetKeep
+  ZO_KeepTooltip.SetKeep = function(self, keepId, ...)
     SetKeep(self, keepId, ...) --original function
     if DestinationsSV.settings.AddEnglishOnKeeps then
       ModifyKeepTooltip(self, keepId)
     end
   end
 
-  local RefreshKeep              = ZO_KeepTooltip.RefreshKeepInfo
+  local RefreshKeep = ZO_KeepTooltip.RefreshKeepInfo
   ZO_KeepTooltip.RefreshKeepInfo = function(self, ...)
     RefreshKeep(self, ...)  --original function
     if self.keepId and self.battlegroundContext and self.historyPercent and DestinationsSV.settings.AddEnglishOnKeeps then
@@ -6457,16 +6457,16 @@ local function DisableEnglishFunctionnalities()
 
   if Destinations.client_lang == "en" then
     DestinationsSV.settings.AddEnglishOnUnknwon = false
-    DestinationsSV.settings.AddEnglishOnKeeps   = false
+    DestinationsSV.settings.AddEnglishOnKeeps = false
   end
 
 end
 
 local function InitSettings()
 
-  local LAM           = LibAddonMenu2
+  local LAM = LibAddonMenu2
 
-  local panelData     = {
+  local panelData = {
     type = "panel",
     name = GetString(DEST_SETTINGS_TITLE),
     displayName = GetString(DEST_SETTINGS_TITLE),
@@ -6480,7 +6480,7 @@ local function InitSettings()
 
   local settingsPanel = LAM:RegisterAddonPanel("Destinations_OptionsPanel", panelData)
 
-  local optionsTable  = {}
+  local optionsTable = {}
 
   --Icon Preview
 
@@ -6490,7 +6490,7 @@ local function InitSettings()
   local ChampionPreview, ChampionPreviewDone, AyleidPreview, DeadlandsPreview, DwemerPreview, WWVampPreview, VampAltarPreview, WWShrinePreview
   local QuestsUndonePreview, QuestsInProgressPreview, QuestsDonePreview, CollectiblePreview, CollectibleDonePreview, FishPreview, FishDonePreview
 
-  CreateIcons         = function(panel)
+  CreateIcons = function(panel)
     if panel == settingsPanel then
       unknownPoiPreview = WINDOW_MANAGER:CreateControl(nil, previewpinTextureUnknown, CT_TEXTURE)
       unknownPoiPreview:SetAnchor(RIGHT, previewpinTextureUnknown.dropdown:GetControl(), LEFT, -10, 0)
@@ -7016,12 +7016,12 @@ local function InitSettings()
         getFunc = function() return DestinationsSV.settings.ShowDungeonBossesOnTop end,
         setFunc = function(state)
           if state == true then
-            DestinationsSV.pins.pinTextureChampion.level     = 56 + 1
+            DestinationsSV.pins.pinTextureChampion.level = 56 + 1
             DestinationsSV.pins.pinTextureChampionDone.level = 56
             LMP:SetLayoutKey(DPINS.CHAMPION, "level", 56 + 1)
             LMP:SetLayoutKey(DPINS.CHAMPION_DONE, "level", 56)
           else
-            DestinationsSV.pins.pinTextureChampion.level     = 30 + 1
+            DestinationsSV.pins.pinTextureChampion.level = 30 + 1
             DestinationsSV.pins.pinTextureChampionDone.level = 30
             LMP:SetLayoutKey(DPINS.CHAMPION, "level", 30 + 1)
             LMP:SetLayoutKey(DPINS.CHAMPION_DONE, "level", 30)
@@ -7046,7 +7046,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Champion) do
             if name == selected then
-              DestinationsSV.pins.pinTextureChampion.type     = index
+              DestinationsSV.pins.pinTextureChampion.type = index
               DestinationsSV.pins.pinTextureChampionDone.type = index
               LMP:SetLayoutKey(DPINS.CHAMPION, "texture", pinTextures.paths.Champion[index])
               LMP:SetLayoutKey(DPINS.CHAMPION_DONE, "texture", pinTextures.paths.ChampionDone[index])
@@ -7071,7 +7071,7 @@ local function InitSettings()
         max = 70,
         getFunc = function() return DestinationsSV.pins.pinTextureChampion.size end,
         setFunc = function(size)
-          DestinationsSV.pins.pinTextureChampion.size     = size
+          DestinationsSV.pins.pinTextureChampion.size = size
           DestinationsSV.pins.pinTextureChampionDone.size = size
           ChampionPreview:SetDimensions(size, size)
           ChampionPreviewDone:SetDimensions(size, size)
@@ -7119,7 +7119,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Other) do
             if name == selected then
-              DestinationsSV.pins.pinTextureOther.type     = index
+              DestinationsSV.pins.pinTextureOther.type = index
               DestinationsSV.pins.pinTextureOtherDone.type = index
               LMP:SetLayoutKey(DPINS.LB_GTTP_CP, "texture", pinTextures.paths.Other[index])
               LMP:SetLayoutKey(DPINS.LB_GTTP_CP_DONE, "texture", pinTextures.paths.OtherDone[index])
@@ -7192,7 +7192,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Maiq) do
             if name == selected then
-              DestinationsSV.pins.pinTextureMaiq.type     = index
+              DestinationsSV.pins.pinTextureMaiq.type = index
               DestinationsSV.pins.pinTextureMaiqDone.type = index
               LMP:SetLayoutKey(DPINS.MAIQ, "texture", pinTextures.paths.Maiq[index])
               LMP:SetLayoutKey(DPINS.MAIQ_DONE, "texture", pinTextures.paths.MaiqDone[index])
@@ -7265,7 +7265,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Peacemaker) do
             if name == selected then
-              DestinationsSV.pins.pinTexturePeacemaker.type     = index
+              DestinationsSV.pins.pinTexturePeacemaker.type = index
               DestinationsSV.pins.pinTexturePeacemakerDone.type = index
               LMP:SetLayoutKey(DPINS.PEACEMAKER, "texture", pinTextures.paths.Peacemaker[index])
               LMP:SetLayoutKey(DPINS.PEACEMAKER_DONE, "texture", pinTextures.paths.PeacemakerDone[index])
@@ -7338,7 +7338,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Nosediver) do
             if name == selected then
-              DestinationsSV.pins.pinTextureNosediver.type     = index
+              DestinationsSV.pins.pinTextureNosediver.type = index
               DestinationsSV.pins.pinTextureNosediverDone.type = index
               LMP:SetLayoutKey(DPINS.NOSEDIVER, "texture", pinTextures.paths.Nosediver[index])
               LMP:SetLayoutKey(DPINS.NOSEDIVER_DONE, "texture", pinTextures.paths.NosediverDone[index])
@@ -7411,7 +7411,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.EarthlyPos) do
             if name == selected then
-              DestinationsSV.pins.pinTextureEarthlyPos.type     = index
+              DestinationsSV.pins.pinTextureEarthlyPos.type = index
               DestinationsSV.pins.pinTextureEarthlyPosDone.type = index
               LMP:SetLayoutKey(DPINS.EARTHLYPOS, "texture", pinTextures.paths.Earthlypos[index])
               LMP:SetLayoutKey(DPINS.EARTHLYPOS_DONE, "texture", pinTextures.paths.EarthlyposDone[index])
@@ -7484,7 +7484,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.OnMe) do
             if name == selected then
-              DestinationsSV.pins.pinTextureOnMe.type     = index
+              DestinationsSV.pins.pinTextureOnMe.type = index
               DestinationsSV.pins.pinTextureOnMeDone.type = index
               LMP:SetLayoutKey(DPINS.ON_ME, "texture", pinTextures.paths.OnMe[index])
               LMP:SetLayoutKey(DPINS.ON_ME_DONE, "texture", pinTextures.paths.OnMeDone[index])
@@ -7557,7 +7557,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Brawl) do
             if name == selected then
-              DestinationsSV.pins.pinTextureBrawl.type     = index
+              DestinationsSV.pins.pinTextureBrawl.type = index
               DestinationsSV.pins.pinTextureBrawlDone.type = index
               LMP:SetLayoutKey(DPINS.BRAWL, "texture", pinTextures.paths.Brawl[index])
               LMP:SetLayoutKey(DPINS.BRAWL_DONE, "texture", pinTextures.paths.BrawlDone[index])
@@ -7630,7 +7630,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Patron) do
             if name == selected then
-              DestinationsSV.pins.pinTexturePatron.type     = index
+              DestinationsSV.pins.pinTexturePatron.type = index
               DestinationsSV.pins.pinTexturePatronDone.type = index
               LMP:SetLayoutKey(DPINS.PATRON, "texture", pinTextures.paths.Patron[index])
               LMP:SetLayoutKey(DPINS.PATRON_DONE, "texture", pinTextures.paths.PatronDone[index])
@@ -7703,7 +7703,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.WrothgarJumper) do
             if name == selected then
-              DestinationsSV.pins.pinTextureWrothgarJumper.type     = index
+              DestinationsSV.pins.pinTextureWrothgarJumper.type = index
               DestinationsSV.pins.pinTextureWrothgarJumperDone.type = index
               LMP:SetLayoutKey(DPINS.WROTHGAR_JUMPER, "texture", pinTextures.paths.WrothgarJumper[index])
               LMP:SetLayoutKey(DPINS.WROTHGAR_JUMPER_DONE, "texture", pinTextures.paths.WrothgarJumperDone[index])
@@ -7776,7 +7776,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.RelicHunter) do
             if name == selected then
-              DestinationsSV.pins.pinTextureRelicHunter.type     = index
+              DestinationsSV.pins.pinTextureRelicHunter.type = index
               DestinationsSV.pins.pinTextureRelicHunterDone.type = index
               LMP:SetLayoutKey(DPINS.RELIC_HUNTER, "texture", pinTextures.paths.RelicHunter[index])
               LMP:SetLayoutKey(DPINS.RELIC_HUNTER_DONE, "texture", pinTextures.paths.RelicHunterDone[index])
@@ -7849,7 +7849,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Breaking) do
             if name == selected then
-              DestinationsSV.pins.pinTextureBreaking.type     = index
+              DestinationsSV.pins.pinTextureBreaking.type = index
               DestinationsSV.pins.pinTextureBreakingDone.type = index
               LMP:SetLayoutKey(DPINS.BREAKING, "texture", pinTextures.paths.Breaking[index])
               LMP:SetLayoutKey(DPINS.BREAKING_DONE, "texture", pinTextures.paths.BreakingDone[index])
@@ -7874,7 +7874,7 @@ local function InitSettings()
         max = 70,
         getFunc = function() return DestinationsSV.pins.pinTextureBreaking.size end,
         setFunc = function(size)
-          DestinationsSV.pins.pinTextureBreaking.size     = size
+          DestinationsSV.pins.pinTextureBreaking.size = size
           DestinationsSV.pins.pinTextureBreakingDone.size = size
           LMP:SetLayoutKey(DPINS.BREAKING, "size", size)
           LMP:SetLayoutKey(DPINS.BREAKING_DONE, "size", size)
@@ -7922,7 +7922,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Cutpurse) do
             if name == selected then
-              DestinationsSV.pins.pinTextureCutpurse.type     = index
+              DestinationsSV.pins.pinTextureCutpurse.type = index
               DestinationsSV.pins.pinTextureCutpurseDone.type = index
               LMP:SetLayoutKey(DPINS.CUTPURSE, "texture", pinTextures.paths.Cutpurse[index])
               LMP:SetLayoutKey(DPINS.CUTPURSE_DONE, "texture", pinTextures.paths.CutpurseDone[index])
@@ -7975,7 +7975,7 @@ local function InitSettings()
         setFunc = function(level)
           for _, pinName in pairs(drtv.AchPinTex) do
             DestinationsSV.pins[pinName].level = level
-            pinName                            = pinName .. "Done"
+            pinName = pinName .. "Done"
             DestinationsSV.pins[pinName].level = level
           end
           for _, pinName in pairs(drtv.AchPins) do
@@ -8087,7 +8087,7 @@ local function InitSettings()
         getFunc = function() return unpack(DestinationsSV.pins.pinTextureOtherDone.tint) end,
         setFunc = function(r, g, b, a)
           for _, pinName in pairs(drtv.AchPinTex) do
-            pinName                           = pinName .. "Done"
+            pinName = pinName .. "Done"
             DestinationsSV.pins[pinName].tint = { r, g, b, a }
           end
           for _, pinName in pairs(drtv.AchPins) do
@@ -8118,7 +8118,7 @@ local function InitSettings()
         getFunc = function() return unpack(DestinationsSV.pins.pinTextureOtherDone.textcolor) end,
         setFunc = function(r, g, b)
           for _, pinName in pairs(drtv.AchPinTex) do
-            pinName                                = pinName .. "Done"
+            pinName = pinName .. "Done"
             DestinationsSV.pins[pinName].textcolor = { r, g, b }
           end
           for _, pinName in pairs(drtv.AchPins) do
@@ -8189,13 +8189,13 @@ local function InitSettings()
         setFunc = function(maxDistance)
           for _, pinName in pairs(drtv.AchPinTex) do
             DestinationsSV.pins[pinName].maxDistance = maxDistance / 1000
-            pinName                                  = pinName .. "Done"
+            pinName = pinName .. "Done"
             DestinationsSV.pins[pinName].maxDistance = maxDistance / 1000
           end
           for _, pinName in pairs(drtv.AchPins) do
             COMPASS_PINS.pinLayouts[DPINS[pinName]].maxDistance = maxDistance / 1000
             RedrawCompassPinsOnly(DPINS[pinName])
-            pinName                                             = pinName .. "_DONE"
+            pinName = pinName .. "_DONE"
             COMPASS_PINS.pinLayouts[DPINS[pinName]].maxDistance = maxDistance / 1000
             RedrawCompassPinsOnly(DPINS[pinName])
           end
@@ -8308,7 +8308,7 @@ local function InitSettings()
         disabled = function() return not DestinationsCSSV.filters[DPINS.AYLEID] end,
         default = { r = defaults.pins.pinTextureAyleid.textcolor[1], g = defaults.pins.pinTextureAyleid.textcolor[2], b = defaults.pins.pinTextureAyleid.textcolor[3] }
       })
----- Deadlands Begin
+      ---- Deadlands Begin
       table.insert(submenu, { -- Header
         type = "header",
         name = defaults.miscColorCodes.settingsTextAchHeaders:Colorize(GetString(DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER)),
@@ -8386,7 +8386,7 @@ local function InitSettings()
         disabled = function() return not DestinationsCSSV.filters[DPINS.DEADLANDS] end,
         default = { r = defaults.pins.pinTextureDeadlands.textcolor[1], g = defaults.pins.pinTextureDeadlands.textcolor[2], b = defaults.pins.pinTextureDeadlands.textcolor[3] }
       })
----- Deadlands End
+      ---- Deadlands End
       table.insert(submenu, { -- Header
         type = "header",
         name = defaults.miscColorCodes.settingsTextAchHeaders:Colorize(GetString(DEST_SETTINGS_MISC_DWEMER_HEADER)),
@@ -8493,9 +8493,9 @@ local function InitSettings()
         max = 100,
         getFunc = function() return DestinationsSV.pins.pinTextureAyleid.maxDistance * 1000 end,
         setFunc = function(maxDistance)
-          DestinationsSV.pins.pinTextureAyleid.maxDistance  = maxDistance / 1000
-          DestinationsSV.pins.pinTextureDeadlands.maxDistance  = maxDistance / 1000
-          DestinationsSV.pins.pinTextureDwemer.maxDistance  = maxDistance / 1000
+          DestinationsSV.pins.pinTextureAyleid.maxDistance = maxDistance / 1000
+          DestinationsSV.pins.pinTextureDeadlands.maxDistance = maxDistance / 1000
+          DestinationsSV.pins.pinTextureDwemer.maxDistance = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.AYLEID].maxDistance = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.DEADLANDS].maxDistance = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.DWEMER].maxDistance = maxDistance / 1000
@@ -8721,11 +8721,11 @@ local function InitSettings()
         max = 100,
         getFunc = function() return DestinationsSV.pins.pinTextureWWShrine.maxDistance * 1000 end,
         setFunc = function(maxDistance)
-          DestinationsSV.pins.pinTextureWWVamp.maxDistance           = maxDistance / 1000
-          DestinationsSV.pins.pinTextureWWShrine.maxDistance         = maxDistance / 1000
-          DestinationsSV.pins.pinTextureVampAltar.maxDistance        = maxDistance / 1000
-          COMPASS_PINS.pinLayouts[DPINS.WWVAMP].maxDistance          = maxDistance / 1000
-          COMPASS_PINS.pinLayouts[DPINS.VAMPIRE_ALTAR].maxDistance   = maxDistance / 1000
+          DestinationsSV.pins.pinTextureWWVamp.maxDistance = maxDistance / 1000
+          DestinationsSV.pins.pinTextureWWShrine.maxDistance = maxDistance / 1000
+          DestinationsSV.pins.pinTextureVampAltar.maxDistance = maxDistance / 1000
+          COMPASS_PINS.pinLayouts[DPINS.WWVAMP].maxDistance = maxDistance / 1000
+          COMPASS_PINS.pinLayouts[DPINS.VAMPIRE_ALTAR].maxDistance = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.WEREWOLF_SHRINE].maxDistance = maxDistance / 1000
           RedrawCompassPinsOnly(DPINS.WWVAMP)
           RedrawCompassPinsOnly(DPINS.VAMPIRE_ALTAR)
@@ -8747,8 +8747,8 @@ local function InitSettings()
         step = 5,
         getFunc = function() return DestinationsSV.pins.pinTextureWWShrine.level end,
         setFunc = function(level)
-          DestinationsSV.pins.pinTextureWWVamp.level    = level
-          DestinationsSV.pins.pinTextureWWShrine.level  = level
+          DestinationsSV.pins.pinTextureWWVamp.level = level
+          DestinationsSV.pins.pinTextureWWShrine.level = level
           DestinationsSV.pins.pinTextureVampAltar.level = level
           LMP:SetLayoutKey(DPINS.WWVAMP, "level", level)
           LMP:SetLayoutKey(DPINS.VAMPIRE_ALTAR, "level", level)
@@ -8770,9 +8770,9 @@ local function InitSettings()
         tooltip = GetString(DEST_SETTINGS_VWW_PIN_COLOR_TT),
         getFunc = function() return unpack(DestinationsSV.pins.pinTextureWWVamp.tint) end,
         setFunc = function(r, g, b, a)
-          DestinationsSV.pins.pinTextureWWVamp.tint    = { r, g, b, a }
+          DestinationsSV.pins.pinTextureWWVamp.tint = { r, g, b, a }
           DestinationsSV.pins.pinTextureVampAltar.tint = { r, g, b, a }
-          DestinationsSV.pins.pinTextureWWShrine.tint  = { r, g, b, a }
+          DestinationsSV.pins.pinTextureWWShrine.tint = { r, g, b, a }
           LMP:SetLayoutKey(DPINS.WWVAMP, "tint", ZO_ColorDef:New(r, g, b, a))
           WWVampPreview:SetColor(r, g, b, a)
           LMP:SetLayoutKey(DPINS.VAMPIRE_ALTAR, "tint", ZO_ColorDef:New(r, g, b, a))
@@ -8796,9 +8796,9 @@ local function InitSettings()
         tooltip = GetString(DEST_SETTINGS_VWW_PINTEXT_COLOR_TT),
         getFunc = function() return unpack(DestinationsSV.pins.pinTextureWWVamp.textcolor) end,
         setFunc = function(r, g, b)
-          DestinationsSV.pins.pinTextureWWVamp.textcolor    = { r, g, b }
+          DestinationsSV.pins.pinTextureWWVamp.textcolor = { r, g, b }
           DestinationsSV.pins.pinTextureVampAltar.textcolor = { r, g, b }
-          DestinationsSV.pins.pinTextureWWShrine.textcolor  = { r, g, b }
+          DestinationsSV.pins.pinTextureWWShrine.textcolor = { r, g, b }
           LMP:RefreshPins(DPINS.WWVAMP)
           LMP:RefreshPins(DPINS.VAMPIRE_ALTAR)
           LMP:RefreshPins(DPINS.WEREWOLF_SHRINE)
@@ -9215,12 +9215,12 @@ local function InitSettings()
         max = 100,
         getFunc = function() return DestinationsSV.pins.pinTextureQuestsUndone.maxDistance * 1000 end,
         setFunc = function(maxDistance)
-          DestinationsSV.pins.pinTextureQuestsUndone.maxDistance        = maxDistance / 1000
-          DestinationsSV.pins.pinTextureQuestsInProgress.maxDistance    = maxDistance / 1000
-          DestinationsSV.pins.pinTextureQuestsDone.maxDistance          = maxDistance / 1000
-          COMPASS_PINS.pinLayouts[DPINS.QUESTS_UNDONE].maxDistance      = maxDistance / 1000
+          DestinationsSV.pins.pinTextureQuestsUndone.maxDistance = maxDistance / 1000
+          DestinationsSV.pins.pinTextureQuestsInProgress.maxDistance = maxDistance / 1000
+          DestinationsSV.pins.pinTextureQuestsDone.maxDistance = maxDistance / 1000
+          COMPASS_PINS.pinLayouts[DPINS.QUESTS_UNDONE].maxDistance = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.QUESTS_IN_PROGRESS].maxDistance = maxDistance / 1000
-          COMPASS_PINS.pinLayouts[DPINS.QUESTS_DONE].maxDistance        = maxDistance / 1000
+          COMPASS_PINS.pinLayouts[DPINS.QUESTS_DONE].maxDistance = maxDistance / 1000
           RedrawCompassPinsOnly(DPINS.QUESTS_UNDONE)
           RedrawCompassPinsOnly(DPINS.QUESTS_IN_PROGRESS)
           RedrawCompassPinsOnly(DPINS.QUESTS_DONE)
@@ -9237,9 +9237,9 @@ local function InitSettings()
         step = 5,
         getFunc = function() return DestinationsSV.pins.pinTextureQuestsUndone.level end,
         setFunc = function(level)
-          DestinationsSV.pins.pinTextureQuestsUndone.level     = level + 1
+          DestinationsSV.pins.pinTextureQuestsUndone.level = level + 1
           DestinationsSV.pins.pinTextureQuestsInProgress.level = level + 2
-          DestinationsSV.pins.pinTextureQuestsDone.level       = level
+          DestinationsSV.pins.pinTextureQuestsDone.level = level
           LMP:SetLayoutKey(DPINS.QUESTS_UNDONE, "level", level + 1)
           LMP:SetLayoutKey(DPINS.QUESTS_IN_PROGRESS, "level", level + 2)
           LMP:SetLayoutKey(DPINS.QUESTS_DONE, "level", level)
@@ -9328,7 +9328,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Collectible) do
             if name == selected then
-              DestinationsSV.pins.pinTextureCollectible.type     = index
+              DestinationsSV.pins.pinTextureCollectible.type = index
               DestinationsSV.pins.pinTextureCollectibleDone.type = index
               LMP:SetLayoutKey(DPINS.COLLECTIBLES, "texture", pinTextures.paths.collectible[index])
               LMP:SetLayoutKey(DPINS.COLLECTIBLESDONE, "texture", pinTextures.paths.collectibledone[index])
@@ -9465,9 +9465,9 @@ local function InitSettings()
         max = 100,
         getFunc = function() return DestinationsSV.pins.pinTextureCollectible.maxDistance * 1000 end,
         setFunc = function(maxDistance)
-          DestinationsSV.pins.pinTextureCollectible.maxDistance       = maxDistance / 1000
-          DestinationsSV.pins.pinTextureCollectibleDone.maxDistance   = maxDistance / 1000
-          COMPASS_PINS.pinLayouts[DPINS.COLLECTIBLES].maxDistance     = maxDistance / 1000
+          DestinationsSV.pins.pinTextureCollectible.maxDistance = maxDistance / 1000
+          DestinationsSV.pins.pinTextureCollectibleDone.maxDistance = maxDistance / 1000
+          COMPASS_PINS.pinLayouts[DPINS.COLLECTIBLES].maxDistance = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.COLLECTIBLESDONE].maxDistance = maxDistance / 1000
           RedrawCompassPinsOnly(DPINS.COLLECTIBLES)
           RedrawCompassPinsOnly(DPINS.COLLECTIBLESDONE)
@@ -9484,7 +9484,7 @@ local function InitSettings()
         max = 70,
         getFunc = function() return DestinationsSV.pins.pinTextureCollectible.size end,
         setFunc = function(size)
-          DestinationsSV.pins.pinTextureCollectible.size     = size
+          DestinationsSV.pins.pinTextureCollectible.size = size
           DestinationsSV.pins.pinTextureCollectibleDone.size = size
           CollectiblePreview:SetDimensions(size, size)
           CollectibleDonePreview:SetDimensions(size, size)
@@ -9505,7 +9505,7 @@ local function InitSettings()
         step = 5,
         getFunc = function() return DestinationsSV.pins.pinTextureCollectible.level end,
         setFunc = function(level)
-          DestinationsSV.pins.pinTextureCollectible.level     = level
+          DestinationsSV.pins.pinTextureCollectible.level = level
           DestinationsSV.pins.pinTextureCollectibleDone.level = level - 1
           LMP:SetLayoutKey(DPINS.COLLECTIBLES, "level", level)
           LMP:SetLayoutKey(DPINS.COLLECTIBLESDONE, "level", level - 1)
@@ -9555,7 +9555,7 @@ local function InitSettings()
         setFunc = function(selected)
           for index, name in ipairs(pinTextures.lists.Fish) do
             if name == selected then
-              DestinationsSV.pins.pinTextureFish.type     = index
+              DestinationsSV.pins.pinTextureFish.type = index
               DestinationsSV.pins.pinTextureFishDone.type = index
               LMP:SetLayoutKey(DPINS.FISHING, "texture", pinTextures.paths.fish[index])
               LMP:SetLayoutKey(DPINS.FISHINGDONE, "texture", pinTextures.paths.fishdone[index])
@@ -9771,9 +9771,9 @@ local function InitSettings()
         max = 100,
         getFunc = function() return DestinationsSV.pins.pinTextureFish.maxDistance * 1000 end,
         setFunc = function(maxDistance)
-          DestinationsSV.pins.pinTextureFish.maxDistance         = maxDistance / 1000
-          DestinationsSV.pins.pinTextureFishDone.maxDistance     = maxDistance / 1000
-          COMPASS_PINS.pinLayouts[DPINS.FISHING].maxDistance     = maxDistance / 1000
+          DestinationsSV.pins.pinTextureFish.maxDistance = maxDistance / 1000
+          DestinationsSV.pins.pinTextureFishDone.maxDistance = maxDistance / 1000
+          COMPASS_PINS.pinLayouts[DPINS.FISHING].maxDistance = maxDistance / 1000
           COMPASS_PINS.pinLayouts[DPINS.FISHINGDONE].maxDistance = maxDistance / 1000
           RedrawCompassPinsOnly(DPINS.FISHING)
           RedrawCompassPinsOnly(DPINS.FISHINGDONE)
@@ -9790,7 +9790,7 @@ local function InitSettings()
         max = 70,
         getFunc = function() return DestinationsSV.pins.pinTextureFish.size end,
         setFunc = function(size)
-          DestinationsSV.pins.pinTextureFish.size     = size
+          DestinationsSV.pins.pinTextureFish.size = size
           DestinationsSV.pins.pinTextureFishDone.size = size
           FishPreview:SetDimensions(size, size)
           FishDonePreview:SetDimensions(size, size)
@@ -9811,7 +9811,7 @@ local function InitSettings()
         step = 5,
         getFunc = function() return DestinationsSV.pins.pinTextureFish.level end,
         setFunc = function(level)
-          DestinationsSV.pins.pinTextureFish.level     = level
+          DestinationsSV.pins.pinTextureFish.level = level
           DestinationsSV.pins.pinTextureFishDone.level = level - 1
           LMP:SetLayoutKey(DPINS.FISHING, "level", level)
           LMP:SetLayoutKey(DPINS.FISHINGDONE, "level", level - 1)
@@ -9835,7 +9835,7 @@ local function InitSettings()
         getFunc = function() return DestinationsCSSV.settings.MapFiltersPOIs end,
         setFunc = function(state)
           DestinationsCSSV.settings.activateReloaduiButton = true
-          DestinationsCSSV.settings.MapFiltersPOIs         = state
+          DestinationsCSSV.settings.MapFiltersPOIs = state
         end,
         warning = defaults.miscColorCodes.settingsTextReloadWarning:Colorize(GetString(RELOADUI_INFO)),
         default = defaults.settings.MapFiltersPOIs,
@@ -9859,7 +9859,7 @@ local function InitSettings()
         getFunc = function() return DestinationsCSSV.settings.MapFiltersQuestgivers end,
         setFunc = function(state)
           DestinationsCSSV.settings.activateReloaduiButton = true
-          DestinationsCSSV.settings.MapFiltersQuestgivers  = state
+          DestinationsCSSV.settings.MapFiltersQuestgivers = state
         end,
         warning = defaults.miscColorCodes.settingsTextReloadWarning:Colorize(GetString(RELOADUI_INFO)),
         default = defaults.settings.MapFiltersQuestgivers,
@@ -9883,7 +9883,7 @@ local function InitSettings()
         getFunc = function() return DestinationsCSSV.settings.MapFiltersFishing end,
         setFunc = function(state)
           DestinationsCSSV.settings.activateReloaduiButton = true
-          DestinationsCSSV.settings.MapFiltersFishing      = state
+          DestinationsCSSV.settings.MapFiltersFishing = state
         end,
         warning = defaults.miscColorCodes.settingsTextReloadWarning:Colorize(GetString(RELOADUI_INFO)),
         default = defaults.settings.MapFiltersFishing,
@@ -9895,7 +9895,7 @@ local function InitSettings()
         getFunc = function() return DestinationsCSSV.settings.MapFiltersMisc end,
         setFunc = function(state)
           DestinationsCSSV.settings.activateReloaduiButton = true
-          DestinationsCSSV.settings.MapFiltersMisc         = state
+          DestinationsCSSV.settings.MapFiltersMisc = state
         end,
         warning = defaults.miscColorCodes.settingsTextReloadWarning:Colorize(GetString(RELOADUI_INFO)),
         default = defaults.settings.MapFiltersMisc,
@@ -10004,29 +10004,29 @@ end
 
 local function InitializeDatastores()
 
-  POIsStore        = Destinations.POIsStore
-  TradersStore     = Destinations.TraderTableStore
-  AchIndex         = Destinations.ACHDataIndex
-  AchStore         = Destinations.ACHDataStore
-  AchIDs           = Destinations.AchIDs
+  POIsStore = Destinations.POIsStore
+  TradersStore = Destinations.TraderTableStore
+  AchIndex = Destinations.ACHDataIndex
+  AchStore = Destinations.ACHDataStore
+  AchIDs = Destinations.AchIDs
   -- QuestsIndex = Destinations.QuestDataIndex
   -- QuestsStore = Destinations.QuestDataStore
   -- QTableIndex = Destinations.QuestTableIndex
   -- QTableStore = Destinations.QuestTableStore
   -- QGiverIndex = Destinations.QuestGiverIndex
   -- QGiverStore = Destinations.QuestGiverStore
-  DBossIndex       = Destinations.ChampionTableIndex
-  DBossStore       = Destinations.ChampionTableStore
-  SetsStore        = Destinations.SetsStore
+  DBossIndex = Destinations.ChampionTableIndex
+  DBossStore = Destinations.ChampionTableStore
+  SetsStore = Destinations.SetsStore
   CollectibleIndex = Destinations.CollectibleDataIndex
   CollectibleStore = Destinations.CollectibleDataStore
-  CollectibleIDs   = Destinations.CollectibleIDs
-  FishIndex        = Destinations.FishLocationsIndex
-  FishStore        = Destinations.FishLocationsStore
-  FishIDs          = Destinations.FishIDs
-  FishLocs         = Destinations.FishLocs
-  KeepsStore       = Destinations.KeepsStore
-  MundusStore      = Destinations.mundusStrings
+  CollectibleIDs = Destinations.CollectibleIDs
+  FishIndex = Destinations.FishLocationsIndex
+  FishStore = Destinations.FishLocationsStore
+  FishIDs = Destinations.FishIDs
+  FishLocs = Destinations.FishLocs
+  KeepsStore = Destinations.KeepsStore
+  MundusStore = Destinations.mundusStrings
 
 end
 
@@ -10036,7 +10036,7 @@ local function OnLoad(eventCode, name)
 
     InitializeDatastores()
 
-    DestinationsSV   = ZO_SavedVars:NewCharacterNameSettings("Destinations_Settings", 1, nil, defaults) -- Basic
+    DestinationsSV = ZO_SavedVars:NewCharacterNameSettings("Destinations_Settings", 1, nil, defaults) -- Basic
     DestinationsCSSV = ZO_SavedVars:NewCharacterNameSettings("Destinations_Settings", 1, nil, defaults)
     DestinationsAWSV = ZO_SavedVars:NewAccountWide("Destinations_Settings", 1, nil, defaults) -- AccountWide
 
@@ -10053,16 +10053,16 @@ local function OnLoad(eventCode, name)
       DestinationsSV = ZO_SavedVars:NewAccountWide("Destinations_Settings", 1, nil, defaults)
     end
 
-    DestinationsSV.settings.useAccountWide   = DestinationsAWSV.settings.useAccountWide
+    DestinationsSV.settings.useAccountWide = DestinationsAWSV.settings.useAccountWide
     DestinationsCSSV.settings.useAccountWide = DestinationsAWSV.settings.useAccountWide
 
     if not DestinationsSV.oneTamrielUpdate and not DestinationsCSSV.oneTamrielUpdate and not DestinationsAWSV.oneTamrielUpdate then
-      DestinationsSV.pins.pinTextureUnknown   = defaults.pins.pinTextureUnknown
+      DestinationsSV.pins.pinTextureUnknown = defaults.pins.pinTextureUnknown
       DestinationsCSSV.pins.pinTextureUnknown = defaults.pins.pinTextureUnknown
       DestinationsAWSV.pins.pinTextureUnknown = defaults.pins.pinTextureUnknown
-      DestinationsSV.oneTamrielUpdate         = true
-      DestinationsCSSV.oneTamrielUpdate       = true
-      DestinationsAWSV.oneTamrielUpdate       = true
+      DestinationsSV.oneTamrielUpdate = true
+      DestinationsCSSV.oneTamrielUpdate = true
+      DestinationsAWSV.oneTamrielUpdate = true
     end
 
     DisableEnglishFunctionnalities()

@@ -10,177 +10,177 @@ Each subentry should be regenerated at each POI addition
 /script d(GetZoneId(GetCurrentMapZoneIndex()))
 ]]
 
-Destinations                                    = Destinations or {}
+Destinations = Destinations or {}
 
-local DESTINATIONS_PIN_TYPE_AOI                 = 1
-local DESTINATIONS_PIN_TYPE_AYLEIDRUIN          = 2
-local DESTINATIONS_PIN_TYPE_BATTLEFIELD         = 3
-local DESTINATIONS_PIN_TYPE_CAMP                = 4
-local DESTINATIONS_PIN_TYPE_CAVE                = 5
-local DESTINATIONS_PIN_TYPE_CEMETERY            = 6
-local DESTINATIONS_PIN_TYPE_CITY                = 7
-local DESTINATIONS_PIN_TYPE_CRAFTING            = 8
-local DESTINATIONS_PIN_TYPE_CRYPT               = 9
-local DESTINATIONS_PIN_TYPE_DAEDRICRUIN         = 10
-local DESTINATIONS_PIN_TYPE_DELVE               = 11
-local DESTINATIONS_PIN_TYPE_DOCK                = 12
-local DESTINATIONS_PIN_TYPE_DUNGEON             = 13
-local DESTINATIONS_PIN_TYPE_DWEMERRUIN          = 14
-local DESTINATIONS_PIN_TYPE_ESTATE              = 15
-local DESTINATIONS_PIN_TYPE_FARM                = 16
-local DESTINATIONS_PIN_TYPE_GATE                = 17
-local DESTINATIONS_PIN_TYPE_GROUPBOSS           = 18
-local DESTINATIONS_PIN_TYPE_GROUPDELVE          = 19
-local DESTINATIONS_PIN_TYPE_GROUPINSTANCE       = 20
-local DESTINATIONS_PIN_TYPE_GROVE               = 21
-local DESTINATIONS_PIN_TYPE_KEEP                = 22
-local DESTINATIONS_PIN_TYPE_LIGHTHOUSE          = 23
-local DESTINATIONS_PIN_TYPE_MINE                = 24
-local DESTINATIONS_PIN_TYPE_MUNDUS              = 25
-local DESTINATIONS_PIN_TYPE_PORTAL              = 26
-local DESTINATIONS_PIN_TYPE_RAIDDUNGEON         = 27
-local DESTINATIONS_PIN_TYPE_RUIN                = 28
-local DESTINATIONS_PIN_TYPE_SEWER               = 29
-local DESTINATIONS_PIN_TYPE_SOLOTRIAL           = 30
-local DESTINATIONS_PIN_TYPE_TOWER               = 31
-local DESTINATIONS_PIN_TYPE_TOWN                = 32
-local DESTINATIONS_PIN_TYPE_WAYSHRINE           = 33
-local DESTINATIONS_PIN_TYPE_GUILDKIOSK          = 34
-local DESTINATIONS_PIN_TYPE_PLANARARMORSCRAPS   = 35
-local DESTINATIONS_PIN_TYPE_TINYCLAW            = 36
-local DESTINATIONS_PIN_TYPE_MONSTROUSTEETH      = 37
-local DESTINATIONS_PIN_TYPE_BONESHARD           = 38
-local DESTINATIONS_PIN_TYPE_MARKLEGION          = 39
-local DESTINATIONS_PIN_TYPE_DARKETHER           = 40
-local DESTINATIONS_PIN_TYPE_DARKBROTHERHOOD     = 41
-local DESTINATIONS_PIN_TYPE_GROUPLIGHTHOUSE     = 42
-local DESTINATIONS_PIN_TYPE_GROUPESTATE         = 43
-local DESTINATIONS_PIN_TYPE_GROUPRUIN           = 44
-local DESTINATIONS_PIN_TYPE_GROUPCAVE           = 45
-local DESTINATIONS_PIN_TYPE_GROUPCEMETERY       = 46
-local DESTINATIONS_PIN_TYPE_GROUPKEEP           = 47
+local DESTINATIONS_PIN_TYPE_AOI = 1
+local DESTINATIONS_PIN_TYPE_AYLEIDRUIN = 2
+local DESTINATIONS_PIN_TYPE_BATTLEFIELD = 3
+local DESTINATIONS_PIN_TYPE_CAMP = 4
+local DESTINATIONS_PIN_TYPE_CAVE = 5
+local DESTINATIONS_PIN_TYPE_CEMETERY = 6
+local DESTINATIONS_PIN_TYPE_CITY = 7
+local DESTINATIONS_PIN_TYPE_CRAFTING = 8
+local DESTINATIONS_PIN_TYPE_CRYPT = 9
+local DESTINATIONS_PIN_TYPE_DAEDRICRUIN = 10
+local DESTINATIONS_PIN_TYPE_DELVE = 11
+local DESTINATIONS_PIN_TYPE_DOCK = 12
+local DESTINATIONS_PIN_TYPE_DUNGEON = 13
+local DESTINATIONS_PIN_TYPE_DWEMERRUIN = 14
+local DESTINATIONS_PIN_TYPE_ESTATE = 15
+local DESTINATIONS_PIN_TYPE_FARM = 16
+local DESTINATIONS_PIN_TYPE_GATE = 17
+local DESTINATIONS_PIN_TYPE_GROUPBOSS = 18
+local DESTINATIONS_PIN_TYPE_GROUPDELVE = 19
+local DESTINATIONS_PIN_TYPE_GROUPINSTANCE = 20
+local DESTINATIONS_PIN_TYPE_GROVE = 21
+local DESTINATIONS_PIN_TYPE_KEEP = 22
+local DESTINATIONS_PIN_TYPE_LIGHTHOUSE = 23
+local DESTINATIONS_PIN_TYPE_MINE = 24
+local DESTINATIONS_PIN_TYPE_MUNDUS = 25
+local DESTINATIONS_PIN_TYPE_PORTAL = 26
+local DESTINATIONS_PIN_TYPE_RAIDDUNGEON = 27
+local DESTINATIONS_PIN_TYPE_RUIN = 28
+local DESTINATIONS_PIN_TYPE_SEWER = 29
+local DESTINATIONS_PIN_TYPE_SOLOTRIAL = 30
+local DESTINATIONS_PIN_TYPE_TOWER = 31
+local DESTINATIONS_PIN_TYPE_TOWN = 32
+local DESTINATIONS_PIN_TYPE_WAYSHRINE = 33
+local DESTINATIONS_PIN_TYPE_GUILDKIOSK = 34
+local DESTINATIONS_PIN_TYPE_PLANARARMORSCRAPS = 35
+local DESTINATIONS_PIN_TYPE_TINYCLAW = 36
+local DESTINATIONS_PIN_TYPE_MONSTROUSTEETH = 37
+local DESTINATIONS_PIN_TYPE_BONESHARD = 38
+local DESTINATIONS_PIN_TYPE_MARKLEGION = 39
+local DESTINATIONS_PIN_TYPE_DARKETHER = 40
+local DESTINATIONS_PIN_TYPE_DARKBROTHERHOOD = 41
+local DESTINATIONS_PIN_TYPE_GROUPLIGHTHOUSE = 42
+local DESTINATIONS_PIN_TYPE_GROUPESTATE = 43
+local DESTINATIONS_PIN_TYPE_GROUPRUIN = 44
+local DESTINATIONS_PIN_TYPE_GROUPCAVE = 45
+local DESTINATIONS_PIN_TYPE_GROUPCEMETERY = 46
+local DESTINATIONS_PIN_TYPE_GROUPKEEP = 47
 local DESTINATIONS_PIN_TYPE_GROUPAREAOFINTEREST = 48
-local DESTINATIONS_PIN_TYPE_HOUSING             = 49
-local DESTINATIONS_PIN_TYPE_DWEMERGEAR          = 50
-local DESTINATIONS_PIN_TYPE_NORDBOAT            = 51
-local DESTINATIONS_PIN_TYPE_UNKNOWN             = 99
+local DESTINATIONS_PIN_TYPE_HOUSING = 49
+local DESTINATIONS_PIN_TYPE_DWEMERGEAR = 50
+local DESTINATIONS_PIN_TYPE_NORDBOAT = 51
+local DESTINATIONS_PIN_TYPE_UNKNOWN = 99
 
 -- value is abilityId
-local MUNDUS_STONE_WARRIOR                      = 13940 -- Boon: The Warrior
-local MUNDUS_STONE_MAGE                         = 13943 -- Boon: The Mage
-local MUNDUS_STONE_SERPENT                      = 13974 -- Boon: The Serpent
-local MUNDUS_STONE_THIEF                        = 13975 -- Boon: The Thief
-local MUNDUS_STONE_LADY                         = 13976 -- Boon: The Lady
-local MUNDUS_STONE_STEED                        = 13977 -- Boon: The Steed
-local MUNDUS_STONE_LORD                         = 13978 -- Boon: The Lord
-local MUNDUS_STONE_APPRENTICE                   = 13979 -- Boon: The Apprentice
-local MUNDUS_STONE_RITUAL                       = 13980 -- Boon: The Ritual
-local MUNDUS_STONE_LOVER                        = 13981 -- Boon: The Lover
-local MUNDUS_STONE_ATRONACH                     = 13982 -- Boon: The Atronach
-local MUNDUS_STONE_SHADOW                       = 13984 -- Boon: The Shadow
-local MUNDUS_STONE_TOWER                        = 13985 -- Boon: The Tower
+local MUNDUS_STONE_WARRIOR = 13940 -- Boon: The Warrior
+local MUNDUS_STONE_MAGE = 13943 -- Boon: The Mage
+local MUNDUS_STONE_SERPENT = 13974 -- Boon: The Serpent
+local MUNDUS_STONE_THIEF = 13975 -- Boon: The Thief
+local MUNDUS_STONE_LADY = 13976 -- Boon: The Lady
+local MUNDUS_STONE_STEED = 13977 -- Boon: The Steed
+local MUNDUS_STONE_LORD = 13978 -- Boon: The Lord
+local MUNDUS_STONE_APPRENTICE = 13979 -- Boon: The Apprentice
+local MUNDUS_STONE_RITUAL = 13980 -- Boon: The Ritual
+local MUNDUS_STONE_LOVER = 13981 -- Boon: The Lover
+local MUNDUS_STONE_ATRONACH = 13982 -- Boon: The Atronach
+local MUNDUS_STONE_SHADOW = 13984 -- Boon: The Shadow
+local MUNDUS_STONE_TOWER = 13985 -- Boon: The Tower
 
-local CRAFTINGSET_ASHEN_GRIP                    = 1
-local CRAFTINGSET_DEATHS_WIND                   = 2
-local CRAFTINGSET_NIGHTS_SILENCE                = 3
-local CRAFTINGSET_TORUGS_PACT                   = 4
-local CRAFTINGSET_TWILIGHTS_EMBRACE             = 5
-local CRAFTINGSET_ARMOR_OF_THE_SEDUCER          = 6
-local CRAFTINGSET_MAGNUS_GIFT                   = 7
-local CRAFTINGSET_HIST_BARK                     = 8
-local CRAFTINGSET_WHITESTRAKES_RETRIBUTION      = 9
-local CRAFTINGSET_VAMPIRES_KISS                 = 10
-local CRAFTINGSET_SONG_OF_LAMAE                 = 11
-local CRAFTINGSET_ALESSIAS_BULWARK              = 12
-local CRAFTINGSET_NIGHT_MOTHERS_GAZE            = 13
-local CRAFTINGSET_WILLOWS_PATH                  = 14
-local CRAFTINGSET_HUNDINGS_RAGE                 = 15
+local CRAFTINGSET_ASHEN_GRIP = 1
+local CRAFTINGSET_DEATHS_WIND = 2
+local CRAFTINGSET_NIGHTS_SILENCE = 3
+local CRAFTINGSET_TORUGS_PACT = 4
+local CRAFTINGSET_TWILIGHTS_EMBRACE = 5
+local CRAFTINGSET_ARMOR_OF_THE_SEDUCER = 6
+local CRAFTINGSET_MAGNUS_GIFT = 7
+local CRAFTINGSET_HIST_BARK = 8
+local CRAFTINGSET_WHITESTRAKES_RETRIBUTION = 9
+local CRAFTINGSET_VAMPIRES_KISS = 10
+local CRAFTINGSET_SONG_OF_LAMAE = 11
+local CRAFTINGSET_ALESSIAS_BULWARK = 12
+local CRAFTINGSET_NIGHT_MOTHERS_GAZE = 13
+local CRAFTINGSET_WILLOWS_PATH = 14
+local CRAFTINGSET_HUNDINGS_RAGE = 15
 
-local CRAFTINGSET_OBLIVIONS_FOE                 = 16
-local CRAFTINGSET_SPECTRES_EYE                  = 17
+local CRAFTINGSET_OBLIVIONS_FOE = 16
+local CRAFTINGSET_SPECTRES_EYE = 17
 
-local CRAFTINGSET_KAGRENACS_HOPE                = 18
-local CRAFTINGSET_ORGNUMS_SCALES                = 19
+local CRAFTINGSET_KAGRENACS_HOPE = 18
+local CRAFTINGSET_ORGNUMS_SCALES = 19
 
-local CRAFTINGSET_EYES_OF_MARA                  = 20
-local CRAFTINGSET_SHALIDORS_CURSE               = 21
+local CRAFTINGSET_EYES_OF_MARA = 20
+local CRAFTINGSET_SHALIDORS_CURSE = 21
 
-local CRAFTINGSET_WAY_OF_THE_ARENA              = 22
-local CRAFTINGSET_TWICE_BORN_STAR               = 23
+local CRAFTINGSET_WAY_OF_THE_ARENA = 22
+local CRAFTINGSET_TWICE_BORN_STAR = 23
 
-local CRAFTINGSET_REDISTRIBUTOR                 = 24
-local CRAFTINGSET_NOBLES_CONQUEST               = 25
-local CRAFTINGSET_ARMOR_MASTER                  = 26
+local CRAFTINGSET_REDISTRIBUTOR = 24
+local CRAFTINGSET_NOBLES_CONQUEST = 25
+local CRAFTINGSET_ARMOR_MASTER = 26
 
-local CRAFTINGSET_LAW_OF_JULIANOS               = 27
-local CRAFTINGSET_TRIAL_BY_FIRE                 = 28
-local CRAFTINGSET_MORKULDIN                     = 29
+local CRAFTINGSET_LAW_OF_JULIANOS = 27
+local CRAFTINGSET_TRIAL_BY_FIRE = 28
+local CRAFTINGSET_MORKULDIN = 29
 
-local CRAFTINGSET_TAVAS_FAVOR                   = 30
-local CRAFTINGSET_CLEVER_ALCHEMIST              = 31
-local CRAFTINGSET_ETERNAL_HUNT                  = 32
+local CRAFTINGSET_TAVAS_FAVOR = 30
+local CRAFTINGSET_CLEVER_ALCHEMIST = 31
+local CRAFTINGSET_ETERNAL_HUNT = 32
 
-local CRAFTINGSET_KVATCH_GLADIATOR              = 33
-local CRAFTINGSET_VARENS_LEGACY                 = 34
-local CRAFTINGSET_PELINALS_APTITUDE             = 35
+local CRAFTINGSET_KVATCH_GLADIATOR = 33
+local CRAFTINGSET_VARENS_LEGACY = 34
+local CRAFTINGSET_PELINALS_APTITUDE = 35
 
-local CRAFTINGSET_SHACKLEBREAKER                = 36
-local CRAFTINGSET_DAEDRIC_TRICKERY              = 37
-local CRAFTINGSET_ASSASSIN_GUILE                = 38
+local CRAFTINGSET_SHACKLEBREAKER = 36
+local CRAFTINGSET_DAEDRIC_TRICKERY = 37
+local CRAFTINGSET_ASSASSIN_GUILE = 38
 
-local CRAFTINGSET_INNATE_AXIOM                  = 39
-local CRAFTINGSET_FORTIFIED_BRASS               = 40
-local CRAFTINGSET_MECHANICAL_ACUITY             = 41
+local CRAFTINGSET_INNATE_AXIOM = 39
+local CRAFTINGSET_FORTIFIED_BRASS = 40
+local CRAFTINGSET_MECHANICAL_ACUITY = 41
 
-local CRAFTINGSET_ADEPT_RIDER                   = 42
-local CRAFTINGSET_SLOADS_SEMBLANCE              = 43
-local CRAFTINGSET_NOCTURNALS_FAVOR              = 44
+local CRAFTINGSET_ADEPT_RIDER = 42
+local CRAFTINGSET_SLOADS_SEMBLANCE = 43
+local CRAFTINGSET_NOCTURNALS_FAVOR = 44
 
-local CRAFTINGSET_NAGA_SHAMAN                   = 45
-local CRAFTINGSET_MIGHT_LOST_LEGION             = 46
-local CRAFTINGSET_GRAVESTAKE_COLLECTOR          = 47
+local CRAFTINGSET_NAGA_SHAMAN = 45
+local CRAFTINGSET_MIGHT_LOST_LEGION = 46
+local CRAFTINGSET_GRAVESTAKE_COLLECTOR = 47
 
-local CRAFTINGSET_VASTARIES_TUTELAGE            = 48
-local CRAFTINGSET_SENCHERAHTS_GRIT              = 49
-local CRAFTINGSET_COLDHARBOURS_FAVORITE         = 50
+local CRAFTINGSET_VASTARIES_TUTELAGE = 48
+local CRAFTINGSET_SENCHERAHTS_GRIT = 49
+local CRAFTINGSET_COLDHARBOURS_FAVORITE = 50
 
-local CRAFTINGSET_NEW_MOON_ACOLYTE              = 51
-local CRAFTINGSET_DARING_CORSAIR                = 52
+local CRAFTINGSET_NEW_MOON_ACOLYTE = 51
+local CRAFTINGSET_DARING_CORSAIR = 52
 
 --Update 25 Cyrodiil
-local CRAFTINGSET_DAUNTLESS_COMBATANT           = 53
-local CRAFTINGSET_CRITICAL_RIPOSTE              = 54
-local CRAFTINGSET_UNCHAINED_AGGRESSOR           = 55
+local CRAFTINGSET_DAUNTLESS_COMBATANT = 53
+local CRAFTINGSET_CRITICAL_RIPOSTE = 54
+local CRAFTINGSET_UNCHAINED_AGGRESSOR = 55
 
 --Southern Elsweyr
-local CRAFTINGSET_ANCIENT_DRAGONGUARD           = 56
+local CRAFTINGSET_ANCIENT_DRAGONGUARD = 56
 
 -- Western Skyrim
-local CRAFTINGSET_DRAGONS_APPETITE              = 57
-local CRAFTINGSET_STUHNS_FAVOR                  = 58
+local CRAFTINGSET_DRAGONS_APPETITE = 57
+local CRAFTINGSET_STUHNS_FAVOR = 58
 
 -- Blackreach
-local CRAFTINGSET_SPELL_PARASITE                = 59
+local CRAFTINGSET_SPELL_PARASITE = 59
 
 -- The Reach
-local CRAFTINGSET_RED_EAGLES_FURY               = 60
-local CRAFTINGSET_LEGACY_OF_KARTH               = 61
+local CRAFTINGSET_RED_EAGLES_FURY = 60
+local CRAFTINGSET_LEGACY_OF_KARTH = 61
 
 -- Blackreach: Arkthzand Cavern
-local CRAFTINGSET_AETHERIAL_ASCENSION           = 62
+local CRAFTINGSET_AETHERIAL_ASCENSION = 62
 
 -- Blacwood
-local CRAFTINGSET_PENTRIC_RUN                   = 63
-local CRAFTINGSET_WITHERED_ROOT                 = 64
-local CRAFTINGSET_SARIELLENS_SWORD              = 65
+local CRAFTINGSET_PENTRIC_RUN = 63
+local CRAFTINGSET_WITHERED_ROOT = 64
+local CRAFTINGSET_SARIELLENS_SWORD = 65
 
 -- Fargrave/Deadlands
-local CRAFTINGSET_IRON_FLASK              = 66
-local CRAFTINGSET_DEADLANDS_DEMOLISHER              = 67
-local CRAFTINGSET_WRETCHED_VITALITY              = 68
+local CRAFTINGSET_IRON_FLASK = 66
+local CRAFTINGSET_DEADLANDS_DEMOLISHER = 67
+local CRAFTINGSET_WRETCHED_VITALITY = 68
 
 -- itemId, numberOfTraitsRequired
-Destinations.SetsStore                          = {
+Destinations.SetsStore = {
 
   -- Base
   [CRAFTINGSET_ASHEN_GRIP] = { 43871, 2 },
@@ -296,7 +296,7 @@ Destinations.SetsStore                          = {
   [CRAFTINGSET_WRETCHED_VITALITY] = { 178806, 3 }, -- 65
 }
 
-Destinations.KeepsStore                         = {
+Destinations.KeepsStore = {
   [1] = "Fort Balfiera",
   [3] = "Fort Warden",
   [4] = "Fort Rayles",
@@ -409,10 +409,10 @@ Destinations.KeepsStore                         = {
   [152] = "Cropsford",
 }
 
-Destinations.POIsStore                          = {
----------------------------------
---- Done                      ---
----------------------------------
+Destinations.POIsStore = {
+  ---------------------------------
+  --- Done                      ---
+  ---------------------------------
   [1027] = -- Artaeum
   {
     [1] = { n = "Artaeum Craftworks", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_SLOADS_SEMBLANCE },
@@ -1599,9 +1599,9 @@ Destinations.POIsStore                          = {
     [64] = { n = "Dungeon: The Cauldron", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE },
     ["zoneName"] = "Deshaan",
   },
----------------------------------
---- Not Done                  ---
----------------------------------
+  ---------------------------------
+  --- Not Done                  ---
+  ---------------------------------
   [58] = --Malabal Tor
   {
     [1] = { n = "Ouze", t = DESTINATIONS_PIN_TYPE_RUIN },
@@ -2190,7 +2190,7 @@ Destinations.POIsStore                          = {
     [59] = { n = "Golden Gryphon Garret", t = DESTINATIONS_PIN_TYPE_HOUSING }, --
     [60] = { n = "Alinor Crest Townhouse", t = DESTINATIONS_PIN_TYPE_HOUSING }, --
     [61] = { n = "Colossal Aldmeri Grotto", t = DESTINATIONS_PIN_TYPE_HOUSING }, --
-    [62] = { n = "Dungeon: Coral Aerie", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE  },
+    [62] = { n = "Dungeon: Coral Aerie", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE },
     ["zoneName"] = "Summerset",
   },
   [726] = -- Murkmire
@@ -2473,8 +2473,7 @@ Destinations.POIsStore                          = {
     [13] = { n = "Mistgloom Thicket", t = DESTINATIONS_PIN_TYPE_AOI },
     ["zoneName"] = "Blackreach: Arkthzand Cavern",
   },
-  [1261] =
-  {
+  [1261] = {
     [1] = { n = "Borderwatch", t = DESTINATIONS_PIN_TYPE_KEEP },
     [2] = { n = "White Stallion Inn", t = DESTINATIONS_PIN_TYPE_AOI },
     [3] = { n = "Undertow Cavern", t = DESTINATIONS_PIN_TYPE_DELVE },
@@ -2554,8 +2553,7 @@ Destinations.POIsStore                          = {
     [77] = { n = "Sweetwater Cascades", t = DESTINATIONS_PIN_TYPE_HOUSING },
     ["zoneName"] = "Blackwood",
   },
-  [1282] =
-  {
+  [1282] = {
     [1] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
     [2] = { n = "Fargrave Outskirts Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     [3] = { n = "Ossa Accentium", t = DESTINATIONS_PIN_TYPE_HOUSING },
@@ -2563,8 +2561,7 @@ Destinations.POIsStore                          = {
     [5] = { n = "Fargrave Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     ["zoneName"] = "Fargrave",
   },
-  [1283] =
-  {
+  [1283] = {
     [1] = { n = "Forgotten Feretory", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_IRON_FLASK },
     [2] = { n = "Skein Row", t = DESTINATIONS_PIN_TYPE_AOI },
     [3] = { n = "The Bathhouse", t = DESTINATIONS_PIN_TYPE_RUIN },
@@ -2572,8 +2569,7 @@ Destinations.POIsStore                          = {
     [5] = { n = "Fargrave", t = DESTINATIONS_PIN_TYPE_CITY },
     ["zoneName"] = "The Shambles",
   },
-  [1286] =
-  {
+  [1286] = {
     [1] = { n = "Raging Coast Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     [2] = { n = "The Blood Pit Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
     [3] = { n = "Ardent Hope Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },

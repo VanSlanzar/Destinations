@@ -31,7 +31,7 @@ TYPES:
     50 = "Undetermined"
     55 = "Unknown"
 ]]--
-Destinations              = Destinations or {}
+Destinations = Destinations or {}
 
 Destinations.ACHDataIndex = {
   X = 1,
@@ -3141,9 +3141,26 @@ Destinations.ACHDataStore = {
     { 0.6207196712, 0.7159832715, 20, 999999, 1, "X" }, -- Sharlikran
     { 0.4226815402, 0.4672343432, 20, 999999, 1, "X" }, -- Sharlikran
     { 0.4413733482, 0.1940076649, 20, 999999, 1, "X" }, -- Sharlikran
-    { 0.6365278959, 0.7118381261, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
-    { 0.6542717814, 0.5402227044, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.1440, 0.5920, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.1840, 0.4280, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.2520, 0.3550, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.2600, 0.5160, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.2670, 0.3140, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.3130, 0.6160, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.3730, 0.1790, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.3850, 0.5070, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.4180, 0.3170, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.4480, 0.6170, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.4700, 0.5280, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.5150, 0.2600, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.5330, 0.7900, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
     { 0.6057025790, 0.2294649928, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.6120, 0.4420, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.6365278959, 0.7118381261, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.6440, 0.3600, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.6542717814, 0.5402227044, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.7370, 0.3690, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.7470, 0.8300, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
   },
   -- Arkthzand Cavern
   ["vunalk2_base_0"] = {
@@ -3156,4 +3173,4 @@ Destinations.ACHDataStore = {
 }
 
 -- vunalk
-Destinations.ACHDataStore["vunalk1_base_0"]  = Destinations.ACHDataStore["vunalk2_base_0"]
+Destinations.ACHDataStore["vunalk1_base_0"] = Destinations.ACHDataStore["vunalk2_base_0"]
