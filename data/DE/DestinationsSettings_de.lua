@@ -1,4 +1,4 @@
-﻿-------------------------------------------
+-------------------------------------------
 -- English localization for Destinations --
 -------------------------------------------
 local strings = {
@@ -46,6 +46,7 @@ local strings = {
 
   DEST_FILTER_AYLEID = "(Dest) Ayleid Wells",
   DEST_FILTER_DEADLANDS_ENTRANCE = "(Dest) Deadlands Entrance",
+  DEST_FILTER_HIGHISLE_DRUIDICSHRINE = "(Dest) Druidic Shrine",
   DEST_FILTER_DWEMER = "(Dest) Dwemer Ruins",
   DEST_FILTER_BORDER = "(Dest) Craglorn Border Line",
 
@@ -158,6 +159,7 @@ local strings = {
   DEST_SETTINGS_MISC_HEADER_TT = "This submenu covers Ayleid Wells, Dwemer Ruins and the Craglorn Border line.",
   DEST_SETTINGS_MISC_AYLEID_WELL_HEADER = "Ayleïden Brunnen",
   DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER = "Deadlands Entrance",
+  DEST_SETTINGS_MISC_HIGHISLE_SHRINE_HEADER = "Druidic Shrine",
   DEST_SETTINGS_MISC_DWEMER_HEADER = "Dwemerruinen",
   DEST_SETTINGS_MISC_COMPASS_HEADER = "Verschiedenes",
   DEST_SETTINGS_MISC_BORDER_HEADER = "Kargstein Grenze",
@@ -178,6 +180,15 @@ local strings = {
   DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the PIN color for Deadlands Entrance",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR = "Pin text color for Deadlands Entrance",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the pin TEXT on Deadlands Entrance",
+
+  -- HighIsle
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE = "Show Druidic Shrine",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE_TT = "This is for turning Druidic Shrines on/off on the maps",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_SIZE = "Pin size for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the PIN color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin text color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the pin TEXT on Druidic Shrines",
 
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE = "Zeige Dwemerruinen",
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE_TT = "Zeigt Dwemerruinen auf der Weltkarte an",
@@ -421,6 +432,7 @@ local strings = {
 
   POITYPE_AYLEID_WELL = "Ayleïden Brunnen",
   POITYPE_DEADLANDS_ENTRANCE = "Deadlands Entrance",
+  POITYPE_DRUIDIC_SHRINE = "Druidic Shrine",
   POITYPE_WWVAMP = "Werwölfe/Vampire",
   POITYPE_VAMPIRE_ALTAR = "Vampir Altar",
   POITYPE_DWEMER_RUIN = "Dwemerruinen",

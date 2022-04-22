@@ -45,6 +45,7 @@ local strings = {
 
   DEST_FILTER_AYLEID = "(Dest) 亚历德魔法井",
   DEST_FILTER_DEADLANDS_ENTRANCE = "(Dest) Deadlands Entrance",
+  DEST_FILTER_HIGHISLE_DRUIDICSHRINE = "(Dest) Druidic Shrine",
   DEST_FILTER_DWEMER = "(Dest) 锻莫遗迹",
   DEST_FILTER_BORDER = "(Dest) 荒崖边界线",
 
@@ -110,6 +111,7 @@ local strings = {
   DEST_SETTINGS_MUNDUS_TXT_COLOR_TT = "对梦达斯之石明细文本生效",
   DEST_SETTINGS_GTRADER_COLOR = "公会商人图标文本颜色",
   DEST_SETTINGS_GTRADER_COLOR_TT = "影响在指路祭坛上的'公会商人'文本",
+  DEST_SETTINGS_ALL_SHOW_ENGLISH = "英語名の地点を表示する",
 
   DEST_SETTINGS_ACH_HEADER = "成就位置",
   DEST_SETTINGS_ACH_HEADER_TT = "这个子菜单涵盖了游戏中的大部分成就 (太多不列举了)",
@@ -156,6 +158,7 @@ local strings = {
   DEST_SETTINGS_MISC_HEADER_TT = "此子菜单涵盖 亚历德魔法井, 锻莫遗迹和荒崖边界线.",
   DEST_SETTINGS_MISC_AYLEID_WELL_HEADER = "亚历德魔法井",
   DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER = "Deadlands Entrance",
+  DEST_SETTINGS_MISC_HIGHISLE_SHRINE_HEADER = "Druidic Shrine",
   DEST_SETTINGS_MISC_DWEMER_HEADER = "锻莫遗迹",
   DEST_SETTINGS_MISC_COMPASS_HEADER = "杂项设置",
   DEST_SETTINGS_MISC_BORDER_HEADER = "荒崖边界",
@@ -176,6 +179,15 @@ local strings = {
   DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the PIN color for Deadlands Entrance",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR = "Pin text color for Deadlands Entrance",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the pin TEXT on Deadlands Entrance",
+
+  -- HighIsle
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE = "Show Druidic Shrine",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE_TT = "This is for turning Druidic Shrines on/off on the maps",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_SIZE = "Pin size for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the PIN color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin text color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the pin TEXT on Druidic Shrines",
 
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE = "展示锻莫遗迹",
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE_TT = "此开关切换锻莫遗迹在地图上展示与否",
@@ -419,6 +431,7 @@ local strings = {
 
   POITYPE_AYLEID_WELL = "亚历德魔法井",
   POITYPE_DEADLANDS_ENTRANCE = "Deadlands Entrance",
+  POITYPE_DRUIDIC_SHRINE = "Druidic Shrine",
   POITYPE_WWVAMP = "狼人/吸血鬼",
   POITYPE_VAMPIRE_ALTAR = "吸血鬼祭坛",
   POITYPE_DWEMER_RUIN = "锻莫遗迹",

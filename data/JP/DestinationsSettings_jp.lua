@@ -46,6 +46,7 @@ local strings = {
 
   DEST_FILTER_AYLEID = "(Dest) アイレイドの井戸",
   DEST_FILTER_DEADLANDS_ENTRANCE = "(Dest) Deadlands Entrance",
+  DEST_FILTER_HIGHISLE_DRUIDICSHRINE = "(Dest) Druidic Shrine",
   DEST_FILTER_DWEMER = "(Dest) ドゥエマーの遺跡",
   DEST_FILTER_BORDER = "(Dest) クラグローンの境界線",
 
@@ -158,6 +159,7 @@ local strings = {
   DEST_SETTINGS_MISC_HEADER_TT = "このサブメニューは、アイレイドの井戸、ドゥエマーの遺跡、クラグローンの境界線をカバーします",
   DEST_SETTINGS_MISC_AYLEID_WELL_HEADER = "アイレイドの井戸",
   DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER = "Deadlands Entrance",
+  DEST_SETTINGS_MISC_HIGHISLE_SHRINE_HEADER = "Druidic Shrine",
   DEST_SETTINGS_MISC_DWEMER_HEADER = "ドゥエマーの遺跡",
   DEST_SETTINGS_MISC_COMPASS_HEADER = "いろいろな設定",
   DEST_SETTINGS_MISC_BORDER_HEADER = "クラグローンの境界線",
@@ -178,6 +180,15 @@ local strings = {
   DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the PIN color for Deadlands Entrance",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR = "Pin text color for Deadlands Entrance",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the pin TEXT on Deadlands Entrance",
+
+  -- HighIsle
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE = "Show Druidic Shrine",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE_TT = "This is for turning Druidic Shrines on/off on the maps",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_SIZE = "Pin size for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the PIN color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin text color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the pin TEXT on Druidic Shrines",
 
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE = "ドゥエマーの遺跡を表示する",
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE_TT = "地図上のドゥエマーの遺跡のon/offを調整します",
@@ -400,7 +411,6 @@ local strings = {
   POITYPE_WAYSHRINE = "旅の祠",
   POITYPE_VAULT = "地下室",
   POITYPE_DARK_BROTHERHOOD = "闇の一党",
-
   POITYPE_BREAKING_ENTERING = "鍵開けと侵入",
   POITYPE_CUTPURSE_ABOVE = "上級スリ師",
 
@@ -422,6 +432,7 @@ local strings = {
 
   POITYPE_AYLEID_WELL = "アイレイドの井戸",
   POITYPE_DEADLANDS_ENTRANCE = "Deadlands Entrance",
+  POITYPE_DRUIDIC_SHRINE = "Druidic Shrine",
   POITYPE_WWVAMP = "ウェアウルフ/ヴァンパイア",
   POITYPE_VAMPIRE_ALTAR = "ヴァンパイアの変異",
   POITYPE_DWEMER_RUIN = "ドゥエマーの遺跡",

@@ -73,6 +73,7 @@ Destinations.FishIDs = {
   [2861] = (GetAchievementInfo(2861)), --"The Reach Master Angler"
   [2981] = (GetAchievementInfo(2981)), --"Blackwood Master Angler"
   [3144] = (GetAchievementInfo(3144)), --"Deadlands Master Angler"
+  [3269] = (GetAchievementInfo(3269)), --"High Isle Master Angler"
 }
 Destinations.FishLocs = {
   ["glenumbra_base_0"] = 471, --"Glenumbra Angler"
@@ -118,4 +119,5 @@ Destinations.FishLocs = {
   ["u28_blackreach_base_0"] = 2861, --"The Reach Master Angler"
   ["blackwood_base_0"] = 2981, --"Blackwood Master Angler"
   ["u32deadlandszone_base_0"] = 3144, --"Deadlands Master Angler"
+  ["u34_systreszone_base_0"] = 3269, --"Deadlands Master Angler"
 }

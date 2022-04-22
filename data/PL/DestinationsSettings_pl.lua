@@ -45,6 +45,7 @@ local strings = {
 
   DEST_FILTER_AYLEID = "(Dest) Ayleidzkie studnie",
   DEST_FILTER_DEADLANDS_ENTRANCE = "(Dest) Deadlands Entrance",
+  DEST_FILTER_HIGHISLE_DRUIDICSHRINE = "(Dest) Druidic Shrine",
   DEST_FILTER_DWEMER = "(Dest) Dwemerowe ruiny",
   DEST_FILTER_BORDER = "(Dest) Craglorn Border Line",
 
@@ -85,6 +86,9 @@ local strings = {
 
   DEST_SETTINGS_POI_HEADER = "Nieznane interesujące miejsca",
   DEST_SETTINGS_POI_HEADER_TT = "To podmenu obejmuje nieznane interesujące miejsca",
+  DEST_SETTINGS_POI_UNKOWN_SUBHEADER = "This may be unused",
+  DEST_SETTINGS_POI_KNOWN_SUBHEADER = "This may be unused",
+  DEST_SETTINGS_POIS_ENGLISH_TEXT_HEADER = "This may be unused",
 
   DEST_SETTINGS_UNKNOWN_PIN_TOGGLE = "Pokaż nieznane POI",
   DEST_SETTINGS_UNKNOWN_PIN_STYLE = "Punkty na mapie dla nieznanych POI",
@@ -153,6 +157,7 @@ local strings = {
   DEST_SETTINGS_MISC_HEADER_TT = "To podmenu obejmuje Ayleidzką studnie, Dwemerowe ruiny i linię granicy Craglorn.",
   DEST_SETTINGS_MISC_AYLEID_WELL_HEADER = "Ayleidzka studnia",
   DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER = "Deadlands Entrance",
+  DEST_SETTINGS_MISC_HIGHISLE_SHRINE_HEADER = "Druidic Shrine",
   DEST_SETTINGS_MISC_DWEMER_HEADER = "Dwemerowe ruiny",
   DEST_SETTINGS_MISC_COMPASS_HEADER = "Różne ustawienia",
   DEST_SETTINGS_MISC_BORDER_HEADER = "Granica Craglorn",
@@ -173,6 +178,15 @@ local strings = {
   DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the PIN color for Deadlands Entrance",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR = "Pin text color for Deadlands Entrance",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT = "Affects the pin TEXT on Deadlands Entrance",
+
+  -- HighIsle
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE = "Show Druidic Shrine",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE_TT = "This is for turning Druidic Shrines on/off on the maps",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_SIZE = "Pin size for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the PIN color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin text color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the pin TEXT on Druidic Shrines",
 
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE = "Pokaż Dwemerowe ruiny",
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE_TT = "Służy do włączenia i wyłączenia Dwemerowych ruin na mapie",
@@ -263,6 +277,10 @@ local strings = {
   DEST_SETTINGS_QUEST_ALL_PIN_LAYER = "Pin layer for all Quest pins",
   DEST_SETTINGS_QUEST_COMPASS_TOGGLE = "Pokaż punkty zadań na kompasie",
   DEST_SETTINGS_QUEST_COMPASS_DIST = "Odległość dla punktów zadań na kompasie",
+
+  DEST_SETTINGS_REGISTER_QUEST_GIVER_TOGGLE = "Hide Quest Giver Name",
+  DEST_SETTINGS_REGISTER_QUEST_GIVER_TOGGLE_TT = "Show/Hide the name of the Quest giver in the tooltip.",
+
   DEST_SETTINGS_REGISTER_QUESTS_TOGGLE = "Rejestracja zadań",
   DEST_SETTINGS_REGISTER_QUESTS_TOGGLE_TT = "Zapisuje informacje o zadaniu w zmiennych raportowania. Aby uzyskać więcej informacji, odwiedź stronę Destinations ESOUI.com.",
   DEST_SETTINGS_QUEST_RESET_HIDDEN = "Reset ukrytych zadań",
@@ -412,6 +430,7 @@ local strings = {
 
   POITYPE_AYLEID_WELL = "Ayleidzka studnia",
   POITYPE_DEADLANDS_ENTRANCE = "Deadlands Entrance",
+  POITYPE_DRUIDIC_SHRINE = "Druidic Shrine",
   POITYPE_WWVAMP = "Wilkołaki/Wampiry",
   POITYPE_VAMPIRE_ALTAR = "Wampirzy Ołtarz",
   POITYPE_DWEMER_RUIN = "Dwemerowe ruiny",

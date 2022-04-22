@@ -23,6 +23,7 @@ TYPES:
     23 = "Dwemer Ruins"
     24 = "Werewolf Shrine"
     25 = "Deadlands Entrance"
+    26 = "Druidic Shrine"
     30 = "Trophy Area"
     40 = "Foul Water Fishing Spot"
     41 = "River Fishing Spot"
@@ -3169,6 +3170,10 @@ Destinations.ACHDataStore = {
   -- Deadlands
   ["u32deadlandszone_base_0"] = {
     { 0.8387016057, 0.2812155783, 40, 3144, 1, "X" }, -- Sharlikran
+  },
+  -- High Isle
+  ["u34_systreszone_base_0"] = {
+    { 0.5397703647, 0.5882382988, 26, 999999, 1, "X" }, -- Sharlikran
   },
 }
 

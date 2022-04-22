@@ -179,6 +179,12 @@ local CRAFTINGSET_IRON_FLASK = 66
 local CRAFTINGSET_DEADLANDS_DEMOLISHER = 67
 local CRAFTINGSET_WRETCHED_VITALITY = 68
 
+-- |H1:item:184771:30:1:0:0:0:0:0:0:0:0:0:0:0:0:1:1:0:0:0:0|h|h
+
+local CRAFTINGSET_ORDERS_WRATH = 69
+local CRAFTINGSET_DRUIDS_BRAID = 70
+local CRAFTINGSET_SERPENTS_DISDAIN = 71
+
 -- itemId, numberOfTraitsRequired
 Destinations.SetsStore = {
 
@@ -291,9 +297,14 @@ Destinations.SetsStore = {
   [CRAFTINGSET_SARIELLENS_SWORD] = { 172829, 7 }, -- 65
 
   -- Fargrave/Deadlands
-  [CRAFTINGSET_IRON_FLASK] = { 179554, 5 }, -- 65
-  [CRAFTINGSET_DEADLANDS_DEMOLISHER] = { 179180, 7 }, -- 65
-  [CRAFTINGSET_WRETCHED_VITALITY] = { 178806, 3 }, -- 65
+  [CRAFTINGSET_IRON_FLASK] = { 179554, 5 }, -- 66
+  [CRAFTINGSET_DEADLANDS_DEMOLISHER] = { 179180, 7 }, -- 67
+  [CRAFTINGSET_WRETCHED_VITALITY] = { 178806, 3 }, -- 68
+
+  -- High Isle
+  [CRAFTINGSET_ORDERS_WRATH] = { 184771, 3 }, -- 69
+  [CRAFTINGSET_DRUIDS_BRAID] = { 185531, 7 }, -- 70
+  [CRAFTINGSET_SERPENTS_DISDAIN] = { 185151, 5 }, -- 71
 }
 
 Destinations.KeepsStore = {
@@ -2603,4 +2614,92 @@ Destinations.POIsStore = {
     [31] = { n = "Den of the Unmaker", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
     ["zoneName"] = "The Deadlands",
   },
+  [1318] = {
+    [1] = { n = "Gonfalon Bay", t = DESTINATIONS_PIN_TYPE_TOWN },
+    [2] = { n = "Castle Navire", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [3] = { n = "Steadfast Manor", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [4] = { n = "Stonelore Grove", t = DESTINATIONS_PIN_TYPE_GROVE },
+    [5] = { n = "Garick's Rest", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [6] = { n = "All Flags Islet", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [7] = { n = "Tor Draioch", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [8] = { n = "Amenos Station", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [9] = { n = "Brokerock Mine", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [10] = { n = "Skulltooth Coast", t = DESTINATIONS_PIN_TYPE_DOCK },
+    [11] = { n = "Spire of the Crimson Coin", t = DESTINATIONS_PIN_TYPE_DUNGEON },
+    [12] = { n = "Ghost Haven Bay", t = DESTINATIONS_PIN_TYPE_DUNGEON },
+    [13] = { n = "Breakwater Cave", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [14] = { n = "The Firepot", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [15] = { n = "Death's Valor Keep", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [16] = { n = "Shipwreck Shoals", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [17] = { n = "Whalefall", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [18] = { n = "Coral Cliffs", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [19] = { n = "Y'ffre's Cauldron", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [20] = { n = "Serpent Bog", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [21] = { n = "Faun Falls", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [22] = { n = "Dark Stone Hollow", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [23] = { n = "Amenos Basin", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [24] = { n = "Mornard Falls", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [25] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [26] = { n = "Coral Road  Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [27] = { n = "Tor Draioch Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [28] = { n = "Steadfast Manor Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [29] = { n = "Castle Navire Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [30] = { n = "Garick's Rest Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [31] = { n = "Stonelore Grove Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [32] = { n = "Dufort Shipyards Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [33] = { n = "Amenos Station Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [34] = { n = "Brokerock Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [35] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [36] = { n = "Stonelore Forge and Craft", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_SERPENTS_DISDAIN },
+    [37] = { n = "Steadfast Hammer and Saw", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_ORDERS_WRATH },
+    [38] = { n = "Hidden Foundry", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_DRUIDS_BRAID },
+    [39] = { n = "All Flags Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [40] = { n = "Trial: Dreadsail Reef", t = DESTINATIONS_PIN_TYPE_RAIDDUNGEON },
+    [41] = { n = "Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [42] = { n = "Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [43] = { n = "Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [44] = { n = "Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [45] = { n = "Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [46] = { n = "Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [47] = { n = "Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [48] = { n = "Trappers Peak Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [49] = { n = "Spriggan's Crown", t = DESTINATIONS_PIN_TYPE_AOI },
+    [50] = { n = "Port Navire", t = DESTINATIONS_PIN_TYPE_DOCK },
+    [51] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [52] = { n = "Druid's Gate", t = DESTINATIONS_PIN_TYPE_RUIN },
+    [53] = { n = "Gonfalon Head Lighthouse", t = DESTINATIONS_PIN_TYPE_LIGHTHOUSE },
+    [54] = { n = "Westbay Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [55] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [56] = { n = "Abhain Chapel", t = DESTINATIONS_PIN_TYPE_CRYPT },
+    [57] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [58] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [59] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [60] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [61] = { n = "Augury Monoliths", t = DESTINATIONS_PIN_TYPE_AOI },
+    [62] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [63] = { n = "Jheury's Cove", t = DESTINATIONS_PIN_TYPE_DOCK },
+    [64] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [65] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [66] = { n = "Dufort Shipyards", t = DESTINATIONS_PIN_TYPE_DOCK },
+    [67] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [68] = { n = "Gonfalon Square Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [69] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [70] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [71] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [72] = { n = "Serpents Hollow Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [73] = { n = "Flooded Coast Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [74] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [75] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [76] = { n = "Ancient Anchor Berth", t = DESTINATIONS_PIN_TYPE_HOUSING },
+    [77] = { n = "Highhallow Hold", t = DESTINATIONS_PIN_TYPE_HOUSING },
+    [78] = { n = "Green Serpent Getaway", t = DESTINATIONS_PIN_TYPE_AOI },
+    [79] = { n = "Banished Refuge", t = DESTINATIONS_PIN_TYPE_AOI },
+    [80] = { n = "Albatross Leap", t = DESTINATIONS_PIN_TYPE_AOI },
+    [81] = { n = "Colossus View Lighthouse", t = DESTINATIONS_PIN_TYPE_LIGHTHOUSE },
+    [82] = { n = "Gonfalon Bay", t = DESTINATIONS_PIN_TYPE_TOWN },
+    [83] = { n = "Gonfalon Bay", t = DESTINATIONS_PIN_TYPE_TOWN },
+    [84] = { n = "Stonelore Falls", t = DESTINATIONS_PIN_TYPE_AOI },
+    ["zoneName"] = "High Isle",
+  },
+
 }

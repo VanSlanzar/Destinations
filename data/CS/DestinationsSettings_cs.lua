@@ -45,6 +45,7 @@ local strings = {
 
   DEST_FILTER_AYLEID = "(Dest) Ayleid Wells",
   DEST_FILTER_DEADLANDS_ENTRANCE = "(Dest) Deadlands Entrance",
+  DEST_FILTER_HIGHISLE_DRUIDICSHRINE = "(Dest) Druidic Shrine",
   DEST_FILTER_DWEMER = "(Dest) Ruinas Dwemer",
   DEST_FILTER_BORDER = "(Dest) Craglorn Border Line",
 
@@ -156,6 +157,7 @@ local strings = {
   DEST_SETTINGS_MISC_HEADER_TT = "Este submenú cubre los Pozos Ayleid, las Ruinas Dwemer y la línea de Frontera Craglorn",
   DEST_SETTINGS_MISC_AYLEID_WELL_HEADER = "Pozos de Ayleid",
   DEST_SETTINGS_MISC_DEADLANDS_ENTRANCE_HEADER = "Entrada de Deadlands",
+  DEST_SETTINGS_MISC_HIGHISLE_SHRINE_HEADER = "Druidic Shrine",
   DEST_SETTINGS_MISC_DWEMER_HEADER = "Ruinas Dwemer",
   DEST_SETTINGS_MISC_COMPASS_HEADER = "Ajustes varios",
   DEST_SETTINGS_MISC_BORDER_HEADER = "Frontera Craglorn",
@@ -176,6 +178,15 @@ local strings = {
   DEST_SETTINGS_MISC_PIN_DEADLANDS_ENTRANCE_COLOR_TT = "Afecta al color del PIN de la entrada de las tierras muertas",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR = "Color del texto del pin para la entrada de las tierras muertas",
   DEST_SETTINGS_MISC_PINTEXT_DEADLANDS_ENTRANCE_COLOR_TT = "Afecta al TEXTO del pin en la entrada de Deadlands",
+
+  -- HighIsle
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE = "Show Druidic Shrine",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_TOGGLE_TT = "This is for turning Druidic Shrines on/off on the maps",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_SIZE = "Pin size for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PIN_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the PIN color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR = "Pin text color for Druidic Shrines",
+  DEST_SETTINGS_MISC_PINTEXT_HIGHISLE_DRUIDICSHRINES_COLOR_TT = "Affects the pin TEXT on Druidic Shrines",
 
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE = "Mostrar Ruinas Dwemer",
   DEST_SETTINGS_MISC_DWEMER_PIN_TOGGLE_TT = "Esto es para activar/desactivar las Ruinas Dwemer en los mapas",
@@ -419,6 +430,7 @@ local strings = {
 
   POITYPE_AYLEID_WELL = "Pozo Ayleid",
   POITYPE_DEADLANDS_ENTRANCE = "Entrada de Deadlands",
+  POITYPE_DRUIDIC_SHRINE = "Druidic Shrine",
   POITYPE_WWVAMP = "Hombre Lobo/Vampiro",
   POITYPE_VAMPIRE_ALTAR = "Altar de Vampiros",
   POITYPE_DWEMER_RUIN = "Ruina Dwemer",
