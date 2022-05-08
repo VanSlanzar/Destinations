@@ -27,7 +27,7 @@ Destinations.CollectibleDataStore = {
     { "3", 3, "Spectre" },
     { "4", 4, "Momie" },
     { "5", 5, "Draugr" },
-    { "6", 6, "Fantôme, Archer spectal" },
+    { "6", 6, "Fantôme, Archer spectral" },
   },
   [842] = {   --Accumulateur de chitine
     { "1", 1, "Araignée" },
@@ -58,8 +58,8 @@ Destinations.CollectibleDataStore = {
     { "7", 7, "Harpie" },
   },
   [846] = {   --Collectionneur de secrets dwemers
-    { "1", 1, "Sphères Dwemers" },
-    { "2", 2, "Arraignées Dwemers" },
+    { "1", 1, "Sphère Dwemer" },
+    { "2", 2, "Araignée Dwemer" },
   },
   [847] = {   --Collectionneur d'éléments d'atronachs
     { "1", 1, "Atronach de feu" },
