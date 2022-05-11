@@ -50,31 +50,28 @@ Destinations.supported_menu_lang = Destinations.client_lang == Destinations.effe
 -------------------------------------------------
 ----- Destinations                          -----
 -------------------------------------------------
-Dest = {}
 if LibDebugLogger then
   local logger = LibDebugLogger.Create(ADDON_NAME)
-  Dest.logger = logger
+  Destinations.logger = logger
 end
-local SDLV = DebugLogViewer
-if SDLV then Dest.viewer = true else Dest.viewer = false end
 
 local function create_log(log_type, log_content)
-  if not Dest.viewer and log_type == "Info" then
+  if not DebugLogViewer and log_type == "Info" then
     CHAT_ROUTER:AddSystemMessage(log_content)
     return
   end
-  if not Dest.logger then return end
+  if not LibDebugLogger then return end
   if log_type == "Debug" then
-    Dest.logger:Debug(log_content)
+    Destinations.logger:Debug(log_content)
   end
   if log_type == "Info" then
-    Dest.logger:Info(log_content)
+    Destinations.logger:Info(log_content)
   end
   if log_type == "Verbose" then
-    Dest.logger:Verbose(log_content)
+    Destinations.logger:Verbose(log_content)
   end
   if log_type == "Warn" then
-    Dest.logger:Warn(log_content)
+    Destinations.logger:Warn(log_content)
   end
 end
 
@@ -105,7 +102,7 @@ local function emit_table(log_type, t, indent, table_history)
   end
 end
 
-function Dest:dm(log_type, ...)
+function Destinations:dm(log_type, ...)
   for i = 1, select("#", ...) do
     local value = select(i, ...)
     if (type(value) == "table") then
@@ -128,7 +125,7 @@ local LMP = LibMapPins
 local LQD = LibQuestData
 
 local isQuestCompleted = true
-local mapTextureName, zoneTextureName, mapData, zoneQuests
+local mapTextureName, zoneTextureName, mapData, zoneQuests, mapId, zoneId
 local DestinationsSV, DestinationsCSSV, DestinationsAWSV, playerAlliance
 
 local destinationsSetsData = {}
@@ -189,6 +186,7 @@ local DESTINATIONS_PIN_TYPE_NORDBOAT = 51
 local DESTINATIONS_PIN_TYPE_DEADLANDS = 52
 local DESTINATIONS_PIN_TYPE_HIGHISLE = 53
 local DESTINATIONS_PIN_TYPE_UNKNOWN = 99
+local DESTINATIONS_PIN_PRIORITY_OFFSET = 1
 
 -- quest value constants
 Destinations.QUEST_DONE = 1
@@ -262,6 +260,7 @@ local FishIDs
 local FishLocs
 local KeepsStore
 local MundusStore
+local QOLDataStore
 
 -- Define Pins
 local DPINS = {
@@ -306,6 +305,9 @@ local DPINS = {
   DEADLANDS = "DEST_PinSet_Deadlands",
   HIGHISLE = "DEST_PinSet_HighIsle",
   MISC_COMPASS = "DEST_Compass_Misc",
+
+  QOLPINS_DOCK = "DEST_Qol_Dock",
+  QOLPINS_STABLE = "DEST_Qol_Stable",
 
   WWVAMP = "DEST_PinSet_WWVamp",
   VAMPIRE_ALTAR = "DEST_PinSet_Vampire_Alter",
@@ -685,6 +687,16 @@ local defaults = {
       type = 2,
       size = 26,
       level = 30,
+      maxDistance = 0.05,
+      texture = "",
+      tint = { 1, 1, 1, 1 },
+      textcolor = { 1, 1, 1 },
+      textcolortitle = { 1, 1, 1 },
+    },
+    pinTextureQolPin = {
+      type = 1,
+      size = 35,
+      level = 45,
       maxDistance = 0.05,
       texture = "",
       tint = { 1, 1, 1, 1 },
@@ -1528,7 +1540,7 @@ local ZoneIDsToFileNames = {
   [2082] = "u32_theshambles_base_0", -- The Shambles, 1283
   [823] = "goldcoast_base_0",
   [816] = "hewsbane_base_0",
-  [1318] = "u34_systreszone_base_0",
+  [1318] = "u34_systreszone_base_0", -- High Isle
   [726] = "murkmire_base_0",
   [1086] = "elsweyr_base_0",
   [1133] = "southernelsweyr_base_0",
@@ -1595,6 +1607,24 @@ local function RedrawCompassPinsOnly(pinType)
   COMPASS_PINS:RefreshPins(pinType)
 end
 
+local function SetPlayerLocation()
+  local originalMap = GetMapTileTexture()
+  if SetMapToPlayerLocation() == SET_MAP_RESULT_FAILED then
+    Destinations:dm("Warn", "SetMapToPlayerLocation Failed")
+  end
+  if GetMapTileTexture() ~= originalMap then
+    CALLBACK_MANAGER:FireCallbacks("OnWorldMapChanged")
+    return true
+  end
+  -- SET_MAP_RESULT_CURRENT_MAP_UNCHANGED
+  return false
+end
+
+local function RedrawQolPins()
+  RedrawMapPinsOnly(DPINS.QOLPINS_DOCK)
+  RedrawMapPinsOnly(DPINS.QOLPINS_STABLE)
+end
+
 local function check_map_state()
   if GetMapType() > MAPTYPE_ZONE then
     return
@@ -1603,6 +1633,7 @@ local function check_map_state()
   RedrawAllPins(DPINS.QUESTS_UNDONE)
   RedrawAllPins(DPINS.QUESTS_IN_PROGRESS)
   RedrawAllPins(DPINS.QUESTS_DONE)
+  RedrawQolPins()
 end
 
 CALLBACK_MANAGER:RegisterCallback("OnWorldMapChanged", function()
@@ -1613,12 +1644,15 @@ WORLD_MAP_SCENE:RegisterCallback("StateChange", function(oldState, newState)
   if newState == SCENE_SHOWING then
     check_map_state()
   elseif newState == SCENE_HIDDEN then
+    SetPlayerLocation()
     check_map_state()
   end
 end)
 
 function on_zone_changed(eventCode, zoneName, subZoneName, newSubzone, zoneId, subZoneId)
-  check_map_state()
+  if SetPlayerLocation() then
+    check_map_state()
+  end
 end
 EVENT_MANAGER:RegisterForEvent(ADDON_NAME .. "_zone_changed", EVENT_ZONE_CHANGED, on_zone_changed)
 
@@ -1635,8 +1669,8 @@ EVENT_MANAGER:RegisterForEvent(ADDON_NAME .. "_zone_changed", EVENT_ZONE_CHANGED
    "art/maps/elsweyr/jodesembrace1.base_0.dds",
 ]]--
 local function GetMapTextureName()
-  local zoneId = GetZoneId(GetCurrentMapZoneIndex())
-  local mapId = GetCurrentMapId()
+  zoneId = GetZoneId(GetCurrentMapZoneIndex())
+  mapId = GetCurrentMapId()
   if zoneId == 1283 then
     zoneTextureName = ZoneIDsToFileNames[mapId]
   else
@@ -1646,10 +1680,47 @@ local function GetMapTextureName()
   if not zoneTextureName then
     zoneTextureName = mapTextureName
   end
-
-  return mapTextureName, zoneTextureName
 end
 
+-----
+--- Quality of Life Map Pins
+-----
+local function qualityOfLifeMapPinData()
+  mapData, mapTextureName, zoneTextureName, mapId, zoneId = nil, nil, nil, nil, nil
+  GetMapTextureName()
+  mapData = QOLDataStore[mapId]
+end
+
+local function MapCallbackQolPins(pinType)
+  --Destinations:dm("Debug", "MapCallbackQolPins")
+
+  if GetMapType() > MAPTYPE_ZONE then
+    --Destinations:dm("Debug", "Tamriel or Aurbis reached, stopped")
+    return
+  end
+  qualityOfLifeMapPinData()
+  if not mapData then
+    --Destinations:dm("Debug", "mapData in not set")
+    return
+  end
+  -- Loop over both quests and create a map pin with the quest name
+  for key, pinData in pairs(mapData) do
+
+    if pinType == DPINS.QOLPINS_DOCK and pinData.pinsType == Destinations.DocksHighIsle then
+      LMP:CreatePin(DPINS.QOLPINS_DOCK, pinData, pinData.x, pinData.y)
+    end
+
+    if pinType == DPINS.QOLPINS_STABLE and pinData.pinsType == Destinations.Stable then
+      LMP:CreatePin(DPINS.QOLPINS_STABLE, pinData, pinData.x, pinData.y)
+    end
+
+  end
+end
+
+
+-----
+---
+-----
 -- Slash commands -------------------------------------------------------------
 --prints message to chat
 local function ChatPrint(...)
@@ -1688,7 +1759,7 @@ end
 ------------------- MAP PINS -------------------
 ------------------Achievements------------------
 local function sharedAchievementsPinData()
-  mapData, mapTextureName, zoneTextureName = nil, nil, nil
+  mapData, mapTextureName, zoneTextureName, mapId, zoneId = nil, nil, nil, nil, nil
   if LMP:IsEnabled(drtv.pinName) and DestinationsCSSV.filters[drtv.pinName] then
     GetMapTextureName()
     mapData = AchStore[mapTextureName]
@@ -3129,13 +3200,15 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
     -- Hide Cyrodiil quests as long as level is too low
     isQuestCompleted = false
   end
-  if QuestID == 4211 then
+  --[[
+  if QuestID == 4411 then
     -- Hide Final Blows" while "The Veil Falls" is not completed.
     questInfo = GetCompletedQuestInfo(4592)
     if not questInfo then
       isQuestCompleted = false
     end
   end
+  ]]-- data is incorrect handeled by LQD now anyway
   if QuestID == 5535 then
     -- Hide "A Double Life" while "Cleaning House" is not completed.
     questInfo = GetCompletedQuestInfo(5534)
@@ -3237,7 +3310,7 @@ local function QuestPinFilters(QuestID, dataName, questLine, questSeries)
 end
 --[[
 local function sharedQuestPinData()
-  mapData, mapTextureName, zoneTextureName = nil, nil, nil
+  mapData, mapTextureName, zoneTextureName, mapId, zoneId = nil, nil, nil, nil, nil
   if LMP:IsEnabled(drtv.pinName) and DestinationsCSSV.filters[drtv.pinName] then
     GetMapTextureName()
     mapData = LQD:get_quest_list(LMP:GetZoneAndSubzone(true, false, true))
@@ -3652,7 +3725,7 @@ local function AddAchievementCompassPins()
 
   if GetMapType() >= MAPTYPE_WORLD then return end
 
-  mapData, mapTextureName, zoneTextureName = nil, nil, nil
+  mapData, mapTextureName, zoneTextureName, mapId, zoneId = nil, nil, nil, nil, nil
   if DestinationsCSSV.filters[DPINS.ACHIEVEMENTS_COMPASS] then
     GetMapTextureName()
     mapData = AchStore[mapTextureName]
@@ -3772,7 +3845,7 @@ end
 local function AddMiscCompassPins()
   -- Ayleid, Werewolf+Shrine, Vampire+Altar, Dwemer
   if GetMapType() >= MAPTYPE_WORLD then return end
-  mapData, mapTextureName, zoneTextureName = nil, nil, nil
+  mapData, mapTextureName, zoneTextureName, mapId, zoneId = nil, nil, nil, nil, nil
   GetMapTextureName()
   mapData = AchStore[mapTextureName]
   if not mapData then return end
@@ -4193,7 +4266,7 @@ local function MapCallback_fakeKnown()
 
   if GetMapType() >= MAPTYPE_WORLD then return end
 
-  mapData, mapTextureName, zoneTextureName = nil, nil, nil
+  mapData, mapTextureName, zoneTextureName, mapId, zoneId = nil, nil, nil, nil, nil
   GetMapTextureName()
   mapData = POIsStore[GetZoneId(GetCurrentMapZoneIndex())]
 
@@ -4285,7 +4358,7 @@ local function MapCallback_unknown()
 
   drtv.pinName = DPINS.UNKNOWN
 
-  mapData, mapTextureName, zoneTextureName = nil, nil, nil
+  mapData, mapTextureName, zoneTextureName, mapId, zoneId = nil, nil, nil, nil, nil
   if LMP:IsEnabled(drtv.pinName) and DestinationsCSSV.filters[drtv.pinName] then
     GetMapTextureName()
     mapData = POIsStore[GetZoneId(GetCurrentMapZoneIndex())]
@@ -4390,7 +4463,7 @@ local function RegisterQuestDone(eventCode, questName, level, previousExperience
   ]]--
   if questFound then
     if drtv.getQuestInfo then
-      Dest:dm("Info", "Completed: " .. tostring(questID) .. " / " .. questName)
+      Destinations:dm("Info", "Completed: " .. tostring(questID) .. " / " .. questName)
     end
     for k, v in pairs(DestinationsCSSV.QuestsDone) do
       if questID == k then
@@ -4424,7 +4497,7 @@ end
 local function RegisterQuestCancelled(eventCode, isCompleted, journalIndex, questName, zoneIndex, poiIndex, questID)
   if isCompleted then return end
   if drtv.getQuestInfo then
-    Dest:dm("Info", "Cancelled: " .. tostring(questID) .. "/" .. questName)
+    Destinations:dm("Info", "Cancelled: " .. tostring(questID) .. "/" .. questName)
   end
   local questData = {}
   for k, v in pairs(DestinationsCSSV.QuestsDone) do
@@ -4443,7 +4516,7 @@ local function RegisterQuestCancelled(eventCode, isCompleted, journalIndex, ques
   RedrawAllPins(DPINS.QUESTS_DONE)
 end
 
-local function CheckBreadrumbQuests()
+local function CheckBreadcrumbQuests()
   local questName = nil
   questName = GetCompletedQuestInfo(4453) -- "Message To Mournhold" (breadcrumb quest to A Favor Returned)
   if questName and string.len(questName) >= 3 then
@@ -4868,14 +4941,14 @@ local function SetSpecialQuests()
     DestinationsCSSV.QuestsDone[4656] = 1
   end
   -- check Breadcrumb quests
-  CheckBreadrumbQuests()
+  CheckBreadcrumbQuests()
   CheckAlternateQuests()
 end
 
 local function SetQuestHidden(pin, questID, questName)
   if drtv.getQuestInfo then
-    Dest:dm("Info", "Hiding questID: " .. questID)
-    Dest:dm("Info", "Name: " .. questName)
+    Destinations:dm("Info", "Hiding questID: " .. questID)
+    Destinations:dm("Info", "Name: " .. questName)
   end
   DestinationsCSSV.QuestsDone[questID] = Destinations.QUEST_HIDDEN
   RedrawAllPins(DPINS.QUESTS_UNDONE)
@@ -4913,7 +4986,7 @@ local function ShowQuestEditingMenu(pin)
   qName = string.gsub(qName, "%-", " ")
 
   if drtv.getQuestInfo then
-    Dest:dm("Info", "Quest found: " .. qName)
+    Destinations:dm("Info", "Quest found: " .. qName)
   end
 
   local questTableName
@@ -4935,7 +5008,7 @@ local function ShowQuestEditingMenu(pin)
 
   if not questID or questID == 0 then
     if drtv.getQuestInfo then
-      Dest:dm("Info",
+      Destinations:dm("Info",
         "The quest could not be identified as no ID was found. For that reason the quest can not be hidden.")
     end
     AddMenuItem(defaults.miscColorCodes.settingsTextWarn:Colorize(GetString(QUEST_MENU_NOT_FOUND)), SetQuestHiddenDummy)
@@ -4953,12 +5026,12 @@ function SetQuestEditing()
   if drtv.EditingQuests then
     drtv.EditingQuests = false
     LMP:SetClickHandlers(DPINS.QUESTS_UNDONE, nil)
-    Dest:dm("Info", GetString(QUEST_EDIT_OFF))
+    Destinations:dm("Info", GetString(QUEST_EDIT_OFF))
   else
     drtv.EditingQuests = true
     LMP:SetClickHandlers(DPINS.QUESTS_UNDONE, { [1] = { callback = function(pin) ShowQuestEditingMenu(pin) end } },
       duplicates == false)
-    Dest:dm("Info", GetString(QUEST_EDIT_ON))
+    Destinations:dm("Info", GetString(QUEST_EDIT_ON))
   end
 end
 
@@ -4966,19 +5039,19 @@ SLASH_COMMANDS["/dqin"] = function()
   --Quest Info Debug TOGGLE
   if drtv.getQuestInfo == false then
     drtv.getQuestInfo = true
-    Dest:dm("Info", "Quest debug Info ON")
-    Dest:dm("Info", "Repeat command to turn it off.")
+    Destinations:dm("Info", "Quest debug Info ON")
+    Destinations:dm("Info", "Repeat command to turn it off.")
   elseif drtv.getQuestInfo == true then
     drtv.getQuestInfo = false
-    Dest:dm("Info", "Quest debug Info OFF")
+    Destinations:dm("Info", "Quest debug Info OFF")
   end
 end
 SLASH_COMMANDS["/dhlp"] = function()
   --Show help
-  Dest:dm("Info", GetString(DESTCOMMANDS))
-  Dest:dm("Info", GetString(DESTCOMMANDdhlp))
-  Dest:dm("Info", GetString(DESTCOMMANDdset))
-  Dest:dm("Info", GetString(DESTCOMMANDdqed))
+  Destinations:dm("Info", GetString(DESTCOMMANDS))
+  Destinations:dm("Info", GetString(DESTCOMMANDdhlp))
+  Destinations:dm("Info", GetString(DESTCOMMANDdset))
+  Destinations:dm("Info", GetString(DESTCOMMANDdqed))
 end
 SLASH_COMMANDS["/dlaq"] = function()
   --Refresh all Completed Quests and /reloadui
@@ -4989,7 +5062,7 @@ end
 SLASH_COMMANDS["/dqed"] = SetQuestEditing   --Quest Editing TOGGLE
 SLASH_COMMANDS["/dgcq"] = function()
   --Get Completed Quests (to saved vars)
-  Dest:dm("Info", "Saving all completed quests...")
+  Destinations:dm("Info", "Saving all completed quests...")
   local questId = nil
   local questName = nil
   local questType
@@ -5000,11 +5073,11 @@ SLASH_COMMANDS["/dgcq"] = function()
       DestinationsSV.TEMPPINDATA[questId] = "\v" .. questName .. "\v"
     end
   end
-  Dest:dm("Info", "Done...")
+  Destinations:dm("Info", "Done...")
 end
 SLASH_COMMANDS["/dgac"] = function()
   --Get All Achievements (to saved vars)
-  Dest:dm("Info", "Saving all achievements...")
+  Destinations:dm("Info", "Saving all achievements...")
   local achId = nil
   local achName = nil
   local achType
@@ -5015,11 +5088,11 @@ SLASH_COMMANDS["/dgac"] = function()
       DestinationsSV.TEMPPINDATA[achId] = "\v" .. achName .. "\v"
     end
   end
-  Dest:dm("Info", "Done...")
+  Destinations:dm("Info", "Done...")
 end
 SLASH_COMMANDS["/dgap"] = function()
   --Get All POI's (to saved vars)
-  Dest:dm("Info", "Saving all POI's...")
+  Destinations:dm("Info", "Saving all POI's...")
   local zoneIndex = GetCurrentMapZoneIndex()
   local currentMapId = GetZoneId(zoneIndex)
   if Destinations_Settings.pointsOfIntrest == nil then Destinations_Settings.pointsOfIntrest = {} end
@@ -5038,16 +5111,16 @@ SLASH_COMMANDS["/dgap"] = function()
         end
         local objectiveString = "{ n = 0x22%s0x22, t = %s },"
         saveData[POIno] = string.format(objectiveString, objectiveName, objectiveIcon)
-        Dest:dm("Info", tostring(POIno) .. ": " .. objectiveName)
+        Destinations:dm("Info", tostring(POIno) .. ": " .. objectiveName)
         if string.find(objectiveIcon, "/esoui/art/icons/poi/") then
           objectiveIcon = string.gsub(objectiveIcon, "/esoui/art/icons/poi/", "")
         end
-        Dest:dm("Info", tostring(POIno) .. ": " .. objectiveIcon)
+        Destinations:dm("Info", tostring(POIno) .. ": " .. objectiveIcon)
       end
     end
-    Dest:dm("Info", "Done...")
+    Destinations:dm("Info", "Done...")
   else
-    Dest:dm("Info", "No data to save...")
+    Destinations:dm("Info", "No data to save...")
   end
 end
 
@@ -5057,36 +5130,36 @@ SLASH_COMMANDS["/dsav"] = function(...)
   if (param ~= nil and param ~= "") then
     local cmdparam = nil
     if (param == "ff") then
-      Dest:dm("Info", "Saving Foul Water Fishing Spot.")
+      Destinations:dm("Info", "Saving Foul Water Fishing Spot.")
       cmdparam = 40
     elseif (param == "fr") then
-      Dest:dm("Info", "Saving River Fishing Spot.")
+      Destinations:dm("Info", "Saving River Fishing Spot.")
       cmdparam = 41
     elseif (param == "fo") then
-      Dest:dm("Info", "Saving Ocean Fishing Spot.")
+      Destinations:dm("Info", "Saving Ocean Fishing Spot.")
       cmdparam = 42
     elseif (param == "fl") then
-      Dest:dm("Info", "Saving Lake Fishing Spot.")
+      Destinations:dm("Info", "Saving Lake Fishing Spot.")
       cmdparam = 43
     elseif (string.sub(param, 0, 2) == "co") and (string.len(param) >= 5) then
-      Dest:dm("Info", "Saving Collectible Spot.")
+      Destinations:dm("Info", "Saving Collectible Spot.")
       cmdparam = 100
     elseif (param == "-h") then
-      Dest:dm("Info", "Write /dsav <param>")
-      Dest:dm("Info", "The following parameters can be used:")
-      Dest:dm("Info", "co* > saves Collectible spot")
-      Dest:dm("Info", "replace the * with the mob name")
-      Dest:dm("Info", "like: /dsav coMudcrab")
-      Dest:dm("Info", "ff > saves Foul Fishing spot")
-      Dest:dm("Info", "fr > saves River Fishing spot")
-      Dest:dm("Info", "fo > saves Ocean Fishing spot")
-      Dest:dm("Info", "fl > saves Lake Fishing spot")
-      Dest:dm("Info", "-h > Shows this help text.")
-      Dest:dm("Info", "Example: /dsav ff")
+      Destinations:dm("Info", "Write /dsav <param>")
+      Destinations:dm("Info", "The following parameters can be used:")
+      Destinations:dm("Info", "co* > saves Collectible spot")
+      Destinations:dm("Info", "replace the * with the mob name")
+      Destinations:dm("Info", "like: /dsav coMudcrab")
+      Destinations:dm("Info", "ff > saves Foul Fishing spot")
+      Destinations:dm("Info", "fr > saves River Fishing spot")
+      Destinations:dm("Info", "fo > saves Ocean Fishing spot")
+      Destinations:dm("Info", "fl > saves Lake Fishing spot")
+      Destinations:dm("Info", "-h > Shows this help text.")
+      Destinations:dm("Info", "Example: /dsav ff")
       cmdparam = nil
     else
-      Dest:dm("Info", "Unknown parameter!")
-      Dest:dm("Info", "Write /dsav -h for help.")
+      Destinations:dm("Info", "Unknown parameter!")
+      Destinations:dm("Info", "Write /dsav -h for help.")
       cmdparam = nil
     end
     if cmdparam then
@@ -5117,15 +5190,15 @@ SLASH_COMMANDS["/dsav"] = function(...)
       mapNumber = 1
       while coordData[mapNumber] do
         if drtv.getQuestInfo then
-          Dest:dm("Info", "saving data for " .. mapName[mapNumber] .. "...")
+          Destinations:dm("Info", "saving data for " .. mapName[mapNumber] .. "...")
         end
         DestinationsSV.Quests["DQD: " .. mapName[mapNumber] .. "/" .. FormatCoords(mapX) .. FormatCoords(mapY)] = coordData[mapNumber]
         mapNumber = mapNumber + 1
       end
     end
   else
-    Dest:dm("Info", "Missing parameter!")
-    Dest:dm("Info", "Write /dsav -h for help.")
+    Destinations:dm("Info", "Missing parameter!")
+    Destinations:dm("Info", "Write /dsav -h for help.")
   end
 end
 
@@ -5366,7 +5439,7 @@ local function UpdateInventoryContent()
   if DestinationsCSSV.filters[DPINS.RELIC_HUNTER] or DestinationsCSSV.filters[DPINS.CUTPURSE] then
     GetMapTextureName()
     if mapTextureName and zoneTextureName then
-      -- Dest:dm("Info", "getting inventory...")
+      -- Destinations:dm("Info", "getting inventory...")
     end
   end
 end
@@ -6151,6 +6224,41 @@ local function SetPinLayouts()
   LMP:AddPinType(DPINS.WEREWOLF_SHRINE, WerewolfShrinepinTypeCallback, nil, pinLayout_WereWolfShrine, pinTooltipCreator)
 
   LMP:AddPinType(DPINS.DWEMER, DwemerRuinpinTypeCallback, nil, pinLayout_Dwemer, pinTooltipCreator)
+
+  local qolPinTooltipCreator = {
+    creator = function(pin)
+      local pinTag = select(2, pin:GetPinTypeAndTag())
+      if IsInGamepadPreferredMode() then
+        local InformationTooltip = ZO_MapLocationTooltip_Gamepad
+        local baseSection = InformationTooltip.tooltip
+        InformationTooltip:LayoutIconStringLine(baseSection, nil, ADDON_NAME, baseSection:GetStyle("mapLocationTooltipContentHeader"))
+        InformationTooltip:LayoutIconStringLine(baseSection, nil, pinTag.pinName, baseSection:GetStyle("mapLocationTooltipContentName"))
+      else
+        if pinTag.pinTitle then
+          INFORMATION_TOOLTIP:AddLine(pinTag.pinTitle, "ZoFontGameOutline", ZO_SELECTED_TEXT:UnpackRGB())
+          ZO_Tooltip_AddDivider(INFORMATION_TOOLTIP)
+        end
+        INFORMATION_TOOLTIP:AddLine(pinTag.pinName, "ZoFontGameOutline", ZO_TOOLTIP_DEFAULT_COLOR:UnpackRGB())
+      end
+    end,
+  }
+  local qolPinLayout = {
+    [DPINS.QOLPINS_DOCK] = {
+      level = DestinationsSV.pins.pinTextureQolPin.level,
+      size = DestinationsSV.pins.pinTextureQolPin.size,
+      tint = ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQolPin.tint)),
+      texture = "/esoui/art/icons/servicemappins/servicepin_dock.dds",
+    },
+    [DPINS.QOLPINS_STABLE] = {
+      level = DestinationsSV.pins.pinTextureQolPin.level,
+      size = DestinationsSV.pins.pinTextureQolPin.size,
+      tint = ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQolPin.tint)),
+      texture = "/esoui/art/icons/servicemappins/servicepin_stable.dds",
+    },
+  }
+  -- Quality Of Life Pins
+  LMP:AddPinType(DPINS.QOLPINS_DOCK, function() MapCallbackQolPins(DPINS.QOLPINS_DOCK) end, nil, qolPinLayout[DPINS.QOLPINS_DOCK], qolPinTooltipCreator)
+  LMP:AddPinType(DPINS.QOLPINS_STABLE, function() MapCallbackQolPins(DPINS.QOLPINS_STABLE) end, nil, qolPinLayout[DPINS.QOLPINS_STABLE], qolPinTooltipCreator)
 
   --Add filter check boxes
   if DestinationsCSSV.settings.MapFiltersPOIs then
@@ -10185,12 +10293,13 @@ local function InitializeDatastores()
   FishLocs = Destinations.FishLocs
   KeepsStore = Destinations.KeepsStore
   MundusStore = Destinations.mundusStrings
+  QOLDataStore = Destinations.QOLDataStore
 
 end
 
-local function OnLoad(eventCode, name)
+local function OnLoad(eventCode, addonName)
 
-  if name == ADDON_NAME then
+  if addonName == ADDON_NAME then
 
     InitializeDatastores()
 

@@ -119,5 +119,5 @@ Destinations.FishLocs = {
   ["u28_blackreach_base_0"] = 2861, --"The Reach Master Angler"
   ["blackwood_base_0"] = 2981, --"Blackwood Master Angler"
   ["u32deadlandszone_base_0"] = 3144, --"Deadlands Master Angler"
-  ["u34_systreszone_base_0"] = 3269, --"Deadlands Master Angler"
+  ["u34_systreszone_base_0"] = 3269, --"High Isle Master Angler"
 }
