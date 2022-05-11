@@ -3173,9 +3173,40 @@ Destinations.ACHDataStore = {
   },
   -- High Isle
   ["u34_systreszone_base_0"] = {
-    { 0.5397703647, 0.5882382988, 26, 999999, 1, "X" }, -- Sharlikran
+    { 0.1804388016, 0.5292015671, 26, 3298, 1, "X" }, -- Sharlikran (1)
+    { 0.4095820486, 0.5600040555, 26, 3298, 1, "X" }, -- Sharlikran (2)
+    { 0.4223474562, 0.7643600106, 26, 3298, 1, "X" }, -- Sharlikran (3)
+    { 0.5397703647, 0.5882382988, 26, 3298, 1, "X" }, -- Sharlikran (4)
+    { 0.7043770551, 0.3688865900, 26, 3298, 1, "X" }, -- Sharlikran (5)
   },
 }
 
 -- vunalk
 Destinations.ACHDataStore["vunalk1_base_0"] = Destinations.ACHDataStore["vunalk2_base_0"]
+
+-- This data file covers the coordinates for several achievements
+--[[
+TYPES:
+     1 = "Docks High Isle"
+     2 = "Stables"
+]]--
+Destinations.DocksHighIsle = 1
+Destinations.Stable = 2
+
+--[[For LibMapPins-1.0 use:
+pinName: Name for tooltip
+]]--
+Destinations.QOLDataStore = {
+  [2114] = {
+  {x = 0.3763126432, y = 0.7147346735, pinName = "To All Flags Islet", pinsType = Destinations.DocksHighIsle},
+  {x = 0.3117929697, y = 0.6673734784, pinName = "To Steadfast Manor", pinsType = Destinations.DocksHighIsle},
+  {x = 0.6184409260, y = 0.5642197728, pinName = "To Amenos Station", pinsType = Destinations.DocksHighIsle},
+  {x = 0.6510598659, y = 0.4716517329, pinName = "To Dufort Shipyard", pinsType = Destinations.DocksHighIsle},
+  },
+  [2214] = {
+  {x = 0.2604621052, y = 0.5057994127, pinName = "To Dufort Shipyard", pinsType = Destinations.DocksHighIsle},
+  },
+  [160] = {
+  {x = 0.3663540780, y = 0.2584021091, pinName = "Bitterblade Stables", pinTitle = "Bitterblade Fine Steeds", pinsType = Destinations.Stable},
+  },
+}
