@@ -11,7 +11,7 @@
 ## Author: Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir
 ## APIVersion: 101033 101034
 ## SavedVariables: Destinations_Settings
-## DependsOn: LibAddonMenu-2.0>=33 LibMapPins-1.0>=10034 CustomCompassPins>=32 LibQuestData>=245
+## DependsOn: LibAddonMenu-2.0>=33 LibMapPins-1.0>=10035 CustomCompassPins>=32 LibQuestData>=245
 ## OptionalDependsOn: LibDebugLogger DebugLogViewer
 
 data/EN/DestinationsCollectibles_en.lua
