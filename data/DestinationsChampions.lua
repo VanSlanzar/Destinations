@@ -1342,7 +1342,7 @@ Destinations.ChampionTableStore = {
   ["midnightbarrow_base_0"] = {
     { 0.6324, 0.1261, 2642, 1 }, -- Midnight Barrow
   },
-  ["shadowgreen_lower_0"] = {
+  ["shadowgreen_lower_base_0"] = {
     { 0.3592, 0.4852, 2643, 1 }, -- Shadowgreen
   },
   ["thescraps_base_0"] = {
