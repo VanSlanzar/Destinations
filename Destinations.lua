@@ -118,7 +118,7 @@ end
 -------------------------------------------------
 
 local ADDON_AUTHOR = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION = "29.72"
+local ADDON_VERSION = "29.73"
 local ADDON_WEBSITE = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP = LibMapPins
@@ -308,6 +308,7 @@ local DPINS = {
 
   QOLPINS_DOCK = "DEST_Qol_Dock",
   QOLPINS_STABLE = "DEST_Qol_Stable",
+  QOLPINS_PORTAL = "DEST_Qol_Portal",
 
   WWVAMP = "DEST_PinSet_WWVamp",
   VAMPIRE_ALTAR = "DEST_PinSet_Vampire_Alter",
@@ -1623,6 +1624,7 @@ end
 local function RedrawQolPins()
   RedrawMapPinsOnly(DPINS.QOLPINS_DOCK)
   RedrawMapPinsOnly(DPINS.QOLPINS_STABLE)
+  RedrawMapPinsOnly(DPINS.QOLPINS_PORTAL)
 end
 
 local function check_map_state()
@@ -1712,6 +1714,10 @@ local function MapCallbackQolPins(pinType)
 
     if pinType == DPINS.QOLPINS_STABLE and pinData.pinsType == Destinations.Stable then
       LMP:CreatePin(DPINS.QOLPINS_STABLE, pinData, pinData.x, pinData.y)
+    end
+
+    if pinType == DPINS.QOLPINS_PORTAL and pinData.pinsType == Destinations.Portals then
+      LMP:CreatePin(DPINS.QOLPINS_PORTAL, pinData, pinData.x, pinData.y)
     end
 
   end
@@ -6255,10 +6261,17 @@ local function SetPinLayouts()
       tint = ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQolPin.tint)),
       texture = "/esoui/art/icons/servicemappins/servicepin_stable.dds",
     },
+    [DPINS.QOLPINS_PORTAL] = {
+      level = DestinationsSV.pins.pinTextureQolPin.level,
+      size = DestinationsSV.pins.pinTextureQolPin.size,
+      tint = ZO_ColorDef:New(unpack(DestinationsSV.pins.pinTextureQolPin.tint)),
+      texture = "/esoui/art/icons/servicemappins/servicepin_fargraveportal.dds",
+    },
   }
   -- Quality Of Life Pins
   LMP:AddPinType(DPINS.QOLPINS_DOCK, function() MapCallbackQolPins(DPINS.QOLPINS_DOCK) end, nil, qolPinLayout[DPINS.QOLPINS_DOCK], qolPinTooltipCreator)
   LMP:AddPinType(DPINS.QOLPINS_STABLE, function() MapCallbackQolPins(DPINS.QOLPINS_STABLE) end, nil, qolPinLayout[DPINS.QOLPINS_STABLE], qolPinTooltipCreator)
+  LMP:AddPinType(DPINS.QOLPINS_PORTAL, function() MapCallbackQolPins(DPINS.QOLPINS_PORTAL) end, nil, qolPinLayout[DPINS.QOLPINS_PORTAL], qolPinTooltipCreator)
 
   --Add filter check boxes
   if DestinationsCSSV.settings.MapFiltersPOIs then

@@ -6,12 +6,12 @@
 
 ## Title: |cFFFFFFDestinations|r
 ## Description: This addon adds various points of interest to your maps and compass.
-## AddOnVersion: 2972
-## Version: 29.72
+## AddOnVersion: 2973
+## Version: 29.73
 ## Author: Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir
 ## APIVersion: 101033 101034
 ## SavedVariables: Destinations_Settings
-## DependsOn: LibAddonMenu-2.0>=33 LibMapPins-1.0>=10036 CustomCompassPins>=32 LibQuestData>=245
+## DependsOn: LibAddonMenu-2.0>=33 LibMapPins-1.0>=10036 CustomCompassPins>=32 LibQuestData>=247
 ## OptionalDependsOn: LibDebugLogger DebugLogViewer
 
 data/EN/DestinationsCollectibles_en.lua

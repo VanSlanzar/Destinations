@@ -3184,7 +3184,6 @@ Destinations.ACHDataStore = {
 -- vunalk
 Destinations.ACHDataStore["vunalk1_base_0"] = Destinations.ACHDataStore["vunalk2_base_0"]
 
--- This data file covers the coordinates for several achievements
 --[[
 TYPES:
      1 = "Docks High Isle"
@@ -3192,6 +3191,7 @@ TYPES:
 ]]--
 Destinations.DocksHighIsle = 1
 Destinations.Stable = 2
+Destinations.Portals = 3
 
 --[[For LibMapPins-1.0 use:
 pinName: Name for tooltip
@@ -3208,5 +3208,11 @@ Destinations.QOLDataStore = {
   },
   [160] = {
   {x = 0.3663540780, y = 0.2584021091, pinName = "Bitterblade Stables", pinTitle = "Bitterblade Fine Steeds", pinsType = Destinations.Stable},
+  },
+  [448] = {
+  {x = 0.6495081782341, y = 0.63021856546402, pinName = "Portal to Eyevea", pinsType = Destinations.Portals},
+  },
+  [1940] = {
+  {x = 0.16614331305027, y = 0.48378404974937, pinName = "Portal to Fargrave", pinsType = Destinations.Portals},
   },
 }

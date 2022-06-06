@@ -1494,7 +1494,7 @@ Destinations.POIsStore = {
     [105] = { n = "Dungeon: White-Gold Tower", t = DESTINATIONS_PIN_TYPE_GROUPINSTANCE },
     [106] = { n = "Bruma", t = DESTINATIONS_PIN_TYPE_PORTAL },
     [107] = { n = "Cropsford Armory", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_DAUNTLESS_COMBATANT },
-    [108] = { n = "Vlastrus Armory", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_CRITICAL_RIPOSTE },
+    [108] = { n = "Vlastarus Armory", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_CRITICAL_RIPOSTE },
     [109] = { n = "Bruma Armory", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_UNCHAINED_AGGRESSOR },
     ["zoneName"] = "Cyrodiil",
   },
