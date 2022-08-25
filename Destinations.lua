@@ -118,7 +118,7 @@ end
 -------------------------------------------------
 
 local ADDON_AUTHOR = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION = "29.73"
+local ADDON_VERSION = "29.74"
 local ADDON_WEBSITE = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP = LibMapPins
@@ -3355,7 +3355,7 @@ local function Quests_Undone_pinTypeCallback(pinManager)
     local QuestID = pinData[LQD.quest_map_pin_index.quest_id]
     if not QuestID then return end
     local dataName = GetCompletedQuestInfo(QuestID)
-    local QuestName = LQD:get_quest_name(QuestID)
+    local QuestName = GetQuestName(QuestID)
     if not QuestName then QuestName = "<<->>" end
     local Name = zo_strformat(QuestName)
     local questLine = LQD:get_quest_line(QuestID)
@@ -3504,7 +3504,7 @@ local function Quests_In_Progress_pinTypeCallback(pinManager)
     local questSeries = LQD:get_quest_series(QuestID)
     QuestPinFilters(QuestID, dataName, questLine, questSeries)
     if DestinationsCSSV.QuestsDone[QuestID] and DestinationsCSSV.QuestsDone[QuestID] == 2 and isQuestCompleted then
-      local QuestName = LQD:get_quest_name(QuestID)
+      local QuestName = GetQuestName(QuestID)
       if not QuestName then QuestName = "<<->>" end
       local Name = zo_strformat(QuestName)
       local NPCID = LQD:get_quest_npc_id(pinData)
@@ -3615,7 +3615,7 @@ local function Quests_Done_pinTypeCallback(pinManager)
     local QuestID = pinData[LQD.quest_map_pin_index.quest_id]
     if not QuestID then return end
     local dataName = GetCompletedQuestInfo(QuestID)
-    local QuestName = LQD:get_quest_name(QuestID)
+    local QuestName = GetQuestName(QuestID)
     if not QuestName then QuestName = "<<->>" end
     local Name = zo_strformat(QuestName)
     isQuestCompleted = true
@@ -3917,7 +3917,7 @@ local function Quests_CompassPins()
     if skipRep == false then
       if not QuestID then return end
       local dataName = GetCompletedQuestInfo(QuestID)
-      local QuestName = LQD:get_quest_name(QuestID)
+      local QuestName = GetQuestName(QuestID)
       if not QuestName then QuestName = "<<->>" end
       local questLine = LQD:get_quest_line(QuestID)
       local questNumber = LQD:get_quest_number(QuestID)

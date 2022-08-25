@@ -3200,7 +3200,6 @@ Destinations.QOLDataStore = {
   [2114] = {
   {x = 0.3763126432, y = 0.7147346735, pinName = "To All Flags Islet", pinsType = Destinations.DocksHighIsle},
   {x = 0.3117929697, y = 0.6673734784, pinName = "To Steadfast Manor", pinsType = Destinations.DocksHighIsle},
-  {x = 0.6184409260, y = 0.5642197728, pinName = "To Amenos Station", pinsType = Destinations.DocksHighIsle},
   {x = 0.6510598659, y = 0.4716517329, pinName = "To Dufort Shipyard", pinsType = Destinations.DocksHighIsle},
   },
   [2214] = {
