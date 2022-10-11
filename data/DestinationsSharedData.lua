@@ -3170,6 +3170,24 @@ Destinations.ACHDataStore = {
   -- Deadlands
   ["u32deadlandszone_base_0"] = {
     { 0.8387016057, 0.2812155783, 40, 3144, 1, "X" }, -- Sharlikran
+    { 0.8740, 0.4640, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.4980, 0.6660, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.5450, 0.5710, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.6800, 0.4170, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.7710, 0.4100, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.7730, 0.3390, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.6810, 0.3040, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.4570, 0.5560, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.3260, 0.5270, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.3940, 0.5150, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.2900, 0.5760, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.2490, 0.7250, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.3500, 0.6870, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.4920, 0.5930, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.5680, 0.3280, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.5500, 0.4440, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.1930, 0.5610, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
+    { 0.7800, 0.2540, 25, 999999, 1, "X" }, -- Sharlikran Deadlands
   },
   -- High Isle
   ["u34_systreszone_base_0"] = {
@@ -3178,6 +3196,10 @@ Destinations.ACHDataStore = {
     { 0.4223474562, 0.7643600106, 26, 3298, 1, "X" }, -- Sharlikran (3)
     { 0.5397703647, 0.5882382988, 26, 3298, 1, "X" }, -- Sharlikran (4)
     { 0.7043770551, 0.3688865900, 26, 3298, 1, "X" }, -- Sharlikran (5)
+  },
+  -- Galen
+  ["u36_galenisland_base_0"] = {
+    { 0.3544013500, 0.5929176807, 43, 3500, 1, "X" }, -- Sharlikran
   },
 }
 
@@ -3188,6 +3210,7 @@ Destinations.ACHDataStore["vunalk1_base_0"] = Destinations.ACHDataStore["vunalk2
 TYPES:
      1 = "Docks High Isle"
      2 = "Stables"
+     3 = "Portals"
 ]]--
 Destinations.DocksHighIsle = 1
 Destinations.Stable = 2
@@ -3198,20 +3221,48 @@ pinName: Name for tooltip
 ]]--
 Destinations.QOLDataStore = {
   [2114] = {
-  {x = 0.3763126432, y = 0.7147346735, pinName = "To All Flags Islet", pinsType = Destinations.DocksHighIsle},
-  {x = 0.3117929697, y = 0.6673734784, pinName = "To Steadfast Manor", pinsType = Destinations.DocksHighIsle},
-  {x = 0.6510598659, y = 0.4716517329, pinName = "To Dufort Shipyard", pinsType = Destinations.DocksHighIsle},
+    { x = 0.3763126432, y = 0.7147346735, pinName = "To All Flags Islet", pinsType = Destinations.DocksHighIsle },
+    { x = 0.3117929697, y = 0.6673734784, pinName = "To Steadfast Manor", pinsType = Destinations.DocksHighIsle },
+    { x = 0.6510598659, y = 0.4716517329, pinName = "To Dufort Shipyard", pinsType = Destinations.DocksHighIsle },
   },
   [2214] = {
-  {x = 0.2604621052, y = 0.5057994127, pinName = "To Dufort Shipyard", pinsType = Destinations.DocksHighIsle},
+    { x = 0.2604621052, y = 0.5057994127, pinName = "To Dufort Shipyard", pinsType = Destinations.DocksHighIsle },
   },
   [160] = {
-  {x = 0.3663540780, y = 0.2584021091, pinName = "Bitterblade Stables", pinTitle = "Bitterblade Fine Steeds", pinsType = Destinations.Stable},
+    { x = 0.3663540780, y = 0.2584021091, pinName = "Bitterblade Stables", pinTitle = "Bitterblade Fine Steeds", pinsType = Destinations.Stable },
   },
   [448] = {
-  {x = 0.6495081782341, y = 0.63021856546402, pinName = "Portal to Eyevea", pinsType = Destinations.Portals},
+    { x = 0.6495081782341, y = 0.63021856546402, pinName = "Portal to Eyevea", pinsType = Destinations.Portals },
   },
   [1940] = {
-  {x = 0.16614331305027, y = 0.48378404974937, pinName = "Portal to Fargrave", pinsType = Destinations.Portals},
+    { x = 0.16614331305027, y = 0.48378404974937, pinName = "Portal to Fargrave", pinsType = Destinations.Portals },
+  },
+  [2000] = {
+    { x = 0.20910930633545, y = 0.1810761988163, pinName = "Atoll Portal", pinsType = Destinations.Portals },
+    { x = 0.17482243478298, y = 0.36620065569878, pinName = "Atoll Portal", pinsType = Destinations.Portals },
+    { x = 0.2842923104763, y = 0.41839998960495, pinName = "Atoll Portal", pinsType = Destinations.Portals },
+    { x = 0.3700675368309, y = 0.34489288926125, pinName = "Atoll Portal", pinsType = Destinations.Portals },
+    -- { x = 0.44089758396149, y = 0.46782067418098, pinName = "Atoll Portal", pinsType = Destinations.Doorway }, Doorway
+    -- { x = 0.73640447854996, y = 0.18979497253895, pinName = "Atoll Portal", pinsType = Destinations.Doorway }, Doorway
   },
 }
+--[[
+  ["u30_oblivion_portal_base_0"] = { --Atoll of Immolation
+  {0.4110,0.2170,3076},
+  {0.2080,0.5990,3076},
+  {0.2230,0.4300,3076},
+  {0.4270,0.4540,3076},
+  {0.4420,0.5490,3076},
+  {0.5380,0.4850,3076},
+  {0.7710,0.5550,3076},
+  {0.5510,0.7060,3076},
+  {0.5850,0.2940,3076}
+  },
+  ["u30_oblivion_portal_tower"] = {
+  {0.478,0.574,3076},
+  },
+  ["u30_oblivion_portal_boss_base_0"] = {
+  {0.7385361194, 0.4922370016, 3076},
+  },
+  -- ach 3096 Ruinach Rumble
+]]--

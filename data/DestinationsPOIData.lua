@@ -185,6 +185,10 @@ local CRAFTINGSET_ORDERS_WRATH = 69
 local CRAFTINGSET_DRUIDS_BRAID = 70
 local CRAFTINGSET_SERPENTS_DISDAIN = 71
 
+local CRAFTINGSET_CHIMERAS_REBUKE = 72
+local CRAFTINGSET_CLAW_OF_THE_FOREST_WRAITH = 73
+local CRAFTINGSET_OLD_GROWTH_BREWER = 74
+
 -- itemId, numberOfTraitsRequired
 Destinations.SetsStore = {
 
@@ -305,6 +309,11 @@ Destinations.SetsStore = {
   [CRAFTINGSET_ORDERS_WRATH] = { 184771, 3 }, -- 69
   [CRAFTINGSET_DRUIDS_BRAID] = { 185531, 7 }, -- 70
   [CRAFTINGSET_SERPENTS_DISDAIN] = { 185151, 5 }, -- 71
+
+  -- Galen
+  [CRAFTINGSET_CHIMERAS_REBUKE] = { 191232, 7 }, -- 72
+  [CRAFTINGSET_CLAW_OF_THE_FOREST_WRAITH] = { 192292, 5 }, -- 73
+  [CRAFTINGSET_OLD_GROWTH_BREWER] = { 191667, 3 }, -- 74
 }
 
 Destinations.KeepsStore = {
@@ -2700,6 +2709,41 @@ Destinations.POIsStore = {
     [83] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
     [84] = { n = "Stonelore Falls", t = DESTINATIONS_PIN_TYPE_AOI },
     ["zoneName"] = "High Isle",
+  },
+  [1383] = {
+    [1] = { n = "Vastyr", t = DESTINATIONS_PIN_TYPE_TOWN },
+    [2] = { n = "Y'ffre's Path", t = DESTINATIONS_PIN_TYPE_TOWER },
+    [3] = { n = "Llanshara", t = DESTINATIONS_PIN_TYPE_GROVE },
+    [4] = { n = "Embervine", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [5] = { n = "Fauns' Thicket", t = DESTINATIONS_PIN_TYPE_DELVE },
+    [6] = { n = "Valley of the Watcher", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [7] = { n = "Grove of the Chimera", t = DESTINATIONS_PIN_TYPE_GROUPBOSS },
+    [8] = { n = "Old Port Mornard", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_OLD_GROWTH_BREWER },
+    [9] = { n = "Fort Avrippe", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_CHIMERAS_REBUKE },
+    [10] = { n = "Oaken Forge", t = DESTINATIONS_PIN_TYPE_CRAFTING, s = CRAFTINGSET_CLAW_OF_THE_FOREST_WRAITH },
+    [11] = { n = "Vastyr Outskirts Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [12] = { n = "Farpoint Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [13] = { n = "Llanshara Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [14] = { n = "Telling Stone Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [15] = { n = "Eastern Shores Volcanic Vent", t = DESTINATIONS_PIN_TYPE_PORTAL },
+    [16] = { n = "Windwrack Fort", t = DESTINATIONS_PIN_TYPE_AOI },
+    [17] = { n = "Tuinh", t = DESTINATIONS_PIN_TYPE_TOWN },
+    [18] = { n = "Suncleft Grotto", t = DESTINATIONS_PIN_TYPE_CAVE },
+    [19] = { n = "Castle Tonnere", t = DESTINATIONS_PIN_TYPE_AOI },
+    [20] = { n = "Glimmertarn", t = DESTINATIONS_PIN_TYPE_AOI },
+    [21] = { n = "Clohaigh", t = DESTINATIONS_PIN_TYPE_AOI },
+    [22] = { n = "Westport", t = DESTINATIONS_PIN_TYPE_DOCK },
+    [23] = { n = "Ivyhame", t = DESTINATIONS_PIN_TYPE_AOI },
+    [24] = { n = "", t = DESTINATIONS_PIN_TYPE_UNKNOWN },
+    [25] = { n = "The Telling Stone", t = DESTINATIONS_PIN_TYPE_AOI },
+    [26] = { n = "Vastyr Outskirts Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [27] = { n = "Glimmertarn Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [28] = { n = "Embervine Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [29] = { n = "Llanshara Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [30] = { n = "Y'free's Path Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [31] = { n = "Vastyr Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    [32] = { n = "Eastern Shores Wayshrine", t = DESTINATIONS_PIN_TYPE_WAYSHRINE },
+    ["zoneName"] = "Galen",
   },
 
 }

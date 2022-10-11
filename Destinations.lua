@@ -33,7 +33,7 @@ Destinations.client_lang = GetCVar("Language.2")
 Destinations.effective_quest_lang = nil
 Destinations.effective_menu_lang = nil
 local supported_quest_langs = { "br", "de", "en", "es", "fr", "fx", "it", "jp", "kb", "kr", "pl", "ru", }
-local supported_menu_langs = { "de", "en", "cs", "fr", "fx", "jf", "jp", "pl", "ru", "zh", }
+local supported_menu_langs = { "de", "en", "es", "fr", "fx", "jf", "jp", "pl", "ru", "zh", }
 if is_in(Destinations.client_lang, supported_quest_langs) then
   Destinations.effective_quest_lang = Destinations.client_lang
 else
@@ -118,7 +118,7 @@ end
 -------------------------------------------------
 
 local ADDON_AUTHOR = "Sharlikran |c990000Snowman|r|cFFFFFFDK|r & MasterLenman & Ayantir"
-local ADDON_VERSION = "29.75"
+local ADDON_VERSION = "29.76"
 local ADDON_WEBSITE = "http://www.esoui.com/downloads/info667-Destinations.html"
 
 local LMP = LibMapPins
@@ -1542,6 +1542,7 @@ local ZoneIDsToFileNames = {
   [823] = "goldcoast_base_0",
   [816] = "hewsbane_base_0",
   [1318] = "u34_systreszone_base_0", -- High Isle
+  [1383] = "u36_galenisland_base_0", -- Galen
   [726] = "murkmire_base_0",
   [1086] = "elsweyr_base_0",
   [1133] = "southernelsweyr_base_0",
