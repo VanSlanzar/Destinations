@@ -4,7 +4,7 @@
 local ADDON_NAME = "Destinations"
 
 local function is_in(search_value, search_table)
-  for k, v in pairs(search_table) do
+  for _, v in pairs(search_table) do
     if search_value == v then return true end
     if type(search_value) == "string" then
       if string.find(string.lower(v), string.lower(search_value)) then return true end
@@ -51,26 +51,29 @@ Destinations.supported_menu_lang = Destinations.client_lang == Destinations.effe
 ----- Destinations                          -----
 -------------------------------------------------
 if LibDebugLogger then
-  local logger = LibDebugLogger.Create(ADDON_NAME)
-  Destinations.logger = logger
+  Destinations.logger = LibDebugLogger.Create(ADDON_NAME)
 end
 
+local logger
+local viewer
+if DebugLogViewer then viewer = true else viewer = false end
+if LibDebugLogger then logger = true else logger = false end
+
 local function create_log(log_type, log_content)
-  if not DebugLogViewer and log_type == "Info" then
+  if not viewer and log_type == "Info" then
     CHAT_ROUTER:AddSystemMessage(log_content)
     return
   end
-  if not LibDebugLogger then return end
-  if log_type == "Debug" then
+  if logger and log_type == "Debug" then
     Destinations.logger:Debug(log_content)
   end
-  if log_type == "Info" then
+  if logger and log_type == "Info" then
     Destinations.logger:Info(log_content)
   end
-  if log_type == "Verbose" then
+  if logger and log_type == "Verbose" then
     Destinations.logger:Verbose(log_content)
   end
-  if log_type == "Warn" then
+  if logger and log_type == "Warn" then
     Destinations.logger:Warn(log_content)
   end
 end
