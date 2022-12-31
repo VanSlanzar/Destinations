@@ -3237,14 +3237,14 @@ Destinations.QOLDataStore = {
   [1940] = {
     { x = 0.16614331305027, y = 0.48378404974937, pinName = "Portal to Fargrave", pinsType = Destinations.Portals },
   },
-  [2000] = {
-    { x = 0.20910930633545, y = 0.1810761988163, pinName = "Atoll Portal", pinsType = Destinations.Portals },
-    { x = 0.17482243478298, y = 0.36620065569878, pinName = "Atoll Portal", pinsType = Destinations.Portals },
-    { x = 0.2842923104763, y = 0.41839998960495, pinName = "Atoll Portal", pinsType = Destinations.Portals },
-    { x = 0.3700675368309, y = 0.34489288926125, pinName = "Atoll Portal", pinsType = Destinations.Portals },
+  -- [2000] = {
+    -- { x = 0.20910930633545, y = 0.1810761988163, pinName = "Atoll Portal", pinsType = Destinations.Portals },
+    -- { x = 0.17482243478298, y = 0.36620065569878, pinName = "Atoll Portal", pinsType = Destinations.Portals },
+    -- { x = 0.2842923104763, y = 0.41839998960495, pinName = "Atoll Portal", pinsType = Destinations.Portals },
+    -- { x = 0.3700675368309, y = 0.34489288926125, pinName = "Atoll Portal", pinsType = Destinations.Portals },
     -- { x = 0.44089758396149, y = 0.46782067418098, pinName = "Atoll Portal", pinsType = Destinations.Doorway }, Doorway
     -- { x = 0.73640447854996, y = 0.18979497253895, pinName = "Atoll Portal", pinsType = Destinations.Doorway }, Doorway
-  },
+  -- },
 }
 --[[
   ["u30_oblivion_portal_base_0"] = { --Atoll of Immolation
